@@ -31,6 +31,21 @@ class SumoEnvironment:
     - State: queue lengths, densities, waiting times, phase info, and temporal deltas
     - Actions: select a traffic light phase
     - Reward: negative weighted sum of queue lengths and waiting times
+
+    === OBSERVATION NORMALIZATION (Best Practice) ===
+    All features are normalized for stable neural network training:
+    
+    - queue_norm:        queue / max_queue_per_lane     → [0, 1]
+    - delta_queue_norm:  delta_queue / max_delta_queue  → [-1, 1]
+    - density_norm:      density (already 0-1)          → [0, 1]
+    - waiting_norm:      waiting / max_waiting_time     → [0, 1]
+    - delta_density_norm: delta / max_delta_density     → [-1, 1]
+    - phase_onehot:      one-hot encoded phase          → {0, 1}
+    - phase_duration:    duration / max_green           → [0, 1]
+
+    This follows standard deep learning practice: all inputs scaled to similar ranges
+    prevents features with large magnitudes (waiting_time ~300s) from dominating
+    gradients over features with small magnitudes (queue ~0-30).
     """
 
     def __init__(
@@ -45,6 +60,11 @@ class SumoEnvironment:
         reward_alpha: float = 0.5,
         use_gui: bool = False,
         seed: int = 42,
+        # Normalization parameters (best practice from GAP_AUDIT)
+        max_queue_per_lane: int = 30,      # Max vehicles that can queue per lane
+        max_waiting_time: float = 300.0,   # Max waiting time in seconds (5 min)
+        max_delta_queue: float = 10.0,     # Max expected queue change per step
+        max_delta_density: float = 0.5,    # Max expected density change per step
     ):
         self.net_file = net_file
         self.route_file = route_file
@@ -56,6 +76,12 @@ class SumoEnvironment:
         self.reward_alpha = reward_alpha
         self.use_gui = use_gui
         self.seed = seed
+
+        # Normalization constants
+        self.max_queue_per_lane = max_queue_per_lane
+        self.max_waiting_time = max_waiting_time
+        self.max_delta_queue = max_delta_queue
+        self.max_delta_density = max_delta_density
 
         # Load network to get topology info
         self.net = sumolib.net.readNet(self.net_file)
@@ -199,22 +225,36 @@ class SumoEnvironment:
 
     def _get_observation(self, ts_id: str) -> np.ndarray:
         """
-        Get observation for a traffic light agent.
+        Get normalized observation for a traffic light agent.
+        
+        All features are scaled to [0, 1] or [-1, 1] for stable neural network training.
+        This follows best practice from the proposal (Bab IV §4.2) and deep learning standards.
 
         Returns concatenated vector:
-        [queue_per_lane, delta_queue, density_per_lane, phase_onehot, phase_duration_norm]
+        [queue_norm, delta_queue_norm, density_norm, waiting_norm, 
+         delta_density_norm, phase_onehot, phase_duration_norm]
+        
+        Feature ranges:
+        - queue_norm:        [0, 1]
+        - delta_queue_norm:  [-1, 1]
+        - density_norm:      [0, 1]
+        - waiting_norm:      [0, 1]
+        - delta_density_norm: [-1, 1]
+        - phase_onehot:      one-hot (binary)
+        - phase_duration:    [0, 1]
         """
         lanes = self.controlled_lanes[ts_id]
         num_lanes = len(lanes)
 
+        # === RAW FEATURES ===
         # Queue lengths per lane
-        queue = np.array(
+        queue_raw = np.array(
             [traci.lane.getLastStepHaltingNumber(lane) for lane in lanes],
             dtype=np.float32,
         )
 
-        # Density per lane (vehicles / lane_length * 1000 to normalize)
-        density = np.array(
+        # Density per lane (vehicles / lane_capacity)
+        density_raw = np.array(
             [
                 traci.lane.getLastStepVehicleNumber(lane)
                 / max(traci.lane.getLength(lane) / 7.0, 1.0)  # ~7m per vehicle
@@ -222,40 +262,96 @@ class SumoEnvironment:
             ],
             dtype=np.float32,
         )
-        density = np.clip(density, 0.0, 1.0)
 
         # Waiting time per lane
-        waiting = np.array(
+        waiting_raw = np.array(
             [traci.lane.getWaitingTime(lane) for lane in lanes],
             dtype=np.float32,
         )
 
-        # Temporal deltas
-        delta_queue = queue - self._prev_queue[ts_id]
-        delta_density = density - self._prev_density[ts_id]
+        # === NORMALIZED FEATURES (best practice: scale to [0, 1] or [-1, 1]) ===
+        # Queue: normalize by max expected queue per lane
+        queue_norm = queue_raw / self.max_queue_per_lane
+        queue_norm = np.clip(queue_norm, 0.0, 1.0)
 
-        # Update previous values
-        self._prev_queue[ts_id] = queue.copy()
-        self._prev_density[ts_id] = density.copy()
+        # Density: already in [0, 1] from capacity calculation
+        density_norm = np.clip(density_raw, 0.0, 1.0)
 
-        # Current phase (one-hot)
+        # Waiting time: normalize by max expected waiting time
+        waiting_norm = waiting_raw / self.max_waiting_time
+        waiting_norm = np.clip(waiting_norm, 0.0, 1.0)
+
+        # === TEMPORAL DELTAS ===
+        delta_queue_raw = queue_raw - self._prev_queue[ts_id]
+        delta_density_raw = density_raw - self._prev_density[ts_id]
+
+        # Normalize deltas to [-1, 1] range
+        delta_queue_norm = delta_queue_raw / self.max_delta_queue
+        delta_queue_norm = np.clip(delta_queue_norm, -1.0, 1.0)
+
+        delta_density_norm = delta_density_raw / self.max_delta_density
+        delta_density_norm = np.clip(delta_density_norm, -1.0, 1.0)
+
+        # Update previous values (store raw for next delta)
+        self._prev_queue[ts_id] = queue_raw.copy()
+        self._prev_density[ts_id] = density_raw.copy()
+
+        # === PHASE FEATURES (already normalized) ===
         num_phases = self.num_phases[ts_id]
         phase_onehot = np.zeros(num_phases, dtype=np.float32)
         current_phase_idx = self._current_phase[ts_id]
         if current_phase_idx < num_phases:
             phase_onehot[current_phase_idx] = 1.0
 
-        # Phase duration (normalized)
-        phase_duration = np.array(
-            [self._phase_duration[ts_id] / self.max_green], dtype=np.float32
-        )
+        # Phase duration: normalize by max_green
+        phase_duration_norm = self._phase_duration[ts_id] / self.max_green
 
-        # Concatenate: queue + delta_queue + density + waiting + delta_density + phase_onehot + duration
+        # === CONCATENATE NORMALIZED OBSERVATION ===
+        # [queue_norm, delta_queue_norm, density_norm, waiting_norm, 
+        #  delta_density_norm, phase_onehot, phase_duration_norm]
         obs = np.concatenate(
-            [queue, delta_queue, density, waiting, delta_density, phase_onehot, phase_duration]
+            [
+                queue_norm,           # [0, 1]
+                delta_queue_norm,     # [-1, 1]
+                density_norm,         # [0, 1]
+                waiting_norm,         # [0, 1]
+                delta_density_norm,    # [-1, 1]
+                phase_onehot,         # one-hot
+                [phase_duration_norm] # [0, 1]
+            ]
         )
 
         return obs
+
+    def _get_raw_observation(self, ts_id: str) -> Dict[str, np.ndarray]:
+        """
+        Get RAW (unnormalized) observation values for debugging/logging.
+        
+        Returns dict with named features instead of concatenated vector.
+        """
+        lanes = self.controlled_lanes[ts_id]
+        
+        queue = np.array(
+            [traci.lane.getLastStepHaltingNumber(lane) for lane in lanes],
+            dtype=np.float32,
+        )
+        density = np.array(
+            [traci.lane.getLastStepVehicleNumber(lane) 
+             / max(traci.lane.getLength(lane) / 7.0, 1.0) for lane in lanes],
+            dtype=np.float32,
+        )
+        waiting = np.array(
+            [traci.lane.getWaitingTime(lane) for lane in lanes],
+            dtype=np.float32,
+        )
+        
+        return {
+            'queue': queue,
+            'density': density,
+            'waiting_time': waiting,
+            'phase': self._current_phase[ts_id],
+            'phase_duration': self._phase_duration[ts_id],
+        }
 
     def get_obs_size(self, ts_id: str) -> int:
         """Get observation size for a specific traffic light."""

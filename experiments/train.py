@@ -59,8 +59,10 @@ def train(
     first_ts = env.ts_ids[0]
     obs_dim = env.get_obs_size(first_ts)
     num_actions = env.get_action_size(first_ts)
+    num_lanes = len(env.controlled_lanes[first_ts])
     print(f"Observation dim: {obs_dim}")
     print(f"Number of actions: {num_actions}")
+    print(f"Number of lanes per intersection: {num_lanes}")
     print(f"Adjacency matrix:\n{env.adjacency_matrix}")
     env.close()
 
@@ -88,6 +90,8 @@ def train(
             target_update_freq=config["rl"]["target_update_freq"],
             device=device,
         )
+        # Set number of lanes for simplified prediction head
+        agent.set_num_lanes(num_lanes)
     elif agent_type == "independent_dqn":
         agent = IndependentDQNAgent(
             obs_dim=obs_dim,
