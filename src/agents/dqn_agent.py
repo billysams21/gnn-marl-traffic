@@ -42,6 +42,7 @@ class GATDoubleDQNAgent:
         # Prediction Head params
         pred_lambda: float = 0.3,
         action_embed_dim: int = 8,
+        prediction_mode: str = "simplified",
         # RL params
         lr: float = 3e-4,
         gamma: float = 0.95,
@@ -97,14 +98,13 @@ class GATDoubleDQNAgent:
         self.target_q_network.eval()
 
         # Prediction Head (auxiliary task)
-        # Use 'simplified' mode per proposal: predict [avg_queue, avg_density]
-        # This is more stable than full-state prediction
+        # prediction_mode controls output: 'simplified' = [avg_queue, avg_density], 'full' = obs_dim
         self.prediction_head = PredictionHead(
             embed_dim=gat_embed_dim,
             num_actions=num_actions,
             action_embed_dim=action_embed_dim,
             obs_dim=obs_dim,
-            prediction_mode="simplified",  # Best practice from GAP_AUDIT
+            prediction_mode=prediction_mode,
             num_lanes=8,  # Will be updated from env if needed
         ).to(self.device)
 

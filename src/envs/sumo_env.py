@@ -303,8 +303,9 @@ class SumoEnvironment:
         if current_phase_idx < num_phases:
             phase_onehot[current_phase_idx] = 1.0
 
-        # Phase duration: normalize by max_green
+        # Phase duration: normalize by max_green and clip to [0, 1]
         phase_duration_norm = self._phase_duration[ts_id] / self.max_green
+        phase_duration_norm = float(np.clip(phase_duration_norm, 0.0, 1.0))
 
         # === CONCATENATE NORMALIZED OBSERVATION ===
         # [queue_norm, delta_queue_norm, density_norm, waiting_norm, 

@@ -97,9 +97,14 @@ class PredictionHead(nn.Module):
         if prediction_mode == "simplified":
             # Predict: [avg_queue, avg_density] = 2 values
             output_dim = 2
-        else:
+        elif prediction_mode == "full":
             # Predict: full observation
             output_dim = obs_dim
+        else:
+            raise ValueError(
+                f"Unsupported prediction_mode='{prediction_mode}'. "
+                "Expected one of {'simplified', 'full'}."
+            )
 
         self.action_embedding = nn.Embedding(num_actions, action_embed_dim)
 
@@ -143,17 +148,20 @@ class PredictionHead(nn.Module):
             return next_obs
         
         # For simplified mode: extract and average queue and density
-        # Observation format: [queue, delta_queue, density, waiting, delta_density, phase, duration]
-        # queue is first num_lanes elements, density is next num_lanes
+        # Observation format from SumoEnvironment._get_observation():
+        #   [queue, delta_queue, density, waiting, delta_density, phase, duration]
+        # queue occupies the first `num_lanes` elements,
+        # delta_queue the next `num_lanes`, and density the following `num_lanes`
         lanes = num_lanes if num_lanes is not None else self.num_lanes
         
-        if next_obs.shape[-1] < 2 * lanes:
-            # Not enough dimensions, fall back to first 2 values
+        if next_obs.shape[-1] < 3 * lanes:
+            # Not enough dimensions to safely slice density, fall back to first 2 values
             return next_obs[:, :2]
         
         # Average queue per agent (normalized, already in [0,1])
         avg_queue = next_obs[:, :lanes].mean(dim=-1, keepdim=True)
-        # Average density per agent (already in [0,1])
-        avg_density = next_obs[:, lanes:2*lanes].mean(dim=-1, keepdim=True)
+        # Average density per agent (normalized, already in [0,1])
+        # Density starts at index 2 * lanes due to [queue, delta_queue, density, ...] layout
+        avg_density = next_obs[:, 2 * lanes:3 * lanes].mean(dim=-1, keepdim=True)
         
         return torch.cat([avg_queue, avg_density], dim=-1)
