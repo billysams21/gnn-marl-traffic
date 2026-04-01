@@ -1,0 +1,28 @@
+1. Environment Setup (Week 1)
+Install SUMO, create conda/venv environment
+Install: pytorch, torch-geometric, traci, sumo-rl, wandb
+Extract a sub-area of Bandung from OSM → convert to SUMO network with netconvert/osmWebWizard
+Validate: run a fixed-timer baseline simulation
+
+2. Environment Wrapper + Independent DQN Baseline (Week 2)
+Build the gym-compatible SUMO wrapper (state extraction, action execution, reward calculation)
+State: queue, density, waiting_time, phase (per lane) + temporal deltas
+Implement Independent DQN (no GNN) as baseline
+Train on small network (3–5 intersections), verify reward increases
+
+3. GAT-Double DQN Integration (Week 3–4)
+Implement GAT encoder (2-layer, PyTorch Geometric)
+Wire GAT output → Double DQN Q-network (shared weights)
+Add Prediction Head (auxiliary task)
+Train on small network, verify attention weights look reasonable
+
+4. Experiments & Evaluation (Week 5–6)
+Scale to 7–10 intersections
+Run 4 scenarios (stable, peak hour, directional imbalance, daily variation)
+Hyperparameter tuning (focus on α, λ, lr, γ)
+Compare GAT-DDQN vs Independent DQN vs Fixed-Timer
+
+5. Analysis & Writing (Week 6–7)
+Visualize attention weights, training curves, comparison tables
+Write the final report (Bab VI results, Bab VII conclusions)
+Prepare presentation
