@@ -10,6 +10,11 @@ DEFAULT_CONFIG = {
         "min_green": 10,
         "max_green": 60,
         "reward_alpha": 0.5,       # r = -(queue + alpha * waiting)
+        # Normalization parameters (best practice)
+        "max_queue_per_lane": 30,      # Max vehicles per lane
+        "max_waiting_time": 300.0,     # Max waiting time (5 min)
+        "max_delta_queue": 10.0,       # Max queue change per step
+        "max_delta_density": 0.5,      # Max density change per step
     },
 
     "gat": {
@@ -26,6 +31,7 @@ DEFAULT_CONFIG = {
     "prediction": {
         "lambda": 0.3,             # L_total = L_RL + lambda * L_pred
         "action_embed_dim": 8,
+        "mode": "simplified",       # 'simplified' (proposal) or 'full'
     },
 
     "rl": {

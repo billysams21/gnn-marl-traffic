@@ -97,11 +97,15 @@ class GATDoubleDQNAgent:
         self.target_q_network.eval()
 
         # Prediction Head (auxiliary task)
+        # Use 'simplified' mode per proposal: predict [avg_queue, avg_density]
+        # This is more stable than full-state prediction
         self.prediction_head = PredictionHead(
             embed_dim=gat_embed_dim,
             num_actions=num_actions,
             action_embed_dim=action_embed_dim,
             obs_dim=obs_dim,
+            prediction_mode="simplified",  # Best practice from GAP_AUDIT
+            num_lanes=8,  # Will be updated from env if needed
         ).to(self.device)
 
         # ---- Optimizer ----
@@ -117,6 +121,10 @@ class GATDoubleDQNAgent:
 
         # Step counter for target updates
         self._train_steps = 0
+
+    def set_num_lanes(self, num_lanes: int):
+        """Update number of lanes for prediction head (for simplified mode)."""
+        self.prediction_head.num_lanes = num_lanes
 
     def select_actions(
         self, observations: np.ndarray, evaluate: bool = False
@@ -215,9 +223,12 @@ class GATDoubleDQNAgent:
 
         rl_loss = nn.functional.mse_loss(q_taken, target)
 
-        # ---- Prediction Head Loss ----
+        # ---- Prediction Head Loss (simplified target) ----
+        # Per proposal: predict [avg_queue, avg_density] instead of full state
+        # This is more stable and focuses on key traffic metrics
         predicted_next = self.prediction_head(embeddings, actions_flat)
-        pred_loss = nn.functional.mse_loss(predicted_next, next_states_flat)
+        pred_target = self.prediction_head.compute_target(next_states_flat)
+        pred_loss = nn.functional.mse_loss(predicted_next, pred_target)
 
         # Combined loss: L_total = L_RL + lambda * L_pred
         total_loss = rl_loss + self.pred_lambda * pred_loss
