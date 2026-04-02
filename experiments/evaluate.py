@@ -53,6 +53,7 @@ def evaluate(
             gat_hidden_dim=config["gat"]["hidden_dim"],
             gat_embed_dim=config["gat"]["embed_dim"],
             gat_num_heads=config["gat"]["num_heads"],
+            prediction_mode=config["prediction"].get("mode", "simplified"),
         )
     else:
         agent = IndependentDQNAgent(

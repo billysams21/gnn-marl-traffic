@@ -80,6 +80,7 @@ def train(
             q_hidden_dims=config["q_network"]["hidden_dims"],
             pred_lambda=config["prediction"]["lambda"],
             action_embed_dim=config["prediction"]["action_embed_dim"],
+            prediction_mode=config["prediction"].get("mode", "simplified"),
             lr=config["rl"]["lr"],
             gamma=config["rl"]["gamma"],
             epsilon_start=config["rl"]["epsilon_start"],
