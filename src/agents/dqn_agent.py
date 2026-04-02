@@ -291,12 +291,30 @@ class GATDoubleDQNAgent:
         checkpoint = torch.load(path, map_location=self.device, weights_only=False)
         self.gat_encoder.load_state_dict(checkpoint["gat_encoder"])
         self.q_network.load_state_dict(checkpoint["q_network"])
-        self.prediction_head.load_state_dict(checkpoint["prediction_head"])
+
+        # Backward compatibility: prediction head output size changed (full -> simplified).
+        # For evaluation, the policy uses GAT + Q-network only, so a partial/skip load is safe.
+        if "prediction_head" in checkpoint:
+            saved_pred = checkpoint["prediction_head"]
+            current_pred = self.prediction_head.state_dict()
+            compatible = {
+                k: v
+                for k, v in saved_pred.items()
+                if k in current_pred and current_pred[k].shape == v.shape
+            }
+            current_pred.update(compatible)
+            self.prediction_head.load_state_dict(current_pred)
+
         self.target_gat_encoder.load_state_dict(checkpoint["target_gat_encoder"])
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
-        self.optimizer.load_state_dict(checkpoint["optimizer"])
-        self.epsilon = checkpoint["epsilon"]
-        self._train_steps = checkpoint["train_steps"]
+        if "optimizer" in checkpoint:
+            try:
+                self.optimizer.load_state_dict(checkpoint["optimizer"])
+            except ValueError:
+                # Ignore optimizer incompatibility across architecture changes.
+                pass
+        self.epsilon = checkpoint.get("epsilon", self.epsilon)
+        self._train_steps = checkpoint.get("train_steps", self._train_steps)
 
 
 class IndependentDQNAgent:
