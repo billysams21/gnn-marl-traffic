@@ -13,6 +13,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from src.envs.sumo_env import SumoEnvironment
 from src.agents.dqn_agent import GATDoubleDQNAgent, IndependentDQNAgent
+from src.utils.seeding import set_global_seed
 from configs.default_config import DEFAULT_CONFIG, SCENARIOS
 
 
@@ -26,6 +27,10 @@ def evaluate(
 ):
     config = DEFAULT_CONFIG.copy()
     scenario = SCENARIOS[scenario_name]
+    deterministic = config["training"].get("deterministic", True)
+
+    # Global seeding for reproducibility across python/numpy/torch.
+    set_global_seed(seed, deterministic=deterministic)
 
     net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
     route_file = os.path.join(PROJECT_ROOT, scenario["route_file"])
@@ -41,6 +46,7 @@ def evaluate(
     obs = env.reset()
     obs_dim = env.get_obs_size(env.ts_ids[0])
     num_actions = env.get_action_size(env.ts_ids[0])
+    num_lanes = len(env.controlled_lanes[env.ts_ids[0]])
     env.close()
 
     # Create agent and load model
@@ -53,8 +59,9 @@ def evaluate(
             gat_hidden_dim=config["gat"]["hidden_dim"],
             gat_embed_dim=config["gat"]["embed_dim"],
             gat_num_heads=config["gat"]["num_heads"],
-            prediction_mode=config["prediction"].get("mode", "simplified"),
+            prediction_mode=config["prediction"].get("mode", "full"),
         )
+        agent.set_num_lanes(num_lanes)
     else:
         agent = IndependentDQNAgent(
             obs_dim=obs_dim,

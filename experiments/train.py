@@ -17,6 +17,7 @@ sys.path.insert(0, PROJECT_ROOT)
 from src.envs.sumo_env import SumoEnvironment
 from src.agents.dqn_agent import GATDoubleDQNAgent, IndependentDQNAgent
 from src.utils.logger import MetricLogger
+from src.utils.seeding import set_global_seed
 from configs.default_config import DEFAULT_CONFIG, SCENARIOS
 
 
@@ -30,6 +31,10 @@ def train(
 ):
     config = DEFAULT_CONFIG.copy()
     scenario = SCENARIOS[scenario_name]
+    deterministic = config["training"].get("deterministic", True)
+
+    # Global seeding for reproducibility across python/numpy/torch.
+    set_global_seed(seed, deterministic=deterministic)
 
     # Resolve file paths
     net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
@@ -40,6 +45,7 @@ def train(
     print(f"Net: {net_file}")
     print(f"Route: {route_file}")
     print(f"Episodes: {num_episodes}")
+    print(f"Seed: {seed} | Deterministic: {deterministic}")
     print(f"=" * 60)
 
     # ---- Create Environment ----
@@ -80,7 +86,7 @@ def train(
             q_hidden_dims=config["q_network"]["hidden_dims"],
             pred_lambda=config["prediction"]["lambda"],
             action_embed_dim=config["prediction"]["action_embed_dim"],
-            prediction_mode=config["prediction"].get("mode", "simplified"),
+            prediction_mode=config["prediction"].get("mode", "full"),
             lr=config["rl"]["lr"],
             gamma=config["rl"]["gamma"],
             epsilon_start=config["rl"]["epsilon_start"],
