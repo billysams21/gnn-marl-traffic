@@ -42,7 +42,7 @@ class GATDoubleDQNAgent:
         # Prediction Head params
         pred_lambda: float = 0.3,
         action_embed_dim: int = 8,
-        prediction_mode: str = "simplified",
+        prediction_mode: str = "full",
         # RL params
         lr: float = 3e-4,
         gamma: float = 0.95,
@@ -223,9 +223,10 @@ class GATDoubleDQNAgent:
 
         rl_loss = nn.functional.mse_loss(q_taken, target)
 
-        # ---- Prediction Head Loss (simplified target) ----
-        # Per proposal: predict [avg_queue, avg_density] instead of full state
-        # This is more stable and focuses on key traffic metrics
+        # ---- Prediction Head Loss ----
+        # Target format is determined by prediction_mode:
+        # - full: use full next observation
+        # - simplified: use aggregated [avg_queue, avg_density]
         predicted_next = self.prediction_head(embeddings, actions_flat)
         pred_target = self.prediction_head.compute_target(next_states_flat)
         pred_loss = nn.functional.mse_loss(predicted_next, pred_target)
@@ -292,7 +293,7 @@ class GATDoubleDQNAgent:
         self.gat_encoder.load_state_dict(checkpoint["gat_encoder"])
         self.q_network.load_state_dict(checkpoint["q_network"])
 
-        # Backward compatibility: prediction head output size changed (full -> simplified).
+        # Backward compatibility for checkpoints across prediction head shape changes.
         # For evaluation, the policy uses GAT + Q-network only, so a partial/skip load is safe.
         if "prediction_head" in checkpoint:
             saved_pred = checkpoint["prediction_head"]

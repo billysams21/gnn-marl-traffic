@@ -31,7 +31,7 @@ DEFAULT_CONFIG = {
     "prediction": {
         "lambda": 0.3,             # L_total = L_RL + lambda * L_pred
         "action_embed_dim": 8,
-        "mode": "simplified",       # 'simplified' (proposal) or 'full'
+        "mode": "full",            # locked default: 'full' (main), 'simplified' (ablation)
     },
 
     "rl": {
@@ -50,6 +50,7 @@ DEFAULT_CONFIG = {
         "eval_interval": 10,       # evaluate every N episodes
         "save_interval": 50,       # save checkpoint every N episodes
         "log_interval": 1,         # log metrics every N episodes
+        "deterministic": True,     # reproducible runs across python/numpy/torch
     },
 }
 
