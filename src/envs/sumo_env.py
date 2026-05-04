@@ -54,8 +54,8 @@ class SumoEnvironment:
         route_file: str,
         num_seconds: int = 3600,
         delta_time: int = 5,
-        yellow_time: int = 3,
-        min_green: int = 10,
+        yellow_time: int = 5,
+        min_green: int = 13,
         max_green: int = 60,
         reward_alpha: float = 0.5,
         use_gui: bool = False,
@@ -107,6 +107,11 @@ class SumoEnvironment:
         self._yellow_phase_active: Dict[str, bool] = {}
         self._current_phase: Dict[str, int] = {}
         self._phase_duration: Dict[str, int] = {}
+        self._pending_phase: Dict[str, Optional[int]] = {}
+        self._yellow_remaining: Dict[str, int] = {}
+        self._episode_arrived: int = 0
+        self._episode_departed: int = 0
+        self._episode_emergency_stops: int = 0
 
         self._sumo_running = False
 
@@ -184,12 +189,15 @@ class SumoEnvironment:
         traci.start(self._get_sumo_cmd())
         self._sumo_running = True
         self._step_count = 0
+        self._episode_arrived = 0
+        self._episode_departed = 0
+        self._episode_emergency_stops = 0
 
         # Initialize per-TL info from running simulation
         for ts_id in self.ts_ids:
-            self.controlled_lanes[ts_id] = list(
-                set(traci.trafficlight.getControlledLanes(ts_id))
-            )
+            lanes = traci.trafficlight.getControlledLanes(ts_id)
+            # Deterministic lane ordering across runs (no set-based nondeterminism).
+            self.controlled_lanes[ts_id] = sorted(dict.fromkeys(lanes))
             logic = traci.trafficlight.getAllProgramLogics(ts_id)[0]
             phases = logic.getPhases()
             # Filter only green phases (non-yellow, non-all-red)
@@ -205,6 +213,11 @@ class SumoEnvironment:
             self._current_phase[ts_id] = 0
             self._phase_duration[ts_id] = 0
             self._yellow_phase_active[ts_id] = False
+            self._pending_phase[ts_id] = None
+            self._yellow_remaining[ts_id] = 0
+
+            # Ensure each signal starts with a deterministic initial green phase.
+            traci.trafficlight.setRedYellowGreenState(ts_id, self.phase_defs[ts_id][0])
 
         # Initialize previous state for delta computation
         obs = {}
@@ -217,6 +230,13 @@ class SumoEnvironment:
         for _ in range(self.delta_time):
             traci.simulationStep()
             self._step_count += 1
+            self._advance_signal_timers()
+            self._episode_arrived += traci.simulation.getArrivedNumber()
+            self._episode_departed += traci.simulation.getDepartedNumber()
+            if hasattr(traci.simulation, "getEmergencyStoppingVehiclesNumber"):
+                self._episode_emergency_stops += (
+                    traci.simulation.getEmergencyStoppingVehiclesNumber()
+                )
 
         for ts_id in self.ts_ids:
             obs[ts_id] = self._get_observation(ts_id)
@@ -385,10 +405,18 @@ class SumoEnvironment:
         for _ in range(self.delta_time):
             traci.simulationStep()
             self._step_count += 1
+            self._advance_signal_timers()
+            self._episode_arrived += traci.simulation.getArrivedNumber()
+            self._episode_departed += traci.simulation.getDepartedNumber()
+            if hasattr(traci.simulation, "getEmergencyStoppingVehiclesNumber"):
+                self._episode_emergency_stops += (
+                    traci.simulation.getEmergencyStoppingVehiclesNumber()
+                )
 
         # Update phase durations
         for ts_id in self.ts_ids:
-            self._phase_duration[ts_id] += self.delta_time
+            if not self._yellow_phase_active[ts_id]:
+                self._phase_duration[ts_id] += self.delta_time
 
         # Collect observations and rewards
         obs = {}
@@ -414,6 +442,14 @@ class SumoEnvironment:
         """Apply a phase action with yellow transition if needed."""
         current = self._current_phase[ts_id]
 
+        # Ignore new commands while a yellow transition is ongoing.
+        if self._yellow_phase_active[ts_id]:
+            return
+
+        # Enforce minimum green time before allowing phase change.
+        if self._phase_duration[ts_id] < self.min_green:
+            return
+
         if action != current:
             # Set yellow phase (all 'y')
             current_state = traci.trafficlight.getRedYellowGreenState(ts_id)
@@ -425,16 +461,35 @@ class SumoEnvironment:
                     yellow_state += char
             traci.trafficlight.setRedYellowGreenState(ts_id, yellow_state)
 
-            # After yellow_time, set new green phase
-            # (simplified: we set green immediately after yellow in next decision step)
-            self._current_phase[ts_id] = action
-            self._phase_duration[ts_id] = 0
+            # Schedule delayed switch to target green after yellow_time seconds.
+            self._yellow_phase_active[ts_id] = True
+            self._pending_phase[ts_id] = action
+            self._yellow_remaining[ts_id] = self.yellow_time
 
-            # Set the target green phase
-            if action < len(self.phase_defs[ts_id]):
+    def _advance_signal_timers(self):
+        """Progress yellow transitions and apply pending green phases when ready."""
+        for ts_id in self.ts_ids:
+            if not self._yellow_phase_active[ts_id]:
+                continue
+
+            self._yellow_remaining[ts_id] -= 1
+            if self._yellow_remaining[ts_id] > 0:
+                continue
+
+            target_action = self._pending_phase[ts_id]
+            if (
+                target_action is not None
+                and 0 <= target_action < len(self.phase_defs[ts_id])
+            ):
                 traci.trafficlight.setRedYellowGreenState(
-                    ts_id, self.phase_defs[ts_id][action]
+                    ts_id, self.phase_defs[ts_id][target_action]
                 )
+                self._current_phase[ts_id] = target_action
+                self._phase_duration[ts_id] = 0
+
+            self._yellow_phase_active[ts_id] = False
+            self._pending_phase[ts_id] = None
+            self._yellow_remaining[ts_id] = 0
 
     def _compute_reward(self, ts_id: str) -> float:
         """
@@ -453,11 +508,8 @@ class SumoEnvironment:
     def _get_metrics(self) -> Dict[str, float]:
         """Get global traffic metrics."""
         vehicles = traci.vehicle.getIDList()
-        if len(vehicles) == 0:
-            return {"avg_delay": 0.0, "avg_queue": 0.0, "throughput": 0}
-
         total_waiting = sum(traci.vehicle.getWaitingTime(v) for v in vehicles)
-        avg_delay = total_waiting / len(vehicles)
+        avg_delay = total_waiting / max(len(vehicles), 1)
 
         # Queue across all controlled lanes
         all_lanes = []
@@ -468,12 +520,14 @@ class SumoEnvironment:
         )
         avg_queue = total_queue / max(len(all_lanes), 1)
 
-        departed = traci.simulation.getDepartedNumber()
-
         return {
             "avg_delay": avg_delay,
             "avg_queue": avg_queue,
-            "throughput": departed,
+            # Throughput is defined as cumulative completed/arrived vehicles per episode.
+            "throughput": self._episode_arrived,
+            "arrived_vehicles": self._episode_arrived,
+            "departed_vehicles": self._episode_departed,
+            "emergency_stops": self._episode_emergency_stops,
             "num_vehicles": len(vehicles),
         }
 

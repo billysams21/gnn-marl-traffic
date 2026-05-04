@@ -12,18 +12,20 @@ from typing import Dict, List, Optional
 class MetricLogger:
     """Simple CSV + JSON logger for training metrics."""
 
-    def __init__(self, log_dir: str, experiment_name: str = "experiment"):
-        self.log_dir = os.path.join(log_dir, experiment_name)
+    def __init__(self, log_dir: str, experiment_name: Optional[str] = "experiment"):
+        self.log_dir = os.path.join(log_dir, experiment_name) if experiment_name else log_dir
         os.makedirs(self.log_dir, exist_ok=True)
 
         self.csv_path = os.path.join(self.log_dir, "metrics.csv")
         self.config_path = os.path.join(self.log_dir, "config.json")
 
-        self._csv_initialized = False
+        self._csv_initialized = os.path.exists(self.csv_path) and os.path.getsize(self.csv_path) > 0
         self._episode_metrics: List[Dict] = []
 
-    def save_config(self, config: dict):
+    def save_config(self, config: dict, overwrite: bool = True):
         """Save experiment configuration."""
+        if not overwrite and os.path.exists(self.config_path):
+            return
         with open(self.config_path, "w") as f:
             json.dump(config, f, indent=2, default=str)
 

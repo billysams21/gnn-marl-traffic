@@ -6,7 +6,7 @@ DEFAULT_CONFIG = {
     "env": {
         "num_seconds": 3600,       # 1 hour simulation
         "delta_time": 5,           # decision interval (seconds)
-        "yellow_time": 3,
+        "yellow_time": 2,
         "min_green": 10,
         "max_green": 60,
         "reward_alpha": 0.5,       # r = -(queue + alpha * waiting)

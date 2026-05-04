@@ -6,7 +6,7 @@ Stores graph-level transitions (all agents' data per timestep).
 import random
 import numpy as np
 from collections import deque
-from typing import List, Tuple, Dict
+from typing import Any, Dict, Tuple
 
 
 class ReplayBuffer:
@@ -66,3 +66,16 @@ class ReplayBuffer:
 
     def __len__(self):
         return len(self.buffer)
+
+    def state_dict(self) -> Dict[str, Any]:
+        """Serialize replay buffer for checkpointing/resume."""
+        return {
+            "capacity": self.buffer.maxlen,
+            "data": list(self.buffer),
+        }
+
+    def load_state_dict(self, state: Dict[str, Any]):
+        """Restore replay buffer from serialized state."""
+        capacity = state.get("capacity", self.buffer.maxlen)
+        data = state.get("data", [])
+        self.buffer = deque(data, maxlen=capacity)

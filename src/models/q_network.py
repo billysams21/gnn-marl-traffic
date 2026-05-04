@@ -1,9 +1,3 @@
-"""
-Q-Network (Double DQN) for action-value estimation.
-
-Takes spatially-enriched embeddings from GAT and outputs Q-values for each action.
-"""
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -13,7 +7,7 @@ class QNetwork(nn.Module):
     """
     Q-Network MLP.
 
-    Architecture (from ARSITEKTUR_GNN_MARL.md):
+    Architecture:
         Input: embed_dim (h'_i from GAT)
         Hidden: 128 -> 64
         Output: num_actions (Q-value per action)
@@ -58,7 +52,7 @@ class PredictionHead(nn.Module):
     """
     Auxiliary Prediction Head for next-state prediction.
 
-    Architecture (from ARSITEKTUR_GNN_MARL.md):
+    Architecture:
         Input: embed_dim (h'_i) + action_embed_dim = 72
         Hidden: 128 -> 64
         Output: 2 (simplified) or obs_dim (full) predicted values

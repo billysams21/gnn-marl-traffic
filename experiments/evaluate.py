@@ -75,6 +75,8 @@ def evaluate(
     all_rewards = []
     all_delays = []
     all_queues = []
+    all_throughputs = []
+    all_emergency_stops = []
 
     for ep in range(1, num_episodes + 1):
         env.seed = seed + ep
@@ -100,11 +102,15 @@ def evaluate(
         all_rewards.append(ep_reward)
         all_delays.append(info["metrics"]["avg_delay"])
         all_queues.append(info["metrics"]["avg_queue"])
+        all_throughputs.append(info["metrics"]["throughput"])
+        all_emergency_stops.append(info["metrics"]["emergency_stops"])
 
         print(
             f"Episode {ep}: reward={ep_reward:.2f}, "
             f"delay={info['metrics']['avg_delay']:.2f}, "
-            f"queue={info['metrics']['avg_queue']:.2f}"
+            f"queue={info['metrics']['avg_queue']:.2f}, "
+            f"throughput={info['metrics']['throughput']}, "
+            f"emergency_stops={info['metrics']['emergency_stops']}"
         )
 
     env.close()
@@ -115,6 +121,11 @@ def evaluate(
     print(f"Avg Reward:  {np.mean(all_rewards):.2f} ± {np.std(all_rewards):.2f}")
     print(f"Avg Delay:   {np.mean(all_delays):.2f} ± {np.std(all_delays):.2f}")
     print(f"Avg Queue:   {np.mean(all_queues):.2f} ± {np.std(all_queues):.2f}")
+    print(f"Throughput:  {np.mean(all_throughputs):.2f} ± {np.std(all_throughputs):.2f}")
+    print(
+        "Emergency:   "
+        f"{np.mean(all_emergency_stops):.2f} ± {np.std(all_emergency_stops):.2f}"
+    )
 
 
 if __name__ == "__main__":
