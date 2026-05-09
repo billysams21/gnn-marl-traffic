@@ -6,7 +6,7 @@ Wraps SUMO simulator via TraCI for GNN-MARL training.
 import os
 import sys
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Union
 
 # SUMO setup
 if "SUMO_HOME" in os.environ:
@@ -21,6 +21,21 @@ else:
 
 import traci
 import sumolib
+
+
+def _normalize_path(path: Optional[str]) -> Optional[str]:
+    """Normalize filesystem paths before passing them to SUMO/sumolib."""
+    return os.path.normpath(path) if path else None
+
+
+def _ensure_file(path: Optional[str], label: str):
+    """Fail early with a readable error for missing scenario files."""
+    if path and not os.path.isfile(path):
+        raise FileNotFoundError(
+            f"{label} not found: {path}. "
+            "If this is a TorontoSUMONetworks scenario, export/copy the generated "
+            "files into data/networks/toronto_small first."
+        )
 
 
 class SumoEnvironment:
@@ -51,11 +66,12 @@ class SumoEnvironment:
     def __init__(
         self,
         net_file: str,
-        route_file: str,
+        route_file: Optional[Union[str, List[str]]] = None,
+        sumocfg_file: Optional[str] = None,
         num_seconds: int = 3600,
         delta_time: int = 5,
-        yellow_time: int = 5,
-        min_green: int = 13,
+        yellow_time: int = 2,
+        min_green: int = 10,
         max_green: int = 60,
         reward_alpha: float = 0.5,
         use_gui: bool = False,
@@ -66,8 +82,12 @@ class SumoEnvironment:
         max_delta_queue: float = 10.0,     # Max expected queue change per step
         max_delta_density: float = 0.5,    # Max expected density change per step
     ):
-        self.net_file = net_file
-        self.route_file = route_file
+        self.net_file = _normalize_path(net_file)
+        if isinstance(route_file, list):
+            self.route_file = [_normalize_path(path) for path in route_file]
+        else:
+            self.route_file = _normalize_path(route_file)
+        self.sumocfg_file = _normalize_path(sumocfg_file)
         self.num_seconds = num_seconds
         self.delta_time = delta_time  # seconds between agent decisions
         self.yellow_time = yellow_time
@@ -82,16 +102,6 @@ class SumoEnvironment:
         self.max_waiting_time = max_waiting_time
         self.max_delta_queue = max_delta_queue
         self.max_delta_density = max_delta_density
-
-        # Load network to get topology info
-        self.net = sumolib.net.readNet(self.net_file)
-
-        # Get traffic light IDs
-        self.ts_ids: List[str] = [tl.getID() for tl in self.net.getTrafficLights()]
-        self.num_agents = len(self.ts_ids)
-
-        # Build adjacency info from network topology
-        self.adjacency_matrix = self._build_adjacency()
 
         # Per-agent info
         self.controlled_lanes: Dict[str, List[str]] = {}
@@ -114,6 +124,27 @@ class SumoEnvironment:
         self._episode_emergency_stops: int = 0
 
         self._sumo_running = False
+
+        if not self.sumocfg_file and not self.route_file:
+            raise ValueError("Either route_file or sumocfg_file must be provided.")
+
+        _ensure_file(self.net_file, "SUMO net file")
+        _ensure_file(self.sumocfg_file, "SUMO config file")
+        if isinstance(self.route_file, list):
+            for path in self.route_file:
+                _ensure_file(path, "SUMO route file")
+        else:
+            _ensure_file(self.route_file, "SUMO route file")
+
+        # Load network to get topology info
+        self.net = sumolib.net.readNet(self.net_file)
+
+        # Get traffic light IDs
+        self.ts_ids: List[str] = [tl.getID() for tl in self.net.getTrafficLights()]
+        self.num_agents = len(self.ts_ids)
+
+        # Build adjacency info from network topology
+        self.adjacency_matrix = self._build_adjacency()
 
     def _build_adjacency(self) -> np.ndarray:
         """Build adjacency matrix from network topology (shared edges between TL nodes)."""
@@ -171,15 +202,24 @@ class SumoEnvironment:
         sumo_path = os.path.join(os.environ["SUMO_HOME"], "bin", sumo_binary)
         if sys.platform == "win32":
             sumo_path += ".exe"
-        return [
-            sumo_path,
-            "-n", self.net_file,
-            "-r", self.route_file,
+
+        if self.sumocfg_file:
+            cmd = [sumo_path, "-c", self.sumocfg_file]
+        else:
+            route_files = self.route_file
+            if isinstance(route_files, list):
+                route_files = ",".join(route_files)
+            cmd = [sumo_path, "-n", self.net_file, "-r", str(route_files)]
+
+        cmd.extend(
+            [
             "--no-step-log", "true",
             "--waiting-time-memory", "1000",
             "--time-to-teleport", "-1",
             "--seed", str(self.seed),
-        ]
+            ]
+        )
+        return cmd
 
     def reset(self) -> Dict[str, np.ndarray]:
         """Reset environment and return initial observations."""
@@ -441,6 +481,10 @@ class SumoEnvironment:
     def _apply_action(self, ts_id: str, action: int):
         """Apply a phase action with yellow transition if needed."""
         current = self._current_phase[ts_id]
+
+        # Ignore invalid actions to avoid entering yellow with no valid target phase.
+        if not (0 <= action < len(self.phase_defs[ts_id])):
+            return
 
         # Ignore new commands while a yellow transition is ongoing.
         if self._yellow_phase_active[ts_id]:

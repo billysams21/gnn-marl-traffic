@@ -69,6 +69,26 @@ def _infer_episode_from_checkpoint_path(checkpoint_path: str) -> int:
     return 0
 
 
+def _resolve_scenario_paths(scenario: dict):
+    """Resolve scenario files relative to the project root."""
+    net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
+
+    route_config = scenario.get("route_file")
+    if isinstance(route_config, list):
+        route_file = [os.path.join(PROJECT_ROOT, path) for path in route_config]
+    elif route_config:
+        route_file = os.path.join(PROJECT_ROOT, route_config)
+    else:
+        route_file = None
+
+    sumocfg_config = scenario.get("sumocfg_file")
+    sumocfg_file = (
+        os.path.join(PROJECT_ROOT, sumocfg_config) if sumocfg_config else None
+    )
+
+    return net_file, route_file, sumocfg_file
+
+
 def train(
     scenario_name: str = "grid_2x2",
     agent_type: str = "gat_dqn",
@@ -95,13 +115,15 @@ def train(
     set_global_seed(seed, deterministic=deterministic)
 
     # Resolve file paths
-    net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
-    route_file = os.path.join(PROJECT_ROOT, scenario["route_file"])
+    net_file, route_file, sumocfg_file = _resolve_scenario_paths(scenario)
 
     print(f"=" * 60)
     print(f"Training {agent_type} on {scenario_name}")
     print(f"Net: {net_file}")
-    print(f"Route: {route_file}")
+    if sumocfg_file:
+        print(f"SUMO config: {sumocfg_file}")
+    else:
+        print(f"Route: {route_file}")
     print(f"Episodes: {num_episodes}")
     print(f"Seed: {seed} | Deterministic: {deterministic}")
     if resume_mode:
@@ -112,6 +134,7 @@ def train(
     env = SumoEnvironment(
         net_file=net_file,
         route_file=route_file,
+        sumocfg_file=sumocfg_file,
         use_gui=use_gui,
         seed=seed,
         **config["env"],
@@ -310,26 +333,34 @@ def train(
         }
         logger.log_episode(episode, metrics)
 
-        checkpoint_meta = {
-            "episode": episode,
-            "best_reward": best_reward,
-            "rng_state": {
-                "python": random.getstate(),
-                "numpy": np.random.get_state(),
-                "torch": torch.get_rng_state(),
-                "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-            },
-        }
-
         # Save best model
         if episode_reward > best_reward:
             best_reward = episode_reward
-            checkpoint_meta["best_reward"] = best_reward
+            checkpoint_meta = {
+                "episode": episode,
+                "best_reward": best_reward,
+                "rng_state": {
+                    "python": random.getstate(),
+                    "numpy": np.random.get_state(),
+                    "torch": torch.get_rng_state(),
+                    "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+                },
+            }
             save_path = os.path.join(logger.log_dir, "best_model.pt")
             agent.save(save_path, extra_state=checkpoint_meta)
 
         # Periodic save
         if episode % config["training"]["save_interval"] == 0:
+            checkpoint_meta = {
+                "episode": episode,
+                "best_reward": best_reward,
+                "rng_state": {
+                    "python": random.getstate(),
+                    "numpy": np.random.get_state(),
+                    "torch": torch.get_rng_state(),
+                    "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+                },
+            }
             save_path = os.path.join(logger.log_dir, f"checkpoint_ep{episode}.pt")
             agent.save(save_path, extra_state=checkpoint_meta)
 

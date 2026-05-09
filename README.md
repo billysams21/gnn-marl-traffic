@@ -22,3 +22,14 @@ python experiments/train.py --scenario grid_3x3 --agent gat_dqn --episodes 300 -
 Notes:
 - `--episodes` is the final target episode count (not additional episodes).
 - If `--resume-log-dir` is omitted, training continues using the checkpoint folder.
+
+## External Validation Scenario
+
+TorontoSUMONetworks-derived scenarios are supported as external validation via a
+SUMO `.sumocfg` file. See `docs/TORONTO_INTEGRATION.md`.
+
+After exporting files into `data/networks/toronto_small/`:
+
+```powershell
+python experiments/train.py --scenario toronto_small --agent gat_dqn --episodes 5 --seed 42 --yellow-time 2 --min-green 10
+```

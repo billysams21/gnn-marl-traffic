@@ -66,4 +66,12 @@ SCENARIOS = {
         "route_file": "data/networks/grid_3x3/grid_3x3.rou.xml",
         "description": "3x3 grid (9 intersections) for main experiments",
     },
+    "toronto_small": {
+        "net_file": "data/networks/toronto_small/toronto_small.net.xml",
+        "sumocfg_file": "data/networks/toronto_small/toronto_small.sumocfg",
+        "description": (
+            "Small TorontoSUMONetworks-derived scenario for external validation "
+            "after grid_3x3 main experiments and baselines are available"
+        ),
+    },
 }

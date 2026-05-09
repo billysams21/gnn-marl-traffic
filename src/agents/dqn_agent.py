@@ -19,6 +19,14 @@ from src.models.q_network import QNetwork, PredictionHead
 from src.agents.replay_buffer import ReplayBuffer
 
 
+def _move_optimizer_state_to_device(optimizer: optim.Optimizer, device: torch.device):
+    """Move optimizer state tensors to the active device after checkpoint load."""
+    for state in optimizer.state.values():
+        for key, value in state.items():
+            if torch.is_tensor(value):
+                state[key] = value.to(device)
+
+
 class GATDoubleDQNAgent:
     """
     GAT-Double DQN agent with shared weights across all traffic lights.
@@ -314,6 +322,7 @@ class GATDoubleDQNAgent:
         if "optimizer" in checkpoint:
             try:
                 self.optimizer.load_state_dict(checkpoint["optimizer"])
+                _move_optimizer_state_to_device(self.optimizer, self.device)
             except ValueError:
                 # Ignore optimizer incompatibility across architecture changes.
                 pass
@@ -464,6 +473,7 @@ class IndependentDQNAgent:
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
         if "optimizer" in checkpoint:
             self.optimizer.load_state_dict(checkpoint["optimizer"])
+            _move_optimizer_state_to_device(self.optimizer, self.device)
         self.epsilon = checkpoint.get("epsilon", self.epsilon)
         self._train_steps = checkpoint.get("train_steps", self._train_steps)
         if "replay_buffer" in checkpoint:

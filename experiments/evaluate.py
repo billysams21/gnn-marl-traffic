@@ -17,6 +17,26 @@ from src.utils.seeding import set_global_seed
 from configs.default_config import DEFAULT_CONFIG, SCENARIOS
 
 
+def _resolve_scenario_paths(scenario: dict):
+    """Resolve scenario files relative to the project root."""
+    net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
+
+    route_config = scenario.get("route_file")
+    if isinstance(route_config, list):
+        route_file = [os.path.join(PROJECT_ROOT, path) for path in route_config]
+    elif route_config:
+        route_file = os.path.join(PROJECT_ROOT, route_config)
+    else:
+        route_file = None
+
+    sumocfg_config = scenario.get("sumocfg_file")
+    sumocfg_file = (
+        os.path.join(PROJECT_ROOT, sumocfg_config) if sumocfg_config else None
+    )
+
+    return net_file, route_file, sumocfg_file
+
+
 def evaluate(
     model_path: str,
     scenario_name: str = "grid_2x2",
@@ -32,12 +52,12 @@ def evaluate(
     # Global seeding for reproducibility across python/numpy/torch.
     set_global_seed(seed, deterministic=deterministic)
 
-    net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
-    route_file = os.path.join(PROJECT_ROOT, scenario["route_file"])
+    net_file, route_file, sumocfg_file = _resolve_scenario_paths(scenario)
 
     env = SumoEnvironment(
         net_file=net_file,
         route_file=route_file,
+        sumocfg_file=sumocfg_file,
         use_gui=use_gui,
         seed=seed,
         **config["env"],
