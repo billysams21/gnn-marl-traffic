@@ -1,0 +1,1495 @@
+{
+  "settings": {
+    "preferred_yellow_s": 3,
+    "base_saturation_flow_per_lane": 1800,
+    "clamp_cycle": true,
+    "generator": {
+      "seed": 42,
+      "volume_multiplier": 1.0,
+      "note": "Synthetic volumes for probing only; replace with observed PKJI inputs for calibrated baseline."
+    }
+  },
+  "intersections": [
+    {
+      "intersection_id": "A0",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 140,
+              "vol_sm": 828,
+              "vol_ks": 10,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 494,
+              "vol_sm": 1940,
+              "vol_ks": 47,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 94,
+              "vol_sm": 435,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 143,
+              "vol_sm": 989,
+              "vol_ks": 27,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 411,
+              "vol_sm": 2102,
+              "vol_ks": 53,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 82,
+              "vol_sm": 407,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 113,
+              "vol_sm": 859,
+              "vol_ks": 26,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 477,
+              "vol_sm": 1813,
+              "vol_ks": 57,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 92,
+              "vol_sm": 583,
+              "vol_ks": 20,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 144,
+              "vol_sm": 939,
+              "vol_ks": 23,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 428,
+              "vol_sm": 2029,
+              "vol_ks": 58,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 97,
+              "vol_sm": 401,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "A1",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 144,
+              "vol_sm": 908,
+              "vol_ks": 20,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 435,
+              "vol_sm": 1879,
+              "vol_ks": 46,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 101,
+              "vol_sm": 426,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 124,
+              "vol_sm": 824,
+              "vol_ks": 21,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 444,
+              "vol_sm": 2109,
+              "vol_ks": 48,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 82,
+              "vol_sm": 586,
+              "vol_ks": 17,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 134,
+              "vol_sm": 831,
+              "vol_ks": 22,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 410,
+              "vol_sm": 2082,
+              "vol_ks": 49,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 120,
+              "vol_sm": 558,
+              "vol_ks": 15,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 136,
+              "vol_sm": 849,
+              "vol_ks": 12,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 405,
+              "vol_sm": 2138,
+              "vol_ks": 47,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 98,
+              "vol_sm": 420,
+              "vol_ks": 13,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "A2",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 106,
+              "vol_sm": 897,
+              "vol_ks": 18,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 458,
+              "vol_sm": 2125,
+              "vol_ks": 51,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 90,
+              "vol_sm": 494,
+              "vol_ks": 15,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 113,
+              "vol_sm": 971,
+              "vol_ks": 18,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 489,
+              "vol_sm": 2149,
+              "vol_ks": 60,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 84,
+              "vol_sm": 555,
+              "vol_ks": 20,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 110,
+              "vol_sm": 936,
+              "vol_ks": 17,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 420,
+              "vol_sm": 2036,
+              "vol_ks": 52,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 97,
+              "vol_sm": 563,
+              "vol_ks": 18,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 114,
+              "vol_sm": 975,
+              "vol_ks": 20,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 498,
+              "vol_sm": 2197,
+              "vol_ks": 41,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 94,
+              "vol_sm": 408,
+              "vol_ks": 15,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "B0",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 125,
+              "vol_sm": 868,
+              "vol_ks": 12,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 427,
+              "vol_sm": 2090,
+              "vol_ks": 50,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 93,
+              "vol_sm": 567,
+              "vol_ks": 17,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 125,
+              "vol_sm": 964,
+              "vol_ks": 24,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 418,
+              "vol_sm": 1935,
+              "vol_ks": 44,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 95,
+              "vol_sm": 590,
+              "vol_ks": 18,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 134,
+              "vol_sm": 867,
+              "vol_ks": 28,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 454,
+              "vol_sm": 2098,
+              "vol_ks": 52,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 103,
+              "vol_sm": 456,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 132,
+              "vol_sm": 926,
+              "vol_ks": 12,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 496,
+              "vol_sm": 1824,
+              "vol_ks": 43,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 89,
+              "vol_sm": 560,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "B1",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 150,
+              "vol_sm": 974,
+              "vol_ks": 23,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 476,
+              "vol_sm": 1832,
+              "vol_ks": 52,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 104,
+              "vol_sm": 552,
+              "vol_ks": 17,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 133,
+              "vol_sm": 864,
+              "vol_ks": 27,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 401,
+              "vol_sm": 2148,
+              "vol_ks": 43,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 114,
+              "vol_sm": 592,
+              "vol_ks": 14,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 149,
+              "vol_sm": 964,
+              "vol_ks": 20,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 414,
+              "vol_sm": 1950,
+              "vol_ks": 53,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 90,
+              "vol_sm": 516,
+              "vol_ks": 10,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 146,
+              "vol_sm": 984,
+              "vol_ks": 18,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 464,
+              "vol_sm": 2190,
+              "vol_ks": 45,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 112,
+              "vol_sm": 427,
+              "vol_ks": 20,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "B2",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 119,
+              "vol_sm": 963,
+              "vol_ks": 26,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 477,
+              "vol_sm": 1901,
+              "vol_ks": 44,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 103,
+              "vol_sm": 595,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 134,
+              "vol_sm": 999,
+              "vol_ks": 26,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 400,
+              "vol_sm": 2106,
+              "vol_ks": 50,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 111,
+              "vol_sm": 404,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 123,
+              "vol_sm": 878,
+              "vol_ks": 17,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 407,
+              "vol_sm": 1923,
+              "vol_ks": 58,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 85,
+              "vol_sm": 421,
+              "vol_ks": 17,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 104,
+              "vol_sm": 994,
+              "vol_ks": 27,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 498,
+              "vol_sm": 1864,
+              "vol_ks": 44,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 110,
+              "vol_sm": 540,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "C0",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 116,
+              "vol_sm": 935,
+              "vol_ks": 29,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 454,
+              "vol_sm": 1908,
+              "vol_ks": 57,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 92,
+              "vol_sm": 582,
+              "vol_ks": 14,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 125,
+              "vol_sm": 971,
+              "vol_ks": 30,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 447,
+              "vol_sm": 2024,
+              "vol_ks": 56,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 108,
+              "vol_sm": 430,
+              "vol_ks": 13,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 114,
+              "vol_sm": 816,
+              "vol_ks": 20,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 402,
+              "vol_sm": 2101,
+              "vol_ks": 57,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 94,
+              "vol_sm": 550,
+              "vol_ks": 13,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 100,
+              "vol_sm": 818,
+              "vol_ks": 30,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 407,
+              "vol_sm": 1917,
+              "vol_ks": 42,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 82,
+              "vol_sm": 484,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "C1",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 132,
+              "vol_sm": 860,
+              "vol_ks": 18,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 485,
+              "vol_sm": 2048,
+              "vol_ks": 46,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 114,
+              "vol_sm": 433,
+              "vol_ks": 19,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 136,
+              "vol_sm": 921,
+              "vol_ks": 17,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 500,
+              "vol_sm": 2042,
+              "vol_ks": 53,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 92,
+              "vol_sm": 424,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 142,
+              "vol_sm": 910,
+              "vol_ks": 21,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 454,
+              "vol_sm": 2010,
+              "vol_ks": 54,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 83,
+              "vol_sm": 572,
+              "vol_ks": 20,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 141,
+              "vol_sm": 825,
+              "vol_ks": 11,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 451,
+              "vol_sm": 2172,
+              "vol_ks": 50,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 86,
+              "vol_sm": 463,
+              "vol_ks": 13,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "C2",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 112,
+              "vol_sm": 937,
+              "vol_ks": 24,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 417,
+              "vol_sm": 2016,
+              "vol_ks": 45,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 97,
+              "vol_sm": 518,
+              "vol_ks": 13,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Selatan",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 104,
+              "vol_sm": 913,
+              "vol_ks": 27,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 412,
+              "vol_sm": 1825,
+              "vol_ks": 60,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 114,
+              "vol_sm": 403,
+              "vol_ks": 11,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 148,
+              "vol_sm": 860,
+              "vol_ks": 15,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 452,
+              "vol_sm": 2048,
+              "vol_ks": 55,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 93,
+              "vol_sm": 502,
+              "vol_ks": 10,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        },
+        {
+          "name": "Barat",
+          "width_m": 10.0,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 110,
+              "vol_sm": 897,
+              "vol_ks": 10,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 449,
+              "vol_sm": 1935,
+              "vol_ks": 54,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 98,
+              "vol_sm": 508,
+              "vol_ks": 18,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0.0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "corridors": [
+    {
+      "from_intersection": "A0",
+      "to_intersection": "A1",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "A1",
+      "to_intersection": "A2",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "B0",
+      "to_intersection": "B1",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "B1",
+      "to_intersection": "B2",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "C0",
+      "to_intersection": "C1",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "C1",
+      "to_intersection": "C2",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "east_west"
+    },
+    {
+      "from_intersection": "A0",
+      "to_intersection": "B0",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    },
+    {
+      "from_intersection": "B0",
+      "to_intersection": "C0",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    },
+    {
+      "from_intersection": "A1",
+      "to_intersection": "B1",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    },
+    {
+      "from_intersection": "B1",
+      "to_intersection": "C1",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    },
+    {
+      "from_intersection": "A2",
+      "to_intersection": "B2",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    },
+    {
+      "from_intersection": "B2",
+      "to_intersection": "C2",
+      "distance_m": 200.0,
+      "progression_speed_kmh": 40.0,
+      "main_direction": "north_south"
+    }
+  ]
+}

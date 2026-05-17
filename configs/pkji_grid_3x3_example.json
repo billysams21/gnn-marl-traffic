@@ -1,0 +1,140 @@
+{
+  "settings": {
+    "preferred_yellow_s": 3,
+    "base_saturation_flow_per_lane": 1800,
+    "clamp_cycle": true
+  },
+  "intersections": [
+    {
+      "intersection_id": "A0",
+      "num_phases": 2,
+      "offset_s": 0,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 120,
+              "vol_sm": 900,
+              "vol_ks": 25,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 450,
+              "vol_sm": 2200,
+              "vol_ks": 60,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 1
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 90,
+              "vol_sm": 500,
+              "vol_ks": 15,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "L",
+              "vol_mp": 110,
+              "vol_sm": 820,
+              "vol_ks": 20,
+              "is_protected": true,
+              "ltor_allowed": true,
+              "ltor_lane_width_m": 2.5,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "T",
+              "vol_mp": 420,
+              "vol_sm": 2000,
+              "vol_ks": 55,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 2
+            },
+            {
+              "movement_dir": "R",
+              "vol_mp": 80,
+              "vol_sm": 420,
+              "vol_ks": 12,
+              "is_protected": false,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "intersection_id": "A1",
+      "num_phases": 2,
+      "offset_s": 15,
+      "approaches": [
+        {
+          "name": "Utara",
+          "width_m": 10,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "T",
+              "vol_mp": 430,
+              "vol_sm": 2100,
+              "vol_ks": 50,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 1
+            }
+          ]
+        },
+        {
+          "name": "Timur",
+          "width_m": 10,
+          "num_lanes": 2,
+          "movements": [
+            {
+              "movement_dir": "T",
+              "vol_mp": 400,
+              "vol_sm": 1900,
+              "vol_ks": 45,
+              "is_protected": true,
+              "ltor_allowed": false,
+              "ltor_lane_width_m": 0,
+              "phase_id": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "corridors": [
+    {
+      "from_intersection": "A0",
+      "to_intersection": "A1",
+      "distance_m": 200,
+      "progression_speed_kmh": 40,
+      "main_direction": "north_south"
+    }
+  ]
+}

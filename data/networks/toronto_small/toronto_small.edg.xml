@@ -1,0 +1,158 @@
+<edges>
+  <edge id="1141880" from="13463258" to="13463125" numLanes="2" speed="12.50" name="St Paul&#x27;s Square"/>
+  <edge id="1141880_rev" from="13463125" to="13463258" numLanes="2" speed="12.50" name="St Paul&#x27;s Square"/>
+  <edge id="7753909" from="13463674" to="13463463" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="7753909_rev" from="13463463" to="13463674" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="1142293" from="13463674" to="13463628" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="1142293_rev" from="13463628" to="13463674" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="1142453" from="13463834" to="13463674" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="1142453_rev" from="13463674" to="13463834" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="10924063" from="13463958" to="13463834" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="10924063_rev" from="13463834" to="13463958" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="14023731" from="14023737" to="14023738" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="14023521" from="13464913" to="14023523" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="14023521_rev" from="14023523" to="13464913" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="8536222" from="13463258" to="13463195" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="8536222_rev" from="13463195" to="13463258" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="30018013" from="13463436" to="13463329" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="30018013_rev" from="13463329" to="13463436" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="8536083" from="13463463" to="13463195" numLanes="3" speed="12.50" name="Ted Rogers Way"/>
+  <edge id="8536083_rev" from="13463195" to="13463463" numLanes="3" speed="12.50" name="Ted Rogers Way"/>
+  <edge id="30055878" from="13464719" to="30055877" numLanes="2" speed="12.50" name="Carlton Street"/>
+  <edge id="30055878_rev" from="30055877" to="13464719" numLanes="2" speed="12.50" name="Carlton Street"/>
+  <edge id="30073292" from="30073288" to="30073291" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="30073336" from="30073334" to="30073331" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="30073338" from="30073291" to="30073337" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="30073335" from="14023736" to="30073334" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="30073333" from="30073331" to="14023737" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="11466484" from="13463285" to="13463258" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="11466484_rev" from="13463258" to="13463285" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="30108839" from="13464643" to="30108838" numLanes="2" speed="12.50" name="Alexander Street"/>
+  <edge id="30108842" from="30108838" to="30108841" numLanes="2" speed="12.50" name="Alexander Street"/>
+  <edge id="30109473" from="30108841" to="30109472" numLanes="2" speed="12.50" name="Alexander Street"/>
+  <edge id="30109474" from="30109472" to="13464545" numLanes="2" speed="12.50" name="Alexander Street"/>
+  <edge id="30109475" from="30109472" to="14234776" numLanes="1" speed="12.50" name="Donna Shaw Lane"/>
+  <edge id="30109475_rev" from="14234776" to="30109472" numLanes="1" speed="12.50" name="Donna Shaw Lane"/>
+  <edge id="20058416" from="13464719" to="20058418" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="20058416_rev" from="20058418" to="13464719" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="30073339" from="30073337" to="13463778" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="20079096" from="20079097" to="13463674" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="14019610" from="13463778" to="14019613" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="20079095" from="14019613" to="20079097" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="4907210" from="13464071" to="13464042" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="4907210_rev" from="13464042" to="13464071" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="4907227" from="13464163" to="13464071" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="4907227_rev" from="13464071" to="13464163" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9909519" from="13464202" to="13464163" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9909519_rev" from="13464163" to="13464202" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="14020343" from="13464649" to="14020347" numLanes="2" speed="12.50" name="Grosvenor Street"/>
+  <edge id="14020343_rev" from="14020347" to="13464649" numLanes="2" speed="12.50" name="Grosvenor Street"/>
+  <edge id="7762691" from="13464664" to="13464649" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="7762691_rev" from="13464649" to="13464664" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="10759265" from="13463436" to="13463460" numLanes="3" speed="12.50" name="Bloor Street West"/>
+  <edge id="10759265_rev" from="13463460" to="13463436" numLanes="3" speed="12.50" name="Bloor Street West"/>
+  <edge id="11034877" from="13463436" to="13463281" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="11034877_rev" from="13463281" to="13463436" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="7754954" from="13464664" to="13464643" numLanes="2" speed="12.50" name="Alexander Street"/>
+  <edge id="30130900" from="13464320" to="30130899" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="30130900_rev" from="30130899" to="13464320" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="30073289" from="13463885" to="30073288" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="9941868" from="13463906" to="13463839" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9941868_rev" from="13463839" to="13463906" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="14041830" from="13463839" to="14041832" numLanes="2" speed="12.50" name="St Mary Street"/>
+  <edge id="7640089" from="13463906" to="13463885" numLanes="2" speed="12.50" name="Isabella Street"/>
+  <edge id="9941851" from="13464042" to="13463906" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9941851_rev" from="13463906" to="13464042" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="1141817" from="13463195" to="13463162" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="1141817_rev" from="13463162" to="13463195" numLanes="3" speed="12.50" name="Bloor Street East"/>
+  <edge id="2633805" from="13463463" to="13463162" numLanes="3" speed="12.50" name="Mount Pleasant Road"/>
+  <edge id="2633805_rev" from="13463162" to="13463463" numLanes="3" speed="12.50" name="Mount Pleasant Road"/>
+  <edge id="7730328" from="13464821" to="13464666" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7730328_rev" from="13464666" to="13464821" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1143504" from="13464821" to="13464780" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="1143504_rev" from="13464780" to="13464821" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="14023522" from="14023523" to="13464821" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="14023522_rev" from="13464821" to="14023523" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="20058417" from="20058418" to="13464278" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="20058417_rev" from="13464278" to="20058418" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="1143484" from="13464806" to="13464794" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="1143484_rev" from="13464794" to="13464806" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="7754955" from="13464913" to="13464806" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="7754955_rev" from="13464806" to="13464913" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="3739890" from="13464794" to="13464664" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="3739890_rev" from="13464664" to="13464794" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="6535342" from="13464666" to="13464545" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="6535342_rev" from="13464545" to="13464666" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="20059225" from="20058418" to="20058466" numLanes="1" speed="12.50" name="Sirman Lane"/>
+  <edge id="20059225_rev" from="20058466" to="20058418" numLanes="1" speed="12.50" name="Sirman Lane"/>
+  <edge id="10924010" from="13464342" to="13464320" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="10924010_rev" from="13464320" to="13464342" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="9879968" from="13464342" to="13464202" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9879968_rev" from="13464202" to="13464342" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="14673579" from="13464342" to="14673581" numLanes="2" speed="12.50" name="Wellesley Street West"/>
+  <edge id="14673579_rev" from="14673581" to="13464342" numLanes="2" speed="12.50" name="Wellesley Street West"/>
+  <edge id="7730338" from="13464545" to="13464377" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7730338_rev" from="13464377" to="13464545" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142973" from="13464331" to="13464278" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="1142973_rev" from="13464278" to="13464331" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="7731525" from="13464377" to="13464356" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="7731525_rev" from="13464356" to="13464377" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="1142724" from="13464096" to="13463958" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="1142724_rev" from="13463958" to="13464096" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="30094111" from="30094107" to="30094110" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="30094111_rev" from="30094110" to="30094107" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="30130901" from="30130899" to="14673543" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="30130901_rev" from="14673543" to="30130899" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="30094108" from="14673529" to="30094107" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="30094108_rev" from="30094107" to="14673529" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="14673542" from="14673543" to="13464212" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="14673542_rev" from="13464212" to="14673543" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="7731365" from="13464212" to="13464096" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="7731365_rev" from="13464096" to="13464212" numLanes="2" speed="12.50" name="Wellesley Street East"/>
+  <edge id="7731514" from="13464377" to="13464212" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7731514_rev" from="13464212" to="13464377" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="14673527" from="13464212" to="14673529" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="14673527_rev" from="14673529" to="13464212" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142540" from="13463924" to="13463778" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142540_rev" from="13463778" to="13463924" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7731405" from="13463924" to="13463834" numLanes="2" speed="12.50" name="Gloucester Street"/>
+  <edge id="20054199" from="14019546" to="13463463" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="7754038" from="13463778" to="13463577" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7754038_rev" from="13463577" to="13463778" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="6522404" from="13463438" to="13463285" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="6522404_rev" from="13463285" to="13463438" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7754001" from="13463577" to="13463438" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="7754001_rev" from="13463438" to="13463577" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="14023732" from="14023738" to="13463577" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="14019543" from="13463577" to="14019546" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="9941835" from="13463839" to="13463744" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9941835_rev" from="13463744" to="13463839" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9909732" from="13463723" to="13463763" numLanes="2" speed="12.50" name="Charles Street West"/>
+  <edge id="9941849" from="13463744" to="13463723" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9941849_rev" from="13463723" to="13463744" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="14023729" from="13463744" to="14023736" numLanes="2" speed="12.50" name="Charles Street East"/>
+  <edge id="9941793" from="13463723" to="13463608" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9941793_rev" from="13463608" to="13463723" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="30018012" from="13463608" to="13463436" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="30018012_rev" from="13463436" to="13463608" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="1142636" from="13464010" to="13463924" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142636_rev" from="13463924" to="13464010" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142658" from="13464030" to="13464010" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1142658_rev" from="13464010" to="13464030" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="30094112" from="30094110" to="13464030" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="30094112_rev" from="13464030" to="30094110" numLanes="2" speed="12.50" name="Church Street"/>
+  <edge id="1143002" from="13464356" to="13464331" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="1143002_rev" from="13464331" to="13464356" numLanes="2" speed="12.50" name="Maitland Street"/>
+  <edge id="1143164" from="13464525" to="13464342" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="1143164_rev" from="13464342" to="13464525" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9879954" from="13464649" to="13464525" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="9879954_rev" from="13464525" to="13464649" numLanes="3" speed="12.50" name="Yonge Street"/>
+  <edge id="60000256" from="20062301" to="13464719" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="60000256_rev" from="13464719" to="20062301" numLanes="3" speed="12.50" name="Jarvis Street"/>
+  <edge id="12387707" from="13464772" to="13464719" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="12387707_rev" from="13464719" to="13464772" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="1143455" from="13464780" to="13464772" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="1143455_rev" from="13464772" to="13464780" numLanes="3" speed="12.50" name="Carlton Street"/>
+  <edge id="30016121" from="13463834" to="30016120" numLanes="2" speed="12.50" name="Earl Place"/>
+  <edge id="30016121_rev" from="30016120" to="13463834" numLanes="2" speed="12.50" name="Earl Place"/>
+</edges>

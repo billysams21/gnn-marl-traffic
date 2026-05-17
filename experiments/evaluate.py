@@ -6,6 +6,8 @@ Evaluation script for trained models.
 import os
 import sys
 import argparse
+import copy
+import json
 import numpy as np
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +39,21 @@ def _resolve_scenario_paths(scenario: dict):
     return net_file, route_file, sumocfg_file
 
 
+def _load_config_for_model(model_path: str) -> dict:
+    """Load the training config next to a checkpoint, falling back to defaults."""
+    config = copy.deepcopy(DEFAULT_CONFIG)
+    config_path = os.path.join(os.path.dirname(os.path.abspath(model_path)), "config.json")
+    if not os.path.exists(config_path):
+        return config
+
+    with open(config_path, "r") as f:
+        saved = json.load(f)
+
+    if isinstance(saved, dict) and isinstance(saved.get("config"), dict):
+        return saved["config"]
+    return config
+
+
 def evaluate(
     model_path: str,
     scenario_name: str = "grid_2x2",
@@ -44,8 +61,14 @@ def evaluate(
     num_episodes: int = 10,
     use_gui: bool = False,
     seed: int = 123,
+    yellow_time: int = None,
+    min_green: int = None,
 ):
-    config = DEFAULT_CONFIG.copy()
+    config = _load_config_for_model(model_path)
+    if yellow_time is not None:
+        config["env"]["yellow_time"] = yellow_time
+    if min_green is not None:
+        config["env"]["min_green"] = min_green
     scenario = SCENARIOS[scenario_name]
     deterministic = config["training"].get("deterministic", True)
 
@@ -79,6 +102,10 @@ def evaluate(
             gat_hidden_dim=config["gat"]["hidden_dim"],
             gat_embed_dim=config["gat"]["embed_dim"],
             gat_num_heads=config["gat"]["num_heads"],
+            gat_dropout=config["gat"]["dropout"],
+            q_hidden_dims=config["q_network"]["hidden_dims"],
+            pred_lambda=config["prediction"]["lambda"],
+            action_embed_dim=config["prediction"]["action_embed_dim"],
             prediction_mode=config["prediction"].get("mode", "full"),
         )
         agent.set_num_lanes(num_lanes)
@@ -87,6 +114,7 @@ def evaluate(
             obs_dim=obs_dim,
             num_actions=num_actions,
             num_agents=env.num_agents,
+            q_hidden_dims=config["q_network"]["hidden_dims"],
         )
 
     agent.load(model_path)
@@ -156,6 +184,17 @@ if __name__ == "__main__":
     parser.add_argument("--episodes", type=int, default=10)
     parser.add_argument("--gui", action="store_true")
     parser.add_argument("--seed", type=int, default=123)
+    parser.add_argument("--yellow-time", type=int, default=None, help="Override env.yellow_time")
+    parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
 
     args = parser.parse_args()
-    evaluate(args.model, args.scenario, args.agent, args.episodes, args.gui, args.seed)
+    evaluate(
+        args.model,
+        args.scenario,
+        args.agent,
+        args.episodes,
+        args.gui,
+        args.seed,
+        args.yellow_time,
+        args.min_green,
+    )

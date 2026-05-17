@@ -347,6 +347,7 @@ class IndependentDQNAgent:
         obs_dim: int,
         num_actions: int,
         num_agents: int,
+        q_hidden_dims: list = None,
         lr: float = 3e-4,
         gamma: float = 0.95,
         epsilon_start: float = 1.0,
@@ -376,7 +377,7 @@ class IndependentDQNAgent:
         self.q_network = QNetwork(
             embed_dim=obs_dim,  # directly from observation
             num_actions=num_actions,
-            hidden_dims=[128, 64],
+            hidden_dims=q_hidden_dims,
         ).to(self.device)
 
         self.target_q_network = copy.deepcopy(self.q_network).to(self.device)

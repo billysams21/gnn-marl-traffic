@@ -69,6 +69,84 @@ def _infer_episode_from_checkpoint_path(checkpoint_path: str) -> int:
     return 0
 
 
+def _checkpoint_meta(
+    episode: int,
+    best_train_reward: float,
+    best_eval_reward: float,
+    best_model_metric: str,
+):
+    """Build checkpoint metadata with reproducibility state."""
+    return {
+        "episode": episode,
+        # Keep the legacy key for old scripts while recording explicit criteria.
+        "best_reward": (
+            best_eval_reward if best_model_metric == "eval_reward" else best_train_reward
+        ),
+        "best_train_reward": best_train_reward,
+        "best_eval_reward": best_eval_reward,
+        "best_model_metric": best_model_metric,
+        "rng_state": {
+            "python": random.getstate(),
+            "numpy": np.random.get_state(),
+            "torch": torch.get_rng_state(),
+            "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+        },
+    }
+
+
+def _run_greedy_validation(agent, env: SumoEnvironment, seed: int, episodes: int) -> dict:
+    """Run greedy validation episodes without replay storage or epsilon exploration."""
+    if episodes <= 0:
+        return {}
+
+    original_seed = env.seed
+    rewards = []
+    delays = []
+    queues = []
+    throughputs = []
+    emergency_stops = []
+
+    try:
+        for i in range(episodes):
+            env.seed = seed + i
+            obs = env.reset()
+            obs_array = np.stack([obs[ts_id] for ts_id in env.ts_ids])
+            episode_reward = 0.0
+
+            while True:
+                actions_array = agent.select_actions(obs_array, evaluate=True)
+                actions_dict = {
+                    ts_id: int(actions_array[j]) for j, ts_id in enumerate(env.ts_ids)
+                }
+                next_obs, step_rewards, done, info = env.step(actions_dict)
+                next_obs_array = np.stack([next_obs[ts_id] for ts_id in env.ts_ids])
+                rewards_array = np.array([step_rewards[ts_id] for ts_id in env.ts_ids])
+
+                episode_reward += rewards_array.mean()
+                obs_array = next_obs_array
+
+                if done:
+                    break
+
+            rewards.append(episode_reward)
+            delays.append(info["metrics"]["avg_delay"])
+            queues.append(info["metrics"]["avg_queue"])
+            throughputs.append(info["metrics"]["throughput"])
+            emergency_stops.append(info["metrics"]["emergency_stops"])
+    finally:
+        env.close()
+        env.seed = original_seed
+
+    return {
+        "eval_reward": float(np.mean(rewards)),
+        "eval_reward_std": float(np.std(rewards)),
+        "eval_avg_delay": float(np.mean(delays)),
+        "eval_avg_queue": float(np.mean(queues)),
+        "eval_throughput": float(np.mean(throughputs)),
+        "eval_emergency_stops": float(np.mean(emergency_stops)),
+    }
+
+
 def _resolve_scenario_paths(scenario: dict):
     """Resolve scenario files relative to the project root."""
     net_file = os.path.join(PROJECT_ROOT, scenario["net_file"])
@@ -100,6 +178,11 @@ def train(
     resume_log_dir: str = "",
     yellow_time: Optional[int] = None,
     min_green: Optional[int] = None,
+    epsilon_start: Optional[float] = None,
+    epsilon_end: Optional[float] = None,
+    epsilon_decay: Optional[float] = None,
+    eval_interval: Optional[int] = None,
+    eval_episodes: Optional[int] = None,
     exp_suffix: str = "",
 ):
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -108,6 +191,16 @@ def train(
         config["env"]["yellow_time"] = yellow_time
     if min_green is not None:
         config["env"]["min_green"] = min_green
+    if epsilon_start is not None:
+        config["rl"]["epsilon_start"] = epsilon_start
+    if epsilon_end is not None:
+        config["rl"]["epsilon_end"] = epsilon_end
+    if epsilon_decay is not None:
+        config["rl"]["epsilon_decay"] = epsilon_decay
+    if eval_interval is not None:
+        config["training"]["eval_interval"] = eval_interval
+    if eval_episodes is not None:
+        config["training"]["eval_episodes"] = eval_episodes
     deterministic = config["training"].get("deterministic", True)
     resume_mode = bool(resume_checkpoint)
 
@@ -187,6 +280,7 @@ def train(
             obs_dim=obs_dim,
             num_actions=num_actions,
             num_agents=env.num_agents,
+            q_hidden_dims=config["q_network"]["hidden_dims"],
             lr=config["rl"]["lr"],
             gamma=config["rl"]["gamma"],
             epsilon_start=config["rl"]["epsilon_start"],
@@ -232,6 +326,15 @@ def train(
             "yellow_time": yellow_time,
             "min_green": min_green,
         },
+        "training_overrides": {
+            "eval_interval": eval_interval,
+            "eval_episodes": eval_episodes,
+        },
+        "rl_overrides": {
+            "epsilon_start": epsilon_start,
+            "epsilon_end": epsilon_end,
+            "epsilon_decay": epsilon_decay,
+        },
     }
     logger.save_config(
         {
@@ -244,7 +347,12 @@ def train(
 
     # ---- Training Loop ----
     start_episode = 1
-    best_reward = -float("inf")
+    best_train_reward = -float("inf")
+    best_eval_reward = -float("inf")
+    best_model_metric = "eval_reward"
+    eval_interval = int(config["training"].get("eval_interval", 0) or 0)
+    eval_episodes = int(config["training"].get("eval_episodes", 0) or 0)
+    eval_seed = seed + int(config["training"].get("eval_seed_offset", 10000))
 
     if resume_mode:
         checkpoint = agent.load(resume_checkpoint)
@@ -252,7 +360,14 @@ def train(
         if resume_episode is None:
             resume_episode = _infer_episode_from_checkpoint_path(resume_checkpoint)
         start_episode = int(resume_episode) + 1
-        best_reward = float(checkpoint.get("best_reward", best_reward))
+        best_train_reward = float(
+            checkpoint.get(
+                "best_train_reward",
+                checkpoint.get("best_reward", best_train_reward),
+            )
+        )
+        best_eval_reward = float(checkpoint.get("best_eval_reward", best_eval_reward))
+        best_model_metric = checkpoint.get("best_model_metric", best_model_metric)
 
         rng_state = checkpoint.get("rng_state", None)
         if rng_state is not None:
@@ -260,7 +375,9 @@ def train(
 
         print(
             f"Resuming from episode {start_episode} "
-            f"(best_reward={best_reward:.2f}, replay_size={len(agent.replay_buffer)})"
+            f"(best_train_reward={best_train_reward:.2f}, "
+            f"best_eval_reward={best_eval_reward:.2f}, "
+            f"replay_size={len(agent.replay_buffer)})"
         )
 
     if start_episode > num_episodes:
@@ -331,56 +448,77 @@ def train(
             "emergency_stops": info["metrics"]["emergency_stops"],
             **avg_losses,
         }
+
+        eval_metrics = {}
+        should_eval = (
+            eval_interval > 0
+            and eval_episodes > 0
+            and episode % eval_interval == 0
+        )
+        if should_eval:
+            eval_metrics = _run_greedy_validation(
+                agent=agent,
+                env=env,
+                seed=eval_seed,
+                episodes=eval_episodes,
+            )
+            metrics.update(eval_metrics)
+
         logger.log_episode(episode, metrics)
 
-        # Save best model
-        if episode_reward > best_reward:
-            best_reward = episode_reward
-            checkpoint_meta = {
-                "episode": episode,
-                "best_reward": best_reward,
-                "rng_state": {
-                    "python": random.getstate(),
-                    "numpy": np.random.get_state(),
-                    "torch": torch.get_rng_state(),
-                    "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-                },
-            }
+        # Save best model. Prefer greedy validation reward when available; fall back
+        # to exploratory training reward only before the first validation point.
+        if episode_reward > best_train_reward:
+            best_train_reward = episode_reward
+
+        should_save_best = False
+        if eval_metrics:
+            best_model_metric = "eval_reward"
+            if eval_metrics["eval_reward"] > best_eval_reward:
+                best_eval_reward = eval_metrics["eval_reward"]
+                should_save_best = True
+        elif best_eval_reward == -float("inf") and episode_reward >= best_train_reward:
+            best_model_metric = "train_reward"
+            should_save_best = True
+
+        if should_save_best:
+            checkpoint_meta = _checkpoint_meta(
+                episode=episode,
+                best_train_reward=best_train_reward,
+                best_eval_reward=best_eval_reward,
+                best_model_metric=best_model_metric,
+            )
             save_path = os.path.join(logger.log_dir, "best_model.pt")
             agent.save(save_path, extra_state=checkpoint_meta)
 
         # Periodic save
         if episode % config["training"]["save_interval"] == 0:
-            checkpoint_meta = {
-                "episode": episode,
-                "best_reward": best_reward,
-                "rng_state": {
-                    "python": random.getstate(),
-                    "numpy": np.random.get_state(),
-                    "torch": torch.get_rng_state(),
-                    "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-                },
-            }
+            checkpoint_meta = _checkpoint_meta(
+                episode=episode,
+                best_train_reward=best_train_reward,
+                best_eval_reward=best_eval_reward,
+                best_model_metric=best_model_metric,
+            )
             save_path = os.path.join(logger.log_dir, f"checkpoint_ep{episode}.pt")
             agent.save(save_path, extra_state=checkpoint_meta)
 
     # Save final model
     agent.save(
         os.path.join(logger.log_dir, "final_model.pt"),
-        extra_state={
-            "episode": num_episodes,
-            "best_reward": best_reward,
-            "rng_state": {
-                "python": random.getstate(),
-                "numpy": np.random.get_state(),
-                "torch": torch.get_rng_state(),
-                "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-            },
-        },
+        extra_state=_checkpoint_meta(
+            episode=num_episodes,
+            best_train_reward=best_train_reward,
+            best_eval_reward=best_eval_reward,
+            best_model_metric=best_model_metric,
+        ),
     )
     env.close()
 
-    print(f"\nTraining complete! Best reward: {best_reward:.2f}")
+    print(
+        f"\nTraining complete! "
+        f"Best train reward: {best_train_reward:.2f} | "
+        f"Best eval reward: {best_eval_reward:.2f}"
+    )
     print(f"Logs saved to: {logger.log_dir}")
 
 
@@ -414,6 +552,11 @@ if __name__ == "__main__":
     )
     parser.add_argument("--yellow-time", type=int, default=None, help="Override env.yellow_time")
     parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
+    parser.add_argument("--epsilon-start", type=float, default=None, help="Override rl.epsilon_start")
+    parser.add_argument("--epsilon-end", type=float, default=None, help="Override rl.epsilon_end")
+    parser.add_argument("--epsilon-decay", type=float, default=None, help="Override rl.epsilon_decay")
+    parser.add_argument("--eval-interval", type=int, default=None, help="Override training.eval_interval")
+    parser.add_argument("--eval-episodes", type=int, default=None, help="Override training.eval_episodes")
     parser.add_argument("--exp-suffix", type=str, default="", help="Suffix for experiment folder name")
 
     args = parser.parse_args()
@@ -429,5 +572,10 @@ if __name__ == "__main__":
         resume_log_dir=args.resume_log_dir,
         yellow_time=args.yellow_time,
         min_green=args.min_green,
+        epsilon_start=args.epsilon_start,
+        epsilon_end=args.epsilon_end,
+        epsilon_decay=args.epsilon_decay,
+        eval_interval=args.eval_interval,
+        eval_episodes=args.eval_episodes,
         exp_suffix=args.exp_suffix,
     )

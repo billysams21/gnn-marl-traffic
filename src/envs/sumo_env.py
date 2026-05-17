@@ -221,7 +221,7 @@ class SumoEnvironment:
         )
         return cmd
 
-    def reset(self) -> Dict[str, np.ndarray]:
+    def reset(self, preserve_default_program: bool = False) -> Dict[str, np.ndarray]:
         """Reset environment and return initial observations."""
         if self._sumo_running:
             traci.close()
@@ -256,8 +256,15 @@ class SumoEnvironment:
             self._pending_phase[ts_id] = None
             self._yellow_remaining[ts_id] = 0
 
-            # Ensure each signal starts with a deterministic initial green phase.
-            traci.trafficlight.setRedYellowGreenState(ts_id, self.phase_defs[ts_id][0])
+            if preserve_default_program:
+                current_state = traci.trafficlight.getRedYellowGreenState(ts_id)
+                for phase_idx, phase_state in enumerate(self.phase_defs[ts_id]):
+                    if phase_state == current_state:
+                        self._current_phase[ts_id] = phase_idx
+                        break
+            else:
+                # Ensure each signal starts with a deterministic initial green phase.
+                traci.trafficlight.setRedYellowGreenState(ts_id, self.phase_defs[ts_id][0])
 
         # Initialize previous state for delta computation
         obs = {}
@@ -453,11 +460,6 @@ class SumoEnvironment:
                     traci.simulation.getEmergencyStoppingVehiclesNumber()
                 )
 
-        # Update phase durations
-        for ts_id in self.ts_ids:
-            if not self._yellow_phase_active[ts_id]:
-                self._phase_duration[ts_id] += self.delta_time
-
         # Collect observations and rewards
         obs = {}
         rewards = {}
@@ -514,6 +516,7 @@ class SumoEnvironment:
         """Progress yellow transitions and apply pending green phases when ready."""
         for ts_id in self.ts_ids:
             if not self._yellow_phase_active[ts_id]:
+                self._phase_duration[ts_id] += 1
                 continue
 
             self._yellow_remaining[ts_id] -= 1

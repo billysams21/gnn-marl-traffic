@@ -7,7 +7,7 @@ DEFAULT_CONFIG = {
         "num_seconds": 3600,       # 1 hour simulation
         "delta_time": 5,           # decision interval (seconds)
         "yellow_time": 2,
-        "min_green": 10,
+        "min_green": 12,
         "max_green": 60,
         "reward_alpha": 0.5,       # r = -(queue + alpha * waiting)
         # Normalization parameters (best practice)
@@ -47,7 +47,9 @@ DEFAULT_CONFIG = {
 
     "training": {
         "num_episodes": 200,
-        "eval_interval": 10,       # evaluate every N episodes
+        "eval_interval": 10,       # greedy validation every N episodes
+        "eval_episodes": 1,        # validation episodes per eval point
+        "eval_seed_offset": 10000, # fixed validation seeds: train_seed + offset + k
         "save_interval": 50,       # save checkpoint every N episodes
         "log_interval": 1,         # log metrics every N episodes
         "deterministic": True,     # reproducible runs across python/numpy/torch
@@ -65,6 +67,16 @@ SCENARIOS = {
         "net_file": "data/networks/grid_3x3/grid_3x3.net.xml",
         "route_file": "data/networks/grid_3x3/grid_3x3.rou.xml",
         "description": "3x3 grid (9 intersections) for main experiments",
+    },
+    "grid_3x3_pkji_m1": {
+        "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml",
+        "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml",
+        "description": "3x3 grid with PKJI calibrated fixed-time net and PKJI-aware synthetic demand m1",
+    },
+    "grid_3x3_pkji_m1p5": {
+        "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.net.xml",
+        "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.rou.xml",
+        "description": "3x3 grid with PKJI calibrated fixed-time net and PKJI-aware synthetic demand m1.5",
     },
     "toronto_small": {
         "net_file": "data/networks/toronto_small/toronto_small.net.xml",
