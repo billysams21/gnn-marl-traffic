@@ -63,12 +63,15 @@ def evaluate(
     seed: int = 123,
     yellow_time: int = None,
     min_green: int = None,
+    time_to_teleport: int = None,
 ):
     config = _load_config_for_model(model_path)
     if yellow_time is not None:
         config["env"]["yellow_time"] = yellow_time
     if min_green is not None:
         config["env"]["min_green"] = min_green
+    if time_to_teleport is not None:
+        config["env"]["time_to_teleport"] = time_to_teleport
     scenario = SCENARIOS[scenario_name]
     deterministic = config["training"].get("deterministic", True)
 
@@ -186,6 +189,7 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--yellow-time", type=int, default=None, help="Override env.yellow_time")
     parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
+    parser.add_argument("--time-to-teleport", type=int, default=None, help="Override env.time_to_teleport")
 
     args = parser.parse_args()
     evaluate(
@@ -197,4 +201,5 @@ if __name__ == "__main__":
         args.seed,
         args.yellow_time,
         args.min_green,
+        args.time_to_teleport,
     )

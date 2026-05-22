@@ -3,10 +3,9 @@ Set-Location "D:\ITB\TA\gnn-marl-traffic"
 
 $py = ".\helm\Scripts\python.exe"
 
-# Apple-to-apple RL test on PKJI-aware demand scenarios.
-# These scenarios use route files with passenger/motorcycle/heavy composition.
-$scenarios = @("grid_3x3_pkji_m1p5")
-$episodes = 10
+# Level 1 (pretrain): stable curriculum before no-teleport fine-tuning.
+$scenarios = @("grid_3x3_pkji_m1")
+$episodes = 100
 $device = "cuda"
 $yellowTime = 2
 $minGreen = 12
@@ -19,17 +18,17 @@ $seeds = @(10, 101, 1101, 1011, 1111)
 $maxParallel = 5
 
 $configs = @(
-    @{agent="gat_dqn"; suffix="pkji_gat_dqn_eps095_tt300"},
-    @{agent="independent_dqn"; suffix="pkji_independent_dqn_eps095_tt300"}
+    @{agent="gat_dqn"; suffix="pkji_level1_gat_dqn_eps095_tt300_100ep"},
+    @{agent="independent_dqn"; suffix="pkji_level1_independent_dqn_eps095_tt300_100ep"}
 )
 
-# Skip runs that are already completed (scenario + agent).
-# $skipRuns = @(
-#     @{scenario="grid_3x3_pkji_m1"; agent="gat_dqn"}
-# )
+# Add entries here if you want to skip completed pairs (scenario + agent).
+$skipRuns = @(
+    # @{scenario="grid_3x3_pkji_m1"; agent="gat_dqn"}
+)
 
 $ts = Get-Date -Format "yyyyMMdd_HHmmss"
-$runDir = "logs\pkji_rl_launch_$ts"
+$runDir = "logs\pkji_level1_launch_$ts"
 New-Item -ItemType Directory -Force -Path $runDir | Out-Null
 
 $procs = @()
@@ -76,6 +75,6 @@ foreach ($seed in $seeds) {
 }
 }
 
-Write-Host "`nWaiting all PKJI scenario RL runs..."
+Write-Host "`nWaiting all Level 1 runs..."
 $procs | ForEach-Object { Wait-Process -Id $_.Id }
-Write-Host "All PKJI scenario RL runs done. Logs: $runDir"
+Write-Host "All Level 1 runs done. Logs: $runDir"

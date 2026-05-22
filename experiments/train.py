@@ -178,9 +178,13 @@ def train(
     resume_log_dir: str = "",
     yellow_time: Optional[int] = None,
     min_green: Optional[int] = None,
+    max_green: Optional[int] = None,
+    time_to_teleport: Optional[int] = None,
     epsilon_start: Optional[float] = None,
     epsilon_end: Optional[float] = None,
     epsilon_decay: Optional[float] = None,
+    lr: Optional[float] = None,
+    aux_weight: Optional[float] = None,
     eval_interval: Optional[int] = None,
     eval_episodes: Optional[int] = None,
     exp_suffix: str = "",
@@ -191,12 +195,20 @@ def train(
         config["env"]["yellow_time"] = yellow_time
     if min_green is not None:
         config["env"]["min_green"] = min_green
+    if max_green is not None:
+        config["env"]["max_green"] = max_green
+    if time_to_teleport is not None:
+        config["env"]["time_to_teleport"] = time_to_teleport
     if epsilon_start is not None:
         config["rl"]["epsilon_start"] = epsilon_start
     if epsilon_end is not None:
         config["rl"]["epsilon_end"] = epsilon_end
     if epsilon_decay is not None:
         config["rl"]["epsilon_decay"] = epsilon_decay
+    if lr is not None:
+        config["rl"]["lr"] = lr
+    if aux_weight is not None:
+        config["prediction"]["lambda"] = aux_weight
     if eval_interval is not None:
         config["training"]["eval_interval"] = eval_interval
     if eval_episodes is not None:
@@ -334,6 +346,8 @@ def train(
             "epsilon_start": epsilon_start,
             "epsilon_end": epsilon_end,
             "epsilon_decay": epsilon_decay,
+            "lr": lr,
+            "aux_weight": aux_weight,
         },
     }
     logger.save_config(
@@ -373,11 +387,23 @@ def train(
         if rng_state is not None:
             _restore_rng_state(rng_state)
 
+        # Allow explicit epsilon override during resume
+        if epsilon_start is not None:
+            agent.epsilon = epsilon_start
+            print(f"Overriding epsilon from checkpoint to {agent.epsilon:.4f}")
+        if epsilon_end is not None:
+            agent.epsilon_end = epsilon_end
+            print(f"Overriding epsilon_end to {agent.epsilon_end:.4f}")
+        if epsilon_decay is not None:
+            agent.epsilon_decay = epsilon_decay
+            print(f"Overriding epsilon_decay to {agent.epsilon_decay:.4f}")
+
         print(
             f"Resuming from episode {start_episode} "
             f"(best_train_reward={best_train_reward:.2f}, "
             f"best_eval_reward={best_eval_reward:.2f}, "
-            f"replay_size={len(agent.replay_buffer)})"
+            f"replay_size={len(agent.replay_buffer)}, "
+            f"epsilon={agent.epsilon:.4f})"
         )
 
     if start_episode > num_episodes:
@@ -552,9 +578,18 @@ if __name__ == "__main__":
     )
     parser.add_argument("--yellow-time", type=int, default=None, help="Override env.yellow_time")
     parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
+    parser.add_argument("--max-green", type=int, default=None, help="Override env.max_green")
+    parser.add_argument("--time-to-teleport", type=int, default=None, help="Override env.time_to_teleport")
     parser.add_argument("--epsilon-start", type=float, default=None, help="Override rl.epsilon_start")
     parser.add_argument("--epsilon-end", type=float, default=None, help="Override rl.epsilon_end")
     parser.add_argument("--epsilon-decay", type=float, default=None, help="Override rl.epsilon_decay")
+    parser.add_argument("--lr", type=float, default=None, help="Override rl.lr")
+    parser.add_argument(
+        "--aux-weight",
+        type=float,
+        default=None,
+        help="Override prediction.lambda (auxiliary loss weight)",
+    )
     parser.add_argument("--eval-interval", type=int, default=None, help="Override training.eval_interval")
     parser.add_argument("--eval-episodes", type=int, default=None, help="Override training.eval_episodes")
     parser.add_argument("--exp-suffix", type=str, default="", help="Suffix for experiment folder name")
@@ -572,9 +607,13 @@ if __name__ == "__main__":
         resume_log_dir=args.resume_log_dir,
         yellow_time=args.yellow_time,
         min_green=args.min_green,
+        max_green=args.max_green,
+        time_to_teleport=args.time_to_teleport,
         epsilon_start=args.epsilon_start,
         epsilon_end=args.epsilon_end,
         epsilon_decay=args.epsilon_decay,
+        lr=args.lr,
+        aux_weight=args.aux_weight,
         eval_interval=args.eval_interval,
         eval_episodes=args.eval_episodes,
         exp_suffix=args.exp_suffix,

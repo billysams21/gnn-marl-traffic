@@ -6,7 +6,7 @@ Wraps SUMO simulator via TraCI for GNN-MARL training.
 import os
 import sys
 import numpy as np
-from typing import Dict, List, Tuple, Optional, Union
+from typing import Dict, List, Set, Tuple, Optional, Union
 
 # SUMO setup
 if "SUMO_HOME" in os.environ:
@@ -73,6 +73,13 @@ class SumoEnvironment:
         yellow_time: int = 2,
         min_green: int = 10,
         max_green: int = 60,
+        time_to_teleport: int = -1,
+        recovery_enabled: bool = False,
+        recovery_enter_delay: float = 30.0,
+        recovery_enter_queue: float = 3.0,
+        recovery_exit_delay: float = 10.0,
+        recovery_exit_queue: float = 1.5,
+        recovery_hold_seconds: int = 30,
         reward_alpha: float = 0.5,
         use_gui: bool = False,
         seed: int = 42,
@@ -93,6 +100,15 @@ class SumoEnvironment:
         self.yellow_time = yellow_time
         self.min_green = min_green
         self.max_green = max_green
+        self.time_to_teleport = time_to_teleport
+        self.recovery_enabled = recovery_enabled
+        self.recovery_enter_delay = recovery_enter_delay
+        self.recovery_enter_queue = recovery_enter_queue
+        self.recovery_exit_delay = recovery_exit_delay
+        self.recovery_exit_queue = recovery_exit_queue
+        self.recovery_hold_steps = max(
+            1, int(np.ceil(recovery_hold_seconds / max(self.delta_time, 1)))
+        )
         self.reward_alpha = reward_alpha
         self.use_gui = use_gui
         self.seed = seed
@@ -107,6 +123,7 @@ class SumoEnvironment:
         self.controlled_lanes: Dict[str, List[str]] = {}
         self.num_phases: Dict[str, int] = {}
         self.phase_defs: Dict[str, List[str]] = {}
+        self._phase_lanes: Dict[str, List[List[str]]] = {}
 
         # State tracking for temporal features
         self._prev_queue: Dict[str, np.ndarray] = {}
@@ -122,6 +139,9 @@ class SumoEnvironment:
         self._episode_arrived: int = 0
         self._episode_departed: int = 0
         self._episode_emergency_stops: int = 0
+        self._recovery_active: bool = False
+        self._recovery_enter_counter: int = 0
+        self._recovery_exit_counter: int = 0
 
         self._sumo_running = False
 
@@ -215,7 +235,7 @@ class SumoEnvironment:
             [
             "--no-step-log", "true",
             "--waiting-time-memory", "1000",
-            "--time-to-teleport", "-1",
+            "--time-to-teleport", str(self.time_to_teleport),
             "--seed", str(self.seed),
             ]
         )
@@ -232,6 +252,9 @@ class SumoEnvironment:
         self._episode_arrived = 0
         self._episode_departed = 0
         self._episode_emergency_stops = 0
+        self._recovery_active = False
+        self._recovery_enter_counter = 0
+        self._recovery_exit_counter = 0
 
         # Initialize per-TL info from running simulation
         for ts_id in self.ts_ids:
@@ -249,6 +272,7 @@ class SumoEnvironment:
                         green_phases.append(state)
             self.phase_defs[ts_id] = green_phases if green_phases else [phases[0].state]
             self.num_phases[ts_id] = len(self.phase_defs[ts_id])
+            self._phase_lanes[ts_id] = self._build_phase_lane_map(ts_id)
 
             self._current_phase[ts_id] = 0
             self._phase_duration[ts_id] = 0
@@ -444,7 +468,13 @@ class SumoEnvironment:
         Returns:
             observations, rewards, done, info
         """
-        # Apply actions (with yellow transition)
+        metrics_before = self._get_metrics()
+        self._update_recovery_state(metrics_before)
+
+        # Apply actions (with yellow transition / recovery override)
+        if self._recovery_active:
+            actions = self._build_recovery_actions()
+
         for ts_id, action in actions.items():
             self._apply_action(ts_id, action)
 
@@ -480,6 +510,83 @@ class SumoEnvironment:
 
         return obs, rewards, done, info
 
+    def _build_phase_lane_map(self, ts_id: str) -> List[List[str]]:
+        """Precompute incoming lanes that receive green for each available phase."""
+        controlled_links = traci.trafficlight.getControlledLinks(ts_id)
+        phase_lanes: List[List[str]] = []
+        for phase_state in self.phase_defs[ts_id]:
+            lanes: Set[str] = set()
+            for idx, link_group in enumerate(controlled_links):
+                if idx >= len(phase_state):
+                    break
+                if phase_state[idx] not in ("G", "g"):
+                    continue
+                if not link_group:
+                    continue
+                first_link = link_group[0]
+                if first_link and len(first_link) > 0:
+                    lanes.add(first_link[0])
+            phase_lanes.append(sorted(lanes))
+        return phase_lanes
+
+    def _select_phase_by_queue(self, ts_id: str, allow_current: bool) -> int:
+        """Select phase serving the highest queued incoming lanes."""
+        current = self._current_phase[ts_id]
+        best_phase = current
+        best_queue = -1.0
+        for phase_idx, lanes in enumerate(self._phase_lanes[ts_id]):
+            if not allow_current and phase_idx == current:
+                continue
+            queue_score = float(
+                sum(traci.lane.getLastStepHaltingNumber(lane) for lane in lanes)
+            )
+            if queue_score > best_queue:
+                best_queue = queue_score
+                best_phase = phase_idx
+        return best_phase
+
+    def _build_recovery_actions(self) -> Dict[str, int]:
+        """Use deterministic longest-queue phase selection during recovery mode."""
+        actions: Dict[str, int] = {}
+        for ts_id in self.ts_ids:
+            actions[ts_id] = self._select_phase_by_queue(ts_id, allow_current=True)
+        return actions
+
+    def _update_recovery_state(self, metrics: Dict[str, float]):
+        """Manage recovery-mode entry/exit using hysteresis counters."""
+        if not self.recovery_enabled:
+            self._recovery_active = False
+            self._recovery_enter_counter = 0
+            self._recovery_exit_counter = 0
+            return
+
+        enter_condition = (
+            metrics["avg_delay"] > self.recovery_enter_delay
+            or metrics["avg_queue"] > self.recovery_enter_queue
+        )
+        exit_condition = (
+            metrics["avg_delay"] < self.recovery_exit_delay
+            and metrics["avg_queue"] < self.recovery_exit_queue
+        )
+
+        if not self._recovery_active:
+            self._recovery_enter_counter = (
+                self._recovery_enter_counter + 1 if enter_condition else 0
+            )
+            if self._recovery_enter_counter >= self.recovery_hold_steps:
+                self._recovery_active = True
+                self._recovery_enter_counter = 0
+                self._recovery_exit_counter = 0
+            return
+
+        self._recovery_exit_counter = (
+            self._recovery_exit_counter + 1 if exit_condition else 0
+        )
+        if self._recovery_exit_counter >= self.recovery_hold_steps:
+            self._recovery_active = False
+            self._recovery_exit_counter = 0
+            self._recovery_enter_counter = 0
+
     def _apply_action(self, ts_id: str, action: int):
         """Apply a phase action with yellow transition if needed."""
         current = self._current_phase[ts_id]
@@ -491,6 +598,9 @@ class SumoEnvironment:
         # Ignore new commands while a yellow transition is ongoing.
         if self._yellow_phase_active[ts_id]:
             return
+
+        if self._phase_duration[ts_id] >= self.max_green and len(self.phase_defs[ts_id]) > 1:
+            action = self._select_phase_by_queue(ts_id, allow_current=False)
 
         # Enforce minimum green time before allowing phase change.
         if self._phase_duration[ts_id] < self.min_green:
@@ -576,6 +686,7 @@ class SumoEnvironment:
             "departed_vehicles": self._episode_departed,
             "emergency_stops": self._episode_emergency_stops,
             "num_vehicles": len(vehicles),
+            "recovery_active": float(self._recovery_active),
         }
 
     def close(self):

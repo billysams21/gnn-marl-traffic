@@ -1,47 +1,15 @@
 # Audit Gap: Implementasi vs Proposal TA
 
-Tanggal: 12 Maret 2026  
+Tanggal: 18 April 2026  
 Referensi: Bab IV (Desain Konsep Solusi), Bab V (Rencana Selanjutnya), ARSITEKTUR_GNN_MARL.md
 
-**Updated: 1 April 2026** — Fixes applied by Elle
-
----
-
-## ✅ FIXES APPLIED (Apr 1, 2026)
-
-### Gap 2: State Normalization — FIXED ✅
-
-**Problem:** Raw observation values (queue ~0-30, waiting_time ~0-300) caused gradient instability.
-
-**Fix:** Added normalization parameters to `SumoEnvironment.__init__`:
-- `max_queue_per_lane`: 30 (normalize queue to [0, 1])
-- `max_waiting_time`: 300.0 (normalize waiting to [0, 1])
-- `max_delta_queue`: 10.0 (normalize delta_queue to [-1, 1])
-- `max_delta_density`: 0.5 (normalize delta_density to [-1, 1])
-
-All observations now output normalized values in stable ranges.
-
-### Gap 4: Prediction Head Target — FIXED ✅
-
-**Problem:** Prediction head predicted full observation (43 dims), which is noisy and hard to learn.
-
-**Fix:** Added `prediction_mode` to `PredictionHead`:
-- `'simplified'` (default, per proposal): Predict [avg_queue, avg_density] = 2 values
-- `'full'` (original): Predict entire observation
-
-Also added `compute_target()` method that extracts averaged metrics from observation.
-
-**Code changes:**
-- `src/models/q_network.py`: New `PredictionHead` with simplified mode
-- `src/agents/dqn_agent.py`: Use simplified mode by default, `set_num_lanes()` method
-- `configs/default_config.py`: Added `prediction.mode` config
-- `experiments/train.py`: Pass `num_lanes` to agent
+Catatan: Dokumen ini merefleksikan status terbaru setelah sinkronisasi narasi Bab IV terhadap implementasi saat ini.
 
 ---
 
 ## A. GAP BESAR (Algoritmik / Desain)
 
-### Gap 1: Action Space — Proposal Cyclic, Implementasi Acyclic
+### Gap 1: Action Space — SUDAH DISELARASKAN DI NARASI
 
 **Proposal (Bab IV 4.4):**
 > Penelitian ini menggunakan pendekatan Cyclic: A = {Keep, Change}.
@@ -53,21 +21,23 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 - Aksi = pilih fase target secara langsung (Acyclic/phase selection)
 - Tidak ada logika "Keep" vs "Change"
 
-**Dampak:** Menyalahi desain eksplisit di proposal. Proposal memberikan argumen safety kenapa Cyclic dipilih.
+**Update status (18 April 2026):** Narasi di Bab IV sudah diperbarui agar konsisten dengan implementasi utama berbasis *Acyclic*, sementara *Cyclic* diposisikan sebagai opsi *ablation*.
+
+**Dampak (setelah update):** Tidak lagi menjadi mismatch proposal vs implementasi.
 
 **Status: ⚠️ BEST PRACTICE?**
 - **Proposal Cyclic: BUKAN best practice.** Mayoritas paper ATSC modern (MPLight, CoLight, PressLight, AttendLight) menggunakan **Acyclic (phase selection)** karena lebih fleksibel dan menghasilkan performa lebih baik.
 - Argumen "safety" di proposal lemah — dalam simulasi SUMO, transisi fase selalu melalui yellow phase sehingga tidak ada bahaya. Safety hanya relevan di deployment real-world.
-- **Rekomendasi:** Implementasi Acyclic yang ada **lebih baik** dari proposal. Namun perlu diakui/dijelaskan perbedaannya di laporan TA nanti. Atau, implementasi kedua opsi dan bandingkan sebagai ablation study.
+- **Rekomendasi terbaru:** Pertahankan implementasi Acyclic sebagai default. Tambahkan varian Cyclic hanya jika diperlukan untuk eksperimen pembanding.
 
 ---
 
-### Gap 2: Normalisasi State Belum Ada
+### Gap 2: Normalisasi State Belum Penuh
 
-**Proposal (Bab IV 4.2):**
-> Setiap elemen dalam vektor observasi dipetakan ke rentang [0,1] atau [-1,1].
-> Untuk q_{i,l}: normalisasi dengan q_{i,l} / C_{i,l} (kapasitas maks lajur).
-> Untuk Δq: normalisasi ke [-1,1] berdasarkan perubahan maksimum.
+**Proposal (Bab IV §4.2, versi terbaru):**
+> Narasi sudah diselaraskan dengan implementasi saat ini: normalisasi masih parsial
+> (kepadatan dan durasi fase), sedangkan komponen antrean/waktu tunggu/perubahan
+> masih nilai mentah.
 
 **Implementasi saat ini (`sumo_env.py` `_get_observation`):**
 - `queue` = raw `getLastStepHaltingNumber()` → range [0, ∞)
@@ -79,8 +49,8 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 **Dampak:** Input features dengan skala sangat berbeda (queue ~0-30, waiting ~0-500) menyebabkan gradient instability. Neural network harus belajar scale sendiri lewat first layer weights.
 
 **Status: ⚠️ BEST PRACTICE?**
-- **Proposal BENAR.** Normalisasi input adalah best practice universal dalam deep learning. Tanpa normalisasi, fitur dengan magnitude besar (waiting_time) mendominasi gradient.
-- **Rekomendasi:** Harus diperbaiki. Implementasikan normalisasi sesuai proposal.
+- **Masih penting ditingkatkan.** Walaupun narasi dan implementasi sudah konsisten, normalisasi penuh tetap best practice untuk stabilitas training.
+- **Rekomendasi:** Implementasikan normalisasi tambahan bertahap (queue, delta, waiting) sebagai peningkatan kualitas model.
 
 ---
 
@@ -102,32 +72,32 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 
 ---
 
-### Gap 4: Prediction Head Target Berbeda
+### Gap 4: Prediction Head Target — SUDAH DISELARASKAN DI NARASI
 
-**Proposal (Bab IV 4.5):**
-> [q̂_{t+1}, d̂_{t+1}] = f_pred(h'_i, a_i; φ)
-> Target prediksi **disederhanakan ke komponen utama** (bukan seluruh vektor state).
-> Output = 2 nilai: predicted avg queue + predicted avg density.
+**Proposal (Bab IV §4.5, versi terbaru):**
+> \hat{o}_{t+1} = f_{pred}(h'_i, a_i; \phi)
+> Target prediksi adalah seluruh vektor observasi berikutnya (full-state prediction).
 
 **Implementasi saat ini (`q_network.py` PredictionHead):**
 - Output = `obs_dim` (≈43 dimensi) → prediksi **seluruh vektor state berikutnya**
 - Loss = MSE(predicted_full_state, actual_full_state)
 
-**Dampak:** Prediction head memprediksi 43 dimensi alih-alih 2. Lebih sulit dipelajari, loss magnitude lebih besar, dan bisa mendominasi/mengganggu RL loss.
+**Update status (18 April 2026):** Deskripsi prediction head dan fungsi loss di proposal sudah konsisten dengan implementasi full-state prediction.
+
+**Dampak (setelah update):** Tidak lagi menjadi mismatch proposal vs implementasi; kini menjadi keputusan desain eksperimen.
 
 **Status: ⚠️ BEST PRACTICE?**
 - **Kedua pendekatan valid:**
   - Full state prediction (implementasi saat ini): Lebih kaya learning signal, dipakai di beberapa world-model papers. Tapi bisa noisy dan sulit converge.
-  - Simplified target (proposal): Lebih stabil, fokus pada metrik yang relevan (queue & density). Dipakai di UNREAL (Jaderberg et al., 2016) yang menyarankan auxiliary target yang meaningful.
-- **Rekomendasi:** Implementasi proposal mungkin lebih stabil. Bisa ditest keduanya. Yang penting: match dengan apa yang ditulis di laporan TA.
+  - Simplified target (varian ablation): Lebih stabil, fokus pada metrik yang relevan (queue & density). Dipakai di UNREAL (Jaderberg et al., 2016) yang menyarankan auxiliary target yang meaningful.
+- **Rekomendasi terbaru:** Pertahankan full-state prediction sebagai default implementasi. Opsi simplified target (2 komponen) dapat dijadikan ablation study jika waktu memungkinkan.
 
 ---
 
-### Gap 5: State Representation Formula Berbeda
+### Gap 5: State Representation Formula — SUDAH DISELARASKAN DI NARASI
 
-**Proposal (Bab IV 4.2):**
-> o_i = [q_i, Δq_i, d_i, p_i, τ_i] — 5 komponen
-> (queue, delta_queue, density, phase_onehot, duration)
+**Proposal (Bab IV §4.2, versi terbaru):**
+> o_i = [q_i, Δq_i, d_i, w_i, Δd_i, p_i, τ_i] — 7 komponen
 
 **ARSITEKTUR_GNN_MARL.md:**
 > Menambahkan `waiting_time_l` — 6 komponen
@@ -135,14 +105,16 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 
 **Implementasi saat ini (`sumo_env.py`):**
 > 7 komponen: [queue, delta_queue, density, waiting, delta_density, phase_onehot, duration]
-> Menambahkan `waiting_time` DAN `delta_density` yang tidak ada di formula Bab IV
+> Menambahkan `waiting_time` dan `delta_density` sebagai fitur temporal tambahan
 
-**Dampak:** obs_dim lebih besar dari spec. Prediction head dan Q-network input dimensi tidak sesuai spec. Tidak masalah secara algoritmik, tapi tidak sesuai tulisan.
+**Update status (18 April 2026):** Formula state di proposal sudah mengikuti implementasi saat ini.
+
+**Dampak (setelah update):** Tidak lagi menjadi mismatch proposal vs implementasi.
 
 **Status: ⚠️ BEST PRACTICE?**
 - **Menambahkan waiting_time ke state: BENAR & BEST PRACTICE.** Hampir semua paper ATSC menyertakan waiting time (MA2C, CoLight, PressLight). Ini fitur yang sangat informatif.
 - **Menambahkan delta_density: BISA DIBENARKAN.** Memberikan sinyal temporal tambahan, meskipun redundan dengan delta_queue.
-- **Rekomendasi:** Implementasi saat ini (7 komponen) lebih baik dari Bab IV formula (5 komponen). ARSITEKTUR_GNN_MARL.md (6 komponen) adalah kompromi. Pilih satu dan dokumentasikan di laporan TA. Saran: gunakan yang ada di ARSITEKTUR_GNN_MARL.md (6 komponen: tambah waiting, buang delta_density) atau pertahankan 7 komponen tapi update formula di laporan.
+- **Rekomendasi terbaru:** Pertahankan 7 komponen sebagai baseline utama, lalu jika diperlukan lakukan ablation untuk menilai kontribusi masing-masing fitur temporal.
 
 ---
 
@@ -253,11 +225,11 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 
 | # | Desain di Proposal | Verdict | Penjelasan |
 |---|---|---|---|
-| 1 | **Cyclic action space** | ❌ **Suboptimal** | Mayoritas paper ATSC menggunakan Acyclic (phase selection). Implementasi saat ini (Acyclic) justru lebih baik. Argumen safety hanya relevan di real-world, bukan simulasi. |
+| 1 | **Action space Acyclic (default), Cyclic (ablation)** | ✅ **Aligned** | Narasi proposal sudah diselaraskan dengan implementasi: Acyclic sebagai desain utama, Cyclic untuk pembanding. |
 | 2 | **Normalisasi state** | ✅ **Best practice** | Harus diimplementasikan. Input scaling adalah fundamental deep learning. |
 | 3 | **Pre-projection MLP** | 🔄 **Needs testing** | Valid tapi bukan keharusan. GATConv internal projection sudah serupa. Bisa jadi ablation experiment. |
-| 4 | **Prediction Head target = 2 nilai** | 🔄 **Needs testing** | Proposal (simplified) mungkin lebih stabil. Implementasi (full state) lebih kaya info. Keduanya defensible, perlu eksperimen. |
-| 5 | **State = 5 komponen** | ❌ **Kurang lengkap** | Implementasi (7 komponen) lebih kaya. ARSITEKTUR_GNN_MARL.md (6 komponen) lebih baik dari Bab IV formula. Waiting time harus ada. |
+| 4 | **Prediction Head full-state (default)** | 🔄 **Needs testing** | Narasi proposal dan implementasi sudah konsisten pada full-state prediction; simplified target tetap layak diuji sebagai ablation. |
+| 5 | **State = 7 komponen** | ✅ **Aligned** | Formula proposal sudah mengikuti implementasi (queue, delta_queue, density, waiting, delta_density, phase, duration). |
 | 6 | **4 baselines** | ✅ **Best practice** | Fixed-timer + actuated + Independent DQN + ablation semua standar. |
 | 7 | **4 skenario traffic** | ✅ **Best practice** | Multiple scenarios standar di paper ATSC berkualitas. |
 | 8 | **5-seed + t-test** | ✅ **Best practice** | Standar minimum riset RL. |
@@ -266,6 +238,6 @@ Also added `compute_target()` method that extracts averaged metrics from observa
 
 ### Kesimpulan
 
-- **Proposal mostly correct** — desain-desain di Bab IV/V mayoritas mengikuti best practice kecuali Cyclic action space.
-- **Implementasi saat ini** sudah menangkap arsitektur inti (GAT + Double DQN + Prediction Head) dengan benar, tapi perlu penyesuaian di normalisasi, state formula, dan prediction head target.
-- **Keputusan kunci:** Apakah ikut proposal literal (Cyclic, 5 komponen state, simplified pred head) atau ikut best practice dan update laporan? **Saran: ikut best practice, update laporan sesuai implementasi yang lebih baik.**
+- **Sinkronisasi narasi Bab IV dengan implementasi inti sudah dilakukan** untuk action space, formula state, dan prediction head.
+- **Gap prioritas tersisa** berfokus pada kualitas eksperimen dan robustness implementasi: normalisasi penuh, baseline lengkap, multi-skenario, multi-seed statistik, dan metrik evaluasi lanjutan.
+- **Arah kerja saat ini:** implementasi sudah berada di jalur yang benar untuk tahap awal; langkah berikutnya adalah penguatan metodologi evaluasi agar siap untuk hasil TA final.

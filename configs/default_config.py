@@ -8,7 +8,14 @@ DEFAULT_CONFIG = {
         "delta_time": 5,           # decision interval (seconds)
         "yellow_time": 2,
         "min_green": 12,
-        "max_green": 60,
+        "max_green": 40,
+        "time_to_teleport": -1,
+        "recovery_enabled": True,
+        "recovery_enter_delay": 30.0,
+        "recovery_enter_queue": 3.0,
+        "recovery_exit_delay": 10.0,
+        "recovery_exit_queue": 1.5,
+        "recovery_hold_seconds": 30,
         "reward_alpha": 0.5,       # r = -(queue + alpha * waiting)
         # Normalization parameters (best practice)
         "max_queue_per_lane": 30,      # Max vehicles per lane

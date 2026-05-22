@@ -40,6 +40,15 @@ ini checklist implementasi
   - `grid_3x3_pkji_m1`: traffic stabil sintetis dengan komposisi kendaraan PKJI-aware.
   - `grid_3x3_pkji_m1p5`: kandidat peak/hour heavy demand sintetis.
   - Catatan: masih sintetis, bukan data observasi aktual Indonesia.
+- [x] Guardrail stabilitas training sudah diimplementasikan.
+  - `max_green` enforcement aktif di environment.
+  - Recovery mode berbasis hysteresis aktif (enter/exit threshold delay/queue + hold time).
+  - `time_to_teleport` sudah bisa diatur via config/CLI (`train.py` + `SumoEnvironment`), default tetap `-1`.
+- [x] Runner sanity PKJI sudah diperbarui untuk run stabil cepat.
+  - `run_pkji_scenario_50eps.ps1` sekarang memakai `epsilon_decay=0.95` dan `time_to_teleport=300` (label suffix `eps095_tt300`).
+- [x] Sanity hasil terbaru setelah stabilisasi menunjukkan collapse turun signifikan.
+  - `m1` (launch `pkji_rl_launch_20260518_060459`): 100 episode, bad episode 0%.
+  - `m1p5` (launch `pkji_rl_launch_20260518_070207`): 100 episode, bad episode 2% (tanpa catastrophic).
 
 ## P0 - Wajib Sebelum Run Besar
 
@@ -51,14 +60,16 @@ ini checklist implementasi
 - [x] Pastikan urutan lane deterministik (hindari urutan dari set yang bisa berubah antar run).
 - [x] Tambahkan mode resume training dari checkpoint (argumen CLI + restore state penting).
 - [x] Tegaskan definisi throughput untuk laporan utama (misalnya arrived/completed per episode, bukan hanya departed per step).
-- [ ] Kunci timing final di config utama atau command final:
-  - `delta_time=5`
-  - `yellow_time=2`
-  - `min_green=10`
-  - `max_green=60`
-  - Catatan: timing RL tidak dikunci mengikuti PKJI; PKJI dipakai untuk fixed-time engineering baseline.
+- [x] Kunci timing final di config utama atau command final:
+   - `delta_time=5`
+   - `yellow_time=2`
+   - `min_green=12`
+   - `max_green=40`
+   - `time_to_teleport=-1` (default realistis), override `300` untuk stabilisasi training
+   - Catatan: timing RL tidak dikunci mengikuti PKJI; PKJI dipakai untuk fixed-time engineering baseline.
 - [ ] Siapkan script khusus run utama, jangan pakai script sweep tuning.
-  - Target awal baru: `grid_3x3_pkji_m1`, `gat_dqn` dan `independent_dqn`, 200 episode, 5 seed.
+  - Runner sanity sudah ada: `run_pkji_scenario_50eps.ps1` (saat ini dipakai untuk 10 episode quick check).
+  - Target run utama: `grid_3x3_pkji_m1`, `gat_dqn` dan `independent_dqn`, 200 episode, 5 seed.
   - Peak-hour setelah stabil: `grid_3x3_pkji_m1p5`.
   - Seed rekomendasi: 42, 43, 44, 45, 46.
 - [ ] Siapkan script agregasi hasil awal.
@@ -116,7 +127,7 @@ ini checklist implementasi
 ## Definition of Done (DoD) Sebelum Training Besar
 
 - [ ] Semua item P0 selesai
-- [ ] Minimal dry-run `grid_3x3` lulus untuk timing final
+- [x] Minimal dry-run `grid_3x3` lulus untuk timing final
 - [ ] Prosedur re-run dari seed berbeda bisa dijalankan dengan 1 command/script.
 - [ ] Template tabel hasil (mean +- std + p-value) siap dipakai untuk laporan.
 
