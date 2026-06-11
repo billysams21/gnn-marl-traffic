@@ -19,9 +19,10 @@ else:
     os.environ["SUMO_HOME"] = sumo_home
     sys.path.append(os.path.join(sumo_home, "tools"))
 
-import traci
 import sumolib
+import traci
 
+LIBSUMO_AVAILABLE = False
 
 def _normalize_path(path: Optional[str]) -> Optional[str]:
     """Normalize filesystem paths before passing them to SUMO/sumolib."""
@@ -80,14 +81,25 @@ class SumoEnvironment:
         recovery_exit_delay: float = 10.0,
         recovery_exit_queue: float = 1.5,
         recovery_hold_seconds: int = 30,
+        local_safety_enabled: bool = False,
+        local_safety_lane_queue: float = 25.0,
+        local_safety_tl_queue: float = 120.0,
+        local_safety_mode: str = "queue",
+        local_safety_downstream_weight: float = 1.0,
+        local_safety_downstream_block_queue: float = 40.0,
+        local_safety_downstream_block_occupancy: float = 0.8,
+        local_safety_downstream_block_penalty: float = 50.0,
         reward_alpha: float = 0.5,
+        lateral_resolution: float = 0.0,
         use_gui: bool = False,
         seed: int = 42,
         # Normalization parameters (best practice from GAP_AUDIT)
-        max_queue_per_lane: int = 30,      # Max vehicles that can queue per lane
+        max_queue_per_lane: int = 30,      # Fallback max vehicles per lane (used when per-lane calc disabled)
         max_waiting_time: float = 300.0,   # Max waiting time in seconds (5 min)
         max_delta_queue: float = 10.0,     # Max expected queue change per step
         max_delta_density: float = 0.5,    # Max expected density change per step
+        # Per-lane queue normalization (if eff_vehicle_length > 0, overrides max_queue_per_lane)
+        eff_vehicle_length: float = 0.0,   # Weighted effective vehicle length (m); 0 = use max_queue_per_lane
     ):
         self.net_file = _normalize_path(net_file)
         if isinstance(route_file, list):
@@ -109,21 +121,35 @@ class SumoEnvironment:
         self.recovery_hold_steps = max(
             1, int(np.ceil(recovery_hold_seconds / max(self.delta_time, 1)))
         )
+        self.local_safety_enabled = local_safety_enabled
+        self.local_safety_lane_queue = local_safety_lane_queue
+        self.local_safety_tl_queue = local_safety_tl_queue
+        self.local_safety_mode = local_safety_mode
+        self.local_safety_downstream_weight = local_safety_downstream_weight
+        self.local_safety_downstream_block_queue = local_safety_downstream_block_queue
+        self.local_safety_downstream_block_occupancy = local_safety_downstream_block_occupancy
+        self.local_safety_downstream_block_penalty = local_safety_downstream_block_penalty
         self.reward_alpha = reward_alpha
         self.use_gui = use_gui
         self.seed = seed
+        self.lateral_resolution = lateral_resolution
 
         # Normalization constants
         self.max_queue_per_lane = max_queue_per_lane
         self.max_waiting_time = max_waiting_time
         self.max_delta_queue = max_delta_queue
         self.max_delta_density = max_delta_density
+        self.eff_vehicle_length = eff_vehicle_length
+
+        # Per-lane max queue: built at reset() from lane lengths if eff_vehicle_length > 0
+        self._lane_max_queue: Dict[str, float] = {}
 
         # Per-agent info
         self.controlled_lanes: Dict[str, List[str]] = {}
         self.num_phases: Dict[str, int] = {}
         self.phase_defs: Dict[str, List[str]] = {}
         self._phase_lanes: Dict[str, List[List[str]]] = {}
+        self._phase_links: Dict[str, List[List[Tuple[str, str]]]] = {}
 
         # State tracking for temporal features
         self._prev_queue: Dict[str, np.ndarray] = {}
@@ -139,6 +165,12 @@ class SumoEnvironment:
         self._episode_arrived: int = 0
         self._episode_departed: int = 0
         self._episode_emergency_stops: int = 0
+        self._episode_teleport_started: int = 0
+        self._episode_teleport_ended: int = 0
+        self._episode_local_safety_steps: int = 0
+        self._episode_local_safety_overrides: int = 0
+        self._last_local_safety_active_tls: int = 0
+        self._last_local_safety_overrides: int = 0
         self._recovery_active: bool = False
         self._recovery_enter_counter: int = 0
         self._recovery_exit_counter: int = 0
@@ -218,7 +250,11 @@ class SumoEnvironment:
         return adj
 
     def _get_sumo_cmd(self) -> List[str]:
-        sumo_binary = "sumo-gui" if self.use_gui else "sumo"
+        if self.use_gui:
+            sumo_binary = "sumo-gui"
+        else:
+            sumo_binary = "sumo"
+
         sumo_path = os.path.join(os.environ["SUMO_HOME"], "bin", sumo_binary)
         if sys.platform == "win32":
             sumo_path += ".exe"
@@ -239,6 +275,12 @@ class SumoEnvironment:
             "--seed", str(self.seed),
             ]
         )
+        
+        if self.use_gui:
+            # Quit on end allows SUMO to restart nicely
+            cmd.extend(["--quit-on-end"])
+        if self.lateral_resolution > 0:
+            cmd.extend(["--lateral-resolution", str(self.lateral_resolution)])
         return cmd
 
     def reset(self, preserve_default_program: bool = False) -> Dict[str, np.ndarray]:
@@ -252,6 +294,12 @@ class SumoEnvironment:
         self._episode_arrived = 0
         self._episode_departed = 0
         self._episode_emergency_stops = 0
+        self._episode_teleport_started = 0
+        self._episode_teleport_ended = 0
+        self._episode_local_safety_steps = 0
+        self._episode_local_safety_overrides = 0
+        self._last_local_safety_active_tls = 0
+        self._last_local_safety_overrides = 0
         self._recovery_active = False
         self._recovery_enter_counter = 0
         self._recovery_exit_counter = 0
@@ -272,7 +320,9 @@ class SumoEnvironment:
                         green_phases.append(state)
             self.phase_defs[ts_id] = green_phases if green_phases else [phases[0].state]
             self.num_phases[ts_id] = len(self.phase_defs[ts_id])
-            self._phase_lanes[ts_id] = self._build_phase_lane_map(ts_id)
+            phase_lanes, phase_links = self._build_phase_movement_maps(ts_id)
+            self._phase_lanes[ts_id] = phase_lanes
+            self._phase_links[ts_id] = phase_links
 
             self._current_phase[ts_id] = 0
             self._phase_duration[ts_id] = 0
@@ -290,6 +340,19 @@ class SumoEnvironment:
                 # Ensure each signal starts with a deterministic initial green phase.
                 traci.trafficlight.setRedYellowGreenState(ts_id, self.phase_defs[ts_id][0])
 
+        # Compute max lanes across all TLs for homogeneous obs padding
+        self.max_lanes = max(len(self.controlled_lanes[ts]) for ts in self.ts_ids)
+
+        # Build per-lane max queue from physical lane length (if eff_vehicle_length enabled)
+        self._lane_max_queue = {}
+        if self.eff_vehicle_length > 0.0:
+            all_lanes = set()
+            for lanes in self.controlled_lanes.values():
+                all_lanes.update(lanes)
+            for lane_id in all_lanes:
+                lane_len = traci.lane.getLength(lane_id)
+                self._lane_max_queue[lane_id] = max(1.0, lane_len / self.eff_vehicle_length)
+
         # Initialize previous state for delta computation
         obs = {}
         for ts_id in self.ts_ids:
@@ -302,12 +365,7 @@ class SumoEnvironment:
             traci.simulationStep()
             self._step_count += 1
             self._advance_signal_timers()
-            self._episode_arrived += traci.simulation.getArrivedNumber()
-            self._episode_departed += traci.simulation.getDepartedNumber()
-            if hasattr(traci.simulation, "getEmergencyStoppingVehiclesNumber"):
-                self._episode_emergency_stops += (
-                    traci.simulation.getEmergencyStoppingVehiclesNumber()
-                )
+            self._record_simulation_step_counters()
 
         for ts_id in self.ts_ids:
             obs[ts_id] = self._get_observation(ts_id)
@@ -399,17 +457,19 @@ class SumoEnvironment:
         phase_duration_norm = float(np.clip(phase_duration_norm, 0.0, 1.0))
 
         # === CONCATENATE NORMALIZED OBSERVATION ===
-        # [queue_norm, delta_queue_norm, density_norm, waiting_norm, 
+        # [queue_norm, delta_queue_norm, density_norm, waiting_norm,
         #  delta_density_norm, phase_onehot, phase_duration_norm]
+        # Pad lane features to max_lanes for homogeneous obs across TLs
+        pad = self.max_lanes - num_lanes
         obs = np.concatenate(
             [
-                queue_norm,           # [0, 1]
-                delta_queue_norm,     # [-1, 1]
-                density_norm,         # [0, 1]
-                waiting_norm,         # [0, 1]
-                delta_density_norm,    # [-1, 1]
-                phase_onehot,         # one-hot
-                [phase_duration_norm] # [0, 1]
+                np.pad(queue_norm,         (0, pad)),  # [0, 1]
+                np.pad(delta_queue_norm,   (0, pad)),  # [-1, 1]
+                np.pad(density_norm,       (0, pad)),  # [0, 1]
+                np.pad(waiting_norm,       (0, pad)),  # [0, 1]
+                np.pad(delta_density_norm, (0, pad)),  # [-1, 1]
+                phase_onehot,                          # one-hot
+                [phase_duration_norm],                 # [0, 1]
             ]
         )
 
@@ -447,10 +507,10 @@ class SumoEnvironment:
 
     def get_obs_size(self, ts_id: str) -> int:
         """Get observation size for a specific traffic light."""
-        num_lanes = len(self.controlled_lanes[ts_id])
+        # Use max_lanes for padding so all TLs return same obs_dim
         num_phases = self.num_phases[ts_id]
         # queue + delta_queue + density + waiting + delta_density + phase_onehot + duration
-        return num_lanes * 5 + num_phases + 1
+        return self.max_lanes * 5 + num_phases + 1
 
     def get_action_size(self, ts_id: str) -> int:
         """Get number of available actions (phases) for a traffic light."""
@@ -475,6 +535,8 @@ class SumoEnvironment:
         if self._recovery_active:
             actions = self._build_recovery_actions()
 
+        actions = self._apply_local_safety_overrides(actions)
+
         for ts_id, action in actions.items():
             self._apply_action(ts_id, action)
 
@@ -483,12 +545,7 @@ class SumoEnvironment:
             traci.simulationStep()
             self._step_count += 1
             self._advance_signal_timers()
-            self._episode_arrived += traci.simulation.getArrivedNumber()
-            self._episode_departed += traci.simulation.getDepartedNumber()
-            if hasattr(traci.simulation, "getEmergencyStoppingVehiclesNumber"):
-                self._episode_emergency_stops += (
-                    traci.simulation.getEmergencyStoppingVehiclesNumber()
-                )
+            self._record_simulation_step_counters()
 
         # Collect observations and rewards
         obs = {}
@@ -503,6 +560,7 @@ class SumoEnvironment:
             "step": self._step_count,
             "metrics": self._get_metrics(),
         }
+        info["metrics"].update(self._get_congestion_diagnostics(actions))
 
         if done:
             traci.close()
@@ -510,12 +568,16 @@ class SumoEnvironment:
 
         return obs, rewards, done, info
 
-    def _build_phase_lane_map(self, ts_id: str) -> List[List[str]]:
-        """Precompute incoming lanes that receive green for each available phase."""
+    def _build_phase_movement_maps(
+        self, ts_id: str
+    ) -> Tuple[List[List[str]], List[List[Tuple[str, str]]]]:
+        """Precompute green incoming lanes and incoming->outgoing movements."""
         controlled_links = traci.trafficlight.getControlledLinks(ts_id)
         phase_lanes: List[List[str]] = []
+        phase_links: List[List[Tuple[str, str]]] = []
         for phase_state in self.phase_defs[ts_id]:
             lanes: Set[str] = set()
+            links: Set[Tuple[str, str]] = set()
             for idx, link_group in enumerate(controlled_links):
                 if idx >= len(phase_state):
                     break
@@ -526,8 +588,11 @@ class SumoEnvironment:
                 first_link = link_group[0]
                 if first_link and len(first_link) > 0:
                     lanes.add(first_link[0])
+                    if len(first_link) > 1:
+                        links.add((first_link[0], first_link[1]))
             phase_lanes.append(sorted(lanes))
-        return phase_lanes
+            phase_links.append(sorted(links))
+        return phase_lanes, phase_links
 
     def _select_phase_by_queue(self, ts_id: str, allow_current: bool) -> int:
         """Select phase serving the highest queued incoming lanes."""
@@ -545,12 +610,122 @@ class SumoEnvironment:
                 best_phase = phase_idx
         return best_phase
 
+    def _lane_occupancy(self, lane: str) -> float:
+        """Estimate how full a lane is using vehicle count over lane capacity."""
+        vehicle_count = traci.lane.getLastStepVehicleNumber(lane)
+        capacity = max(traci.lane.getLength(lane) / 7.0, 1.0)
+        return float(np.clip(vehicle_count / capacity, 0.0, 1.0))
+
+    def _edge_occupancy(self, edge: str) -> float:
+        """Estimate how full an entire edge is."""
+        vehicle_count = traci.edge.getLastStepVehicleNumber(edge)
+        lane_count = traci.edge.getLaneNumber(edge)
+        # Using a representative lane to get length
+        lane_0 = f"{edge}_0"
+        length = traci.lane.getLength(lane_0) if lane_count > 0 else 1.0
+        capacity = max((length * lane_count) / 7.0, 1.0)
+        return float(np.clip(vehicle_count / capacity, 0.0, 1.0))
+
+    def _phase_pressure_score(
+        self, ts_id: str, phase_idx: int, enforce_block: bool = True
+    ) -> float:
+        """Score a phase by upstream queue minus downstream occupancy pressure."""
+        score = 0.0
+        links = self._phase_links.get(ts_id, [])
+        if phase_idx >= len(links):
+            return score
+
+        for from_lane, to_lane in links[phase_idx]:
+            upstream_queue = float(traci.lane.getLastStepHaltingNumber(from_lane))
+            downstream_queue = float(traci.lane.getLastStepHaltingNumber(to_lane))
+            downstream_fullness = self._lane_occupancy(to_lane)
+            
+            # Incorporate edge-level occupancy
+            downstream_edge = traci.lane.getEdgeID(to_lane)
+            downstream_edge_fullness = self._edge_occupancy(downstream_edge)
+
+            score += upstream_queue - self.local_safety_downstream_weight * (
+                downstream_queue + downstream_edge_fullness * self.max_queue_per_lane
+            )
+            if (
+                downstream_queue >= self.local_safety_downstream_block_queue
+                or downstream_edge_fullness >= self.local_safety_downstream_block_occupancy
+            ):
+                if enforce_block and self.local_safety_downstream_block_penalty <= 0:
+                    return -float("inf")
+                score -= self.local_safety_downstream_block_penalty
+        return score
+
+    def _select_phase_by_pressure(self, ts_id: str, allow_current: bool) -> int:
+        """Select phase with high upstream queue and available downstream space."""
+        current = self._current_phase[ts_id]
+        best_phase = current
+        best_score = -float("inf")
+        for phase_idx in range(len(self.phase_defs[ts_id])):
+            if not allow_current and phase_idx == current:
+                continue
+            score = self._phase_pressure_score(ts_id, phase_idx)
+            if score > best_score:
+                best_score = score
+                best_phase = phase_idx
+        if best_score == -float("inf"):
+            for phase_idx in range(len(self.phase_defs[ts_id])):
+                if not allow_current and phase_idx == current:
+                    continue
+                score = self._phase_pressure_score(
+                    ts_id, phase_idx, enforce_block=False
+                )
+                if score > best_score:
+                    best_score = score
+                    best_phase = phase_idx
+        return best_phase
+
     def _build_recovery_actions(self) -> Dict[str, int]:
         """Use deterministic longest-queue phase selection during recovery mode."""
         actions: Dict[str, int] = {}
         for ts_id in self.ts_ids:
             actions[ts_id] = self._select_phase_by_queue(ts_id, allow_current=True)
         return actions
+
+    def _apply_local_safety_overrides(self, actions: Dict[str, int]) -> Dict[str, int]:
+        """Override only locally critical TLs to their longest-queue phase."""
+        self._last_local_safety_active_tls = 0
+        self._last_local_safety_overrides = 0
+        if not self.local_safety_enabled:
+            return actions
+
+        safe_actions = dict(actions)
+        for ts_id in self.ts_ids:
+            lanes = self.controlled_lanes.get(ts_id, [])
+            if not lanes:
+                continue
+
+            lane_queues = [
+                float(traci.lane.getLastStepHaltingNumber(lane)) for lane in lanes
+            ]
+            total_queue = float(sum(lane_queues))
+            max_lane_queue = max(lane_queues) if lane_queues else 0.0
+            is_critical = (
+                max_lane_queue >= self.local_safety_lane_queue
+                or total_queue >= self.local_safety_tl_queue
+            )
+            if not is_critical:
+                continue
+
+            self._last_local_safety_active_tls += 1
+            if self.local_safety_mode == "pressure":
+                safety_action = self._select_phase_by_pressure(ts_id, allow_current=True)
+            else:
+                safety_action = self._select_phase_by_queue(ts_id, allow_current=True)
+            if safe_actions.get(ts_id) != safety_action:
+                self._last_local_safety_overrides += 1
+            safe_actions[ts_id] = safety_action
+
+        if self._last_local_safety_active_tls > 0:
+            self._episode_local_safety_steps += 1
+            self._episode_local_safety_overrides += self._last_local_safety_overrides
+
+        return safe_actions
 
     def _update_recovery_state(self, metrics: Dict[str, float]):
         """Manage recovery-mode entry/exit using hysteresis counters."""
@@ -587,6 +762,43 @@ class SumoEnvironment:
             self._recovery_exit_counter = 0
             self._recovery_enter_counter = 0
 
+    def _is_phase_blocked(self, ts_id: str, phase_idx: int) -> bool:
+        """Check if a phase is blocked due to downstream congestion."""
+        links = self._phase_links.get(ts_id, [])
+        if phase_idx >= len(links):
+            return False
+
+        for from_lane, to_lane in links[phase_idx]:
+            downstream_queue = float(traci.lane.getLastStepHaltingNumber(to_lane))
+            downstream_edge = traci.lane.getEdgeID(to_lane)
+            downstream_edge_fullness = self._edge_occupancy(downstream_edge)
+
+            if (
+                downstream_queue >= self.local_safety_downstream_block_queue
+                or downstream_edge_fullness >= self.local_safety_downstream_block_occupancy
+            ):
+                return True
+        return False
+
+    def _get_valid_actions(self, ts_id: str, allow_current: bool = True) -> List[int]:
+        """Return list of unblocked phase indices. Fall back to all if all blocked."""
+        current = self._current_phase[ts_id]
+        valid_actions = []
+        for phase_idx in range(len(self.phase_defs[ts_id])):
+            if not allow_current and phase_idx == current:
+                continue
+            if not self._is_phase_blocked(ts_id, phase_idx):
+                valid_actions.append(phase_idx)
+        
+        # Fallback if everything valid is blocked
+        if not valid_actions:
+            for phase_idx in range(len(self.phase_defs[ts_id])):
+                if not allow_current and phase_idx == current:
+                    continue
+                valid_actions.append(phase_idx)
+                
+        return valid_actions
+
     def _apply_action(self, ts_id: str, action: int):
         """Apply a phase action with yellow transition if needed."""
         current = self._current_phase[ts_id]
@@ -599,8 +811,44 @@ class SumoEnvironment:
         if self._yellow_phase_active[ts_id]:
             return
 
+        valid_actions = self._get_valid_actions(ts_id, allow_current=True)
+        if action not in valid_actions:
+            # Override with the best available phase (by pressure or queue)
+            if self.local_safety_mode == "pressure":
+                best_score = -float("inf")
+                best_action = current
+                for p in valid_actions:
+                    s = self._phase_pressure_score(ts_id, p)
+                    if s > best_score:
+                        best_score = s
+                        best_action = p
+                action = best_action
+            else:
+                best_queue = -1
+                best_action = current
+                for p in valid_actions:
+                    links = self._phase_links.get(ts_id, [])
+                    if p >= len(links):
+                        continue
+                    q = sum(traci.lane.getLastStepHaltingNumber(f) for f, t in links[p])
+                    if q > best_queue:
+                        best_queue = q
+                        best_action = p
+                action = best_action
+
         if self._phase_duration[ts_id] >= self.max_green and len(self.phase_defs[ts_id]) > 1:
-            action = self._select_phase_by_queue(ts_id, allow_current=False)
+            valid_others = self._get_valid_actions(ts_id, allow_current=False)
+            if valid_others:
+                action = valid_others[0] # Simplest fallback for forced switch
+                best_queue = -1
+                for p in valid_others:
+                    links = self._phase_links.get(ts_id, [])
+                    if p >= len(links):
+                        continue
+                    q = sum(traci.lane.getLastStepHaltingNumber(f) for f, t in links[p])
+                    if q > best_queue:
+                        best_queue = q
+                        action = p
 
         # Enforce minimum green time before allowing phase change.
         if self._phase_duration[ts_id] < self.min_green:
@@ -650,23 +898,116 @@ class SumoEnvironment:
 
     def _compute_reward(self, ts_id: str) -> float:
         """
-        Compute reward for an agent.
-        r_i = -(sum(queue_l) + alpha * sum(waiting_l))
+        Compute normalized per-agent reward.
+
+        r_i = -(mean_queue_norm + alpha * mean_waiting_norm)
+
+        Queue normalization: per-lane if eff_vehicle_length > 0 (uses physical lane
+        length from traci to compute lane-specific max queue), otherwise falls back
+        to the global max_queue_per_lane constant.
         """
         lanes = self.controlled_lanes[ts_id]
-        total_queue = sum(
-            traci.lane.getLastStepHaltingNumber(lane) for lane in lanes
-        )
+        lane_count = max(len(lanes), 1)
         total_waiting = sum(traci.lane.getWaitingTime(lane) for lane in lanes)
 
-        reward = -(total_queue + self.reward_alpha * total_waiting)
+        if self._lane_max_queue:
+            # Per-lane normalization: each lane divided by its own physical capacity
+            queue_norm_sum = sum(
+                traci.lane.getLastStepHaltingNumber(lane)
+                / self._lane_max_queue.get(lane, self.max_queue_per_lane)
+                for lane in lanes
+            )
+            queue_term = queue_norm_sum / lane_count
+        else:
+            # Fallback: global max_queue_per_lane (original behaviour)
+            total_queue = sum(
+                traci.lane.getLastStepHaltingNumber(lane) for lane in lanes
+            )
+            queue_term = total_queue / (lane_count * self.max_queue_per_lane)
+
+        waiting_term = total_waiting / (lane_count * self.max_waiting_time)
+
+        reward = -(queue_term + self.reward_alpha * waiting_term)
         return reward
+
+    def _get_congestion_diagnostics(self, actions: Dict[str, int]) -> Dict[str, float]:
+        """Return top local congestion details for episode forensics."""
+        top_tl = ""
+        top_tl_queue = -1.0
+        top_tl_waiting = 0.0
+        top_tl_phase = -1
+        top_tl_phase_duration = -1
+        top_tl_action = -1
+
+        top_lane = ""
+        top_lane_queue = -1.0
+        top_lane_waiting = 0.0
+
+        for ts_id in self.ts_ids:
+            lanes = self.controlled_lanes.get(ts_id, [])
+            tl_queue = 0.0
+            tl_waiting = 0.0
+            for lane in lanes:
+                lane_queue = float(traci.lane.getLastStepHaltingNumber(lane))
+                lane_waiting = float(traci.lane.getWaitingTime(lane))
+                tl_queue += lane_queue
+                tl_waiting += lane_waiting
+                if lane_queue > top_lane_queue or (
+                    lane_queue == top_lane_queue and lane_waiting > top_lane_waiting
+                ):
+                    top_lane = lane
+                    top_lane_queue = lane_queue
+                    top_lane_waiting = lane_waiting
+
+            if tl_queue > top_tl_queue or (
+                tl_queue == top_tl_queue and tl_waiting > top_tl_waiting
+            ):
+                top_tl = ts_id
+                top_tl_queue = tl_queue
+                top_tl_waiting = tl_waiting
+                top_tl_phase = self._current_phase.get(ts_id, -1)
+                top_tl_phase_duration = self._phase_duration.get(ts_id, -1)
+                top_tl_action = actions.get(ts_id, -1)
+
+        return {
+            "top_tl": top_tl,
+            "top_tl_queue": top_tl_queue,
+            "top_tl_waiting": top_tl_waiting,
+            "top_tl_phase": top_tl_phase,
+            "top_tl_phase_duration": top_tl_phase_duration,
+            "top_tl_action": top_tl_action,
+            "top_lane": top_lane,
+            "top_lane_queue": top_lane_queue,
+            "top_lane_waiting": top_lane_waiting,
+        }
+
+    def _record_simulation_step_counters(self):
+        """Accumulate per-SUMO-step counters for episode-level diagnostics."""
+        self._episode_arrived += traci.simulation.getArrivedNumber()
+        self._episode_departed += traci.simulation.getDepartedNumber()
+        if hasattr(traci.simulation, "getEmergencyStoppingVehiclesNumber"):
+            self._episode_emergency_stops += (
+                traci.simulation.getEmergencyStoppingVehiclesNumber()
+            )
+        if hasattr(traci.simulation, "getStartingTeleportNumber"):
+            self._episode_teleport_started += traci.simulation.getStartingTeleportNumber()
+        if hasattr(traci.simulation, "getEndingTeleportNumber"):
+            self._episode_teleport_ended += traci.simulation.getEndingTeleportNumber()
 
     def _get_metrics(self) -> Dict[str, float]:
         """Get global traffic metrics."""
-        vehicles = traci.vehicle.getIDList()
-        total_waiting = sum(traci.vehicle.getWaitingTime(v) for v in vehicles)
-        avg_delay = total_waiting / max(len(vehicles), 1)
+        # Use bulk edge retrieval to avoid per-vehicle TraCI calls (massive speedup)
+        # vehicles = traci.vehicle.getIDList()
+        # total_waiting = sum(traci.vehicle.getWaitingTime(v) for v in vehicles)
+        
+        # Instead, sum waiting time across all edges
+        total_waiting = 0.0
+        num_vehicles = traci.vehicle.getIDCount()
+        for edge_id in traci.edge.getIDList():
+            if not edge_id.startswith(":"):  # ignore internal edges
+                total_waiting += traci.edge.getWaitingTime(edge_id)
+                
+        avg_delay = round(total_waiting / max(num_vehicles, 1), 4)
 
         # Queue across all controlled lanes
         all_lanes = []
@@ -675,7 +1016,7 @@ class SumoEnvironment:
         total_queue = sum(
             traci.lane.getLastStepHaltingNumber(lane) for lane in all_lanes
         )
-        avg_queue = total_queue / max(len(all_lanes), 1)
+        avg_queue = round(total_queue / max(len(all_lanes), 1), 4)
 
         return {
             "avg_delay": avg_delay,
@@ -685,8 +1026,14 @@ class SumoEnvironment:
             "arrived_vehicles": self._episode_arrived,
             "departed_vehicles": self._episode_departed,
             "emergency_stops": self._episode_emergency_stops,
-            "num_vehicles": len(vehicles),
+            "teleport_started": self._episode_teleport_started,
+            "teleport_ended": self._episode_teleport_ended,
+            "num_vehicles": num_vehicles,
             "recovery_active": float(self._recovery_active),
+            "local_safety_active_tls": self._last_local_safety_active_tls,
+            "local_safety_overrides": self._last_local_safety_overrides,
+            "episode_local_safety_steps": self._episode_local_safety_steps,
+            "episode_local_safety_overrides": self._episode_local_safety_overrides,
         }
 
     def close(self):

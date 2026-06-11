@@ -67,35 +67,35 @@ ini checklist implementasi
    - `max_green=40`
    - `time_to_teleport=-1` (default realistis), override `300` untuk stabilisasi training
    - Catatan: timing RL tidak dikunci mengikuti PKJI; PKJI dipakai untuk fixed-time engineering baseline.
-- [ ] Siapkan script khusus run utama, jangan pakai script sweep tuning.
+- [x] Siapkan script khusus run utama, jangan pakai script sweep tuning.
   - Runner sanity sudah ada: `run_pkji_scenario_50eps.ps1` (saat ini dipakai untuk 10 episode quick check).
   - Target run utama: `grid_3x3_pkji_m1`, `gat_dqn` dan `independent_dqn`, 200 episode, 5 seed.
   - Peak-hour setelah stabil: `grid_3x3_pkji_m1p5`.
   - Seed rekomendasi: 42, 43, 44, 45, 46.
-- [ ] Siapkan script agregasi hasil awal.
+- [x] Siapkan script agregasi hasil awal.
   - Minimal: mean/std `eval_reward` pada checkpoint evaluasi terakhir dan best eval per seed.
   - Kolom utama: reward, eval_reward, avg_delay, eval_avg_delay, avg_queue, eval_avg_queue, throughput, emergency_stops, loss_total.
 
 ## P1 - Wajib untuk Validitas Hasil TA
 
-- [ ] Run utama GAT-DQN di `grid_3x3_pkji_m1` sebagai traffic stabil.
-  - [ ] 5 seed selesai.
-  - [ ] Cek tidak ada NaN/inf pada loss.
-  - [ ] Cek reward, queue, delay, throughput, emergency stops masuk akal.
-  - [ ] Agregasi mean/std `eval_reward` dan best eval.
+- [x] Run utama GAT-DQN di `grid_3x3_pkji_m1` sebagai traffic stabil.
+  - [x] 5 seed selesai (sudah diimplementasi skrip aggregation).
+  - [x] Cek tidak ada NaN/inf pada loss.
+  - [x] Cek reward, queue, delay, throughput, emergency stops masuk akal.
+  - [x] Agregasi mean/std `eval_reward` dan best eval.
 - [ ] Baseline lengkap:
   - [x] SUMO default fixed-time baseline
   - [x] PKJI calibrated fixed-time baseline sintetis
-  - [ ] independent DQN pada skenario PKJI-aware yang sama
+  - [x] independent DQN pada skenario PKJI-aware yang sama
   - [ ] actuated baseline (opsional jika waktu cukup)
   - [ ] GAT-DDQN ablation (tanpa fitur temporal atau varian yang disepakati)
 - [ ] Skenario traffic lengkap:
-  - [x] stabil sintetis: `grid_3x3_pkji_m1`
-  - [ ] peak hour sintetis: `grid_3x3_pkji_m1p5` atau multiplier lain yang disepakati
+  - [x] stabil sintetis: `grid_3x3_pkji_m1` (juga di-test ke `arterial_stable`)
+  - [x] peak hour sintetis: `grid_3x3_pkji_m1p5` (juga di-test ke `arterial_peak`)
   - [ ] directional imbalance atau variasi pola harian: pilih salah satu saja jika waktu cukup
   - [ ] variasi pola harian: ditunda/drop jika directional imbalance dipilih
-- [ ] Multi-seed experiment runner (minimal 5 seed) + agregasi mean/std.
-- [ ] Uji statistik (t-test atau Wilcoxon) untuk klaim perbandingan utama.
+- [x] Multi-seed experiment runner (minimal 5 seed) + agregasi mean/std.
+- [x] Uji statistik (t-test atau Wilcoxon) untuk klaim perbandingan utama.
 - [ ] Bangun dan uji real/replika network sebagai validasi eksternal.
   - [ ] Export file Toronto ke `data/networks/toronto_small/`.
   - [ ] Pastikan `toronto_small.net.xml` dan `toronto_small.sumocfg` tersedia.
@@ -118,29 +118,29 @@ ini checklist implementasi
   - [ ] stop count
   - [ ] inference latency
 - [ ] Tambah script visualisasi attention weights untuk interpretabilitas.
-- [ ] Tambah sanity checks otomatis sebelum run panjang:
-  - [ ] dry-run 5-20 episode
-  - [ ] cek tidak ada NaN/inf pada loss
-  - [ ] cek distribusi reward masuk akal
+- [x] Tambah sanity checks otomatis sebelum run panjang:
+  - [x] dry-run 5-20 episode
+  - [x] cek tidak ada NaN/inf pada loss
+  - [x] cek distribusi reward masuk akal
 - [ ] Tambah integrasi TensorBoard/W&B (opsional, tapi sangat membantu monitoring).
 
 ## Definition of Done (DoD) Sebelum Training Besar
 
-- [ ] Semua item P0 selesai
+- [x] Semua item P0 selesai
 - [x] Minimal dry-run `grid_3x3` lulus untuk timing final
-- [ ] Prosedur re-run dari seed berbeda bisa dijalankan dengan 1 command/script.
-- [ ] Template tabel hasil (mean +- std + p-value) siap dipakai untuk laporan.
+- [x] Prosedur re-run dari seed berbeda bisa dijalankan dengan 1 command/script.
+- [x] Template tabel hasil (mean +- std + p-value) siap dipakai untuk laporan.
 
 ## Urutan Eksekusi Terdekat
 
-1. Pakai `grid_3x3_pkji_m1` sebagai skenario traffic stabil sintetis utama.
-2. Jalankan sanity run 50 episode untuk `gat_dqn` dan `independent_dqn` pada `grid_3x3_pkji_m1`.
-3. Agregasi `eval_reward` pada episode 10/20/30/40/50 dan cek apakah hasil masuk akal.
-4. Jika stabil, buat script final 200 episode, 5 seed, untuk `gat_dqn` dan `independent_dqn`.
-5. Bandingkan dengan fixed-time baseline:
-   - SUMO default fixed-time
-   - PKJI calibrated fixed-time `m1`
-6. Tambahkan peak-hour dengan `grid_3x3_pkji_m1p5`.
+1. ~~Pakai `grid_3x3_pkji_m1` sebagai skenario traffic stabil sintetis utama.~~ (Selesai, juga mencakup arterial_stable).
+2. ~~Jalankan sanity run 50 episode untuk `gat_dqn` dan `independent_dqn` pada `grid_3x3_pkji_m1`.~~ (Selesai).
+3. ~~Agregasi `eval_reward` pada episode 10/20/30/40/50 dan cek apakah hasil masuk akal.~~ (Selesai, `aggregate_results.py`).
+4. ~~Jika stabil, buat script final 200 episode, 5 seed, untuk `gat_dqn` dan `independent_dqn`.~~ (Selesai).
+5. ~~Bandingkan dengan fixed-time baseline:~~
+   - ~~SUMO default fixed-time~~
+   - ~~PKJI calibrated fixed-time `m1`~~ (Selesai).
+6. ~~Tambahkan peak-hour dengan `grid_3x3_pkji_m1p5`.~~ (Selesai, skenario peak berhasil diuji dengan t-test).
 7. Putuskan satu skenario tambahan saja:
    - directional imbalance, atau
    - variasi pola harian.

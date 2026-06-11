@@ -138,14 +138,14 @@ Catatan: Dokumen ini merefleksikan status terbaru setelah sinkronisasi narasi Ba
 
 **Proposal (Bab V Skenario Pengujian):**
 1. Lalu lintas stabil ← ✅ ada (uniform random trips)
-2. Peak hour ← **BELUM ADA**
-3. Ketidakseimbangan arah ← **BELUM ADA**
+2. Peak hour ← ✅ ada (sudah dibuat untuk peak hour)
+3. Ketidakseimbangan arah ← **BELUM ADA** (ada di script tapi perlu dievaluasi)
 4. Variasi pola harian ← **BELUM ADA**
 
 **Status: BEST PRACTICE?**
 - **Proposal BENAR.** Multiple traffic scenarios adalah standar di semua paper serius (CoLight, MPLight, PressLight).
 - **Rekomendasi:** Buat route file berbeda via `randomTrips.py` dengan parameter berbeda. Contoh:
-  - Peak hour: tinggi di menit 0-1800, puncak di 900-1500, turun di 1800-3600
+  - Peak hour: tinggi di menit 0-1800, puncak di 900-1500, turun di 1800-3600 (Sudah diimplementasikan)
   - Directional: fringe factor khusus (barat→timur berat, timur→barat ringan)
   - Daily: concatenate beberapa pola
 
@@ -157,11 +157,12 @@ Catatan: Dokumen ini merefleksikan status terbaru setelah sinkronisasi narasi Ba
 > Setiap eksperimen diulang minimal 5 kali dengan random seed berbeda.
 > Mean ± standar deviasi. t-test atau Wilcoxon, α=0.05.
 
-**Implementasi saat ini:** Hanya seed=42. Tidak ada multi-seed runner.
+**Implementasi saat ini:** Sudah ada multi-seed experiment runner di skrip `experiments/run_training_seeds.py` (5 seeds, default 42-46) dan `experiments/aggregate_results.py` untuk mengumpulkan hasil.
 
 **Status: BEST PRACTICE?**
 - **Proposal BENAR.** Multi-seed runs adalah standar minimum untuk riset RL. 5 seeds cukup.
-- **Rekomendasi:** Tambahkan loop di training script atau buat bash/batch script yang jalankan 5 seeds. Mudah diimplementasikan.
+- **Rekomendasi:** Lakukan test statistik lebih lanjut untuk klaim perbandingan utama.
+
 
 ---
 
@@ -175,8 +176,8 @@ Catatan: Dokumen ini merefleksikan status terbaru setelah sinkronisasi narasi Ba
 **Status: BEST PRACTICE?**
 - **Proposal BENAR.** Travel time dan stop count adalah metrik standar ATSC. Inference latency penting untuk feasibility argument.
 - **Rekomendasi:** Tambahkan di `_get_metrics()`. Semuanya available dari TraCI:
-  - `traci.vehicle.getAccumulatedWaitingTime(v)` → travel time proxy
-  - `traci.simulation.getArrivedNumber()` → throughput tracking
+  - `traci.vehicle.getAccumulatedWaitingTime(v)` → travel time proxy (Sudah proxy di average delay/waiting)
+  - `traci.simulation.getArrivedNumber()` → throughput tracking (Sudah diimplementasikan throughput)
   - `time.time()` sebelum/sesudah action selection → inference latency
 
 ---

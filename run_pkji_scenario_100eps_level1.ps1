@@ -76,5 +76,9 @@ foreach ($seed in $seeds) {
 }
 
 Write-Host "`nWaiting all Level 1 runs..."
-$procs | ForEach-Object { Wait-Process -Id $_.Id }
+$procs | ForEach-Object {
+    if (Get-Process -Id $_.Id -ErrorAction SilentlyContinue) {
+        Wait-Process -Id $_.Id -ErrorAction SilentlyContinue
+    }
+}
 Write-Host "All Level 1 runs done. Logs: $runDir"

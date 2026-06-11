@@ -86,13 +86,15 @@ def evaluate(
         sumocfg_file=sumocfg_file,
         use_gui=use_gui,
         seed=seed,
+        lateral_resolution=scenario.get("lateral_resolution", 0.0),
+        eff_vehicle_length=scenario.get("eff_vehicle_length", 0.0),
         **config["env"],
     )
 
     obs = env.reset()
     obs_dim = env.get_obs_size(env.ts_ids[0])
     num_actions = env.get_action_size(env.ts_ids[0])
-    num_lanes = len(env.controlled_lanes[env.ts_ids[0]])
+    num_lanes = max(len(env.controlled_lanes[ts]) for ts in env.ts_ids)
     env.close()
 
     # Create agent and load model
@@ -128,12 +130,19 @@ def evaluate(
     all_queues = []
     all_throughputs = []
     all_emergency_stops = []
+    all_teleport_started = []
+    all_teleport_ended = []
+    all_episode_mean_delays = []
+    all_episode_max_delays = []
+    all_episode_mean_queues = []
+    all_episode_max_queues = []
 
     for ep in range(1, num_episodes + 1):
         env.seed = seed + ep
         obs = env.reset()
         obs_array = np.stack([obs[ts_id] for ts_id in env.ts_ids])
         ep_reward = 0.0
+        episode_step_metrics = []
 
         while True:
             actions_array = agent.select_actions(obs_array, evaluate=True)
@@ -141,6 +150,7 @@ def evaluate(
                 ts_id: int(actions_array[i]) for i, ts_id in enumerate(env.ts_ids)
             }
             next_obs, rewards, done, info = env.step(actions_dict)
+            episode_step_metrics.append(info["metrics"])
             next_obs_array = np.stack([next_obs[ts_id] for ts_id in env.ts_ids])
             rewards_array = np.array([rewards[ts_id] for ts_id in env.ts_ids])
 
@@ -155,13 +165,31 @@ def evaluate(
         all_queues.append(info["metrics"]["avg_queue"])
         all_throughputs.append(info["metrics"]["throughput"])
         all_emergency_stops.append(info["metrics"]["emergency_stops"])
+        all_teleport_started.append(info["metrics"]["teleport_started"])
+        all_teleport_ended.append(info["metrics"]["teleport_ended"])
+
+        delay_values = np.array([m["avg_delay"] for m in episode_step_metrics])
+        queue_values = np.array([m["avg_queue"] for m in episode_step_metrics])
+        mean_delay = float(np.mean(delay_values))
+        max_delay = float(np.max(delay_values))
+        mean_queue = float(np.mean(queue_values))
+        max_queue = float(np.max(queue_values))
+        all_episode_mean_delays.append(mean_delay)
+        all_episode_max_delays.append(max_delay)
+        all_episode_mean_queues.append(mean_queue)
+        all_episode_max_queues.append(max_queue)
 
         print(
             f"Episode {ep}: reward={ep_reward:.2f}, "
             f"delay={info['metrics']['avg_delay']:.2f}, "
             f"queue={info['metrics']['avg_queue']:.2f}, "
+            f"mean_delay={mean_delay:.2f}, "
+            f"max_delay={max_delay:.2f}, "
+            f"mean_queue={mean_queue:.2f}, "
+            f"max_queue={max_queue:.2f}, "
             f"throughput={info['metrics']['throughput']}, "
-            f"emergency_stops={info['metrics']['emergency_stops']}"
+            f"emergency_stops={info['metrics']['emergency_stops']}, "
+            f"teleport_started={info['metrics']['teleport_started']}"
         )
 
     env.close()
@@ -172,10 +200,30 @@ def evaluate(
     print(f"Avg Reward:  {np.mean(all_rewards):.2f} ± {np.std(all_rewards):.2f}")
     print(f"Avg Delay:   {np.mean(all_delays):.2f} ± {np.std(all_delays):.2f}")
     print(f"Avg Queue:   {np.mean(all_queues):.2f} ± {np.std(all_queues):.2f}")
+    print(
+        "Mean Delay:  "
+        f"{np.mean(all_episode_mean_delays):.2f} ± {np.std(all_episode_mean_delays):.2f}"
+    )
+    print(
+        "Max Delay:   "
+        f"{np.mean(all_episode_max_delays):.2f} ± {np.std(all_episode_max_delays):.2f}"
+    )
+    print(
+        "Mean Queue:  "
+        f"{np.mean(all_episode_mean_queues):.2f} ± {np.std(all_episode_mean_queues):.2f}"
+    )
+    print(
+        "Max Queue:   "
+        f"{np.mean(all_episode_max_queues):.2f} ± {np.std(all_episode_max_queues):.2f}"
+    )
     print(f"Throughput:  {np.mean(all_throughputs):.2f} ± {np.std(all_throughputs):.2f}")
     print(
         "Emergency:   "
         f"{np.mean(all_emergency_stops):.2f} ± {np.std(all_emergency_stops):.2f}"
+    )
+    print(
+        "Teleport:    "
+        f"{np.mean(all_teleport_started):.2f} ± {np.std(all_teleport_started):.2f}"
     )
 
 

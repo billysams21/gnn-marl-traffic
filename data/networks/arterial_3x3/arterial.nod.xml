@@ -1,0 +1,23 @@
+<nodes>
+    <node id="A1" x="0" y="0" type="traffic_light"/>
+    <node id="A2" x="450" y="0" type="traffic_light"/>
+    <node id="A3" x="800" y="0" type="traffic_light"/>
+    <node id="C1" x="0" y="150" type="traffic_light"/>
+    <node id="C2" x="450" y="150" type="traffic_light"/>
+    <node id="C3" x="800" y="150" type="traffic_light"/>
+    <node id="B1" x="0" y="-150" type="traffic_light"/>
+    <node id="B2" x="450" y="-150" type="traffic_light"/>
+    <node id="B3" x="800" y="-150" type="traffic_light"/>
+    <node id="W_A0" x="-350" y="0" type="priority"/>
+    <node id="E_A4" x="1150" y="0" type="priority"/>
+    <node id="W_C1" x="-350" y="150" type="priority"/>
+    <node id="E_C3" x="1150" y="150" type="priority"/>
+    <node id="W_B1" x="-350" y="-150" type="priority"/>
+    <node id="E_B3" x="1150" y="-150" type="priority"/>
+    <node id="N1" x="0" y="500" type="priority"/>
+    <node id="N2" x="450" y="500" type="priority"/>
+    <node id="N3" x="800" y="500" type="priority"/>
+    <node id="S1" x="0" y="-500" type="priority"/>
+    <node id="S2" x="450" y="-500" type="priority"/>
+    <node id="S3" x="800" y="-500" type="priority"/>
+</nodes>

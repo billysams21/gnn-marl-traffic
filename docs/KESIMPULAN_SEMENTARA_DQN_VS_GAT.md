@@ -1,3 +1,4 @@
+# DEPRECATED
 # Kesimpulan Sementara: Independent DQN vs GAT+DQN
 
 *(Dokumen ini berisi analisis teoretis dan empiris dari sesi pengujian 16 Mei 2026, membandingkan performa baseline Independent DQN dengan arsitektur usulan GAT+DQN pada skenario PKJI).*

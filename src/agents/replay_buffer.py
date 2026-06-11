@@ -67,6 +67,10 @@ class ReplayBuffer:
     def __len__(self):
         return len(self.buffer)
 
+    def clear(self):
+        """Remove all stored transitions while preserving capacity."""
+        self.buffer.clear()
+
     def state_dict(self) -> Dict[str, Any]:
         """Serialize replay buffer for checkpointing/resume."""
         return {

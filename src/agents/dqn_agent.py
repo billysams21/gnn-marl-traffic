@@ -60,6 +60,7 @@ class GATDoubleDQNAgent:
         batch_size: int = 64,
         buffer_size: int = 50000,
         target_update_freq: int = 1000,
+        grad_clip_norm: float = 10.0,
         # Device
         device: str = "auto",
     ):
@@ -123,6 +124,8 @@ class GATDoubleDQNAgent:
             + list(self.prediction_head.parameters()),
             lr=lr,
         )
+
+        self.grad_clip_norm = grad_clip_norm
 
         # ---- Replay Buffer ----
         self.replay_buffer = ReplayBuffer(capacity=buffer_size)
@@ -229,7 +232,7 @@ class GATDoubleDQNAgent:
 
             target = rewards_flat + self.gamma * next_q_best * (1 - dones_flat)
 
-        rl_loss = nn.functional.mse_loss(q_taken, target)
+        rl_loss = nn.functional.smooth_l1_loss(q_taken, target)
 
         # ---- Prediction Head Loss ----
         # Target format is determined by prediction_mode:
@@ -250,7 +253,7 @@ class GATDoubleDQNAgent:
             list(self.gat_encoder.parameters())
             + list(self.q_network.parameters())
             + list(self.prediction_head.parameters()),
-            max_norm=10.0,
+            max_norm=self.grad_clip_norm,
         )
         self.optimizer.step()
 
@@ -296,7 +299,12 @@ class GATDoubleDQNAgent:
             checkpoint.update(extra_state)
         torch.save(checkpoint, path)
 
-    def load(self, path: str) -> Dict[str, Any]:
+    def load(
+        self,
+        path: str,
+        load_optimizer: bool = True,
+        load_replay_buffer: bool = True,
+    ) -> Dict[str, Any]:
         """Load model checkpoint."""
         # Always load checkpoints on CPU first so non-model tensors (e.g., RNG state)
         # remain compatible with torch.set_rng_state during resume.
@@ -319,7 +327,7 @@ class GATDoubleDQNAgent:
 
         self.target_gat_encoder.load_state_dict(checkpoint["target_gat_encoder"])
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
-        if "optimizer" in checkpoint:
+        if load_optimizer and "optimizer" in checkpoint:
             try:
                 self.optimizer.load_state_dict(checkpoint["optimizer"])
                 _move_optimizer_state_to_device(self.optimizer, self.device)
@@ -328,7 +336,7 @@ class GATDoubleDQNAgent:
                 pass
         self.epsilon = checkpoint.get("epsilon", self.epsilon)
         self._train_steps = checkpoint.get("train_steps", self._train_steps)
-        if "replay_buffer" in checkpoint:
+        if load_replay_buffer and "replay_buffer" in checkpoint:
             self.replay_buffer.load_state_dict(checkpoint["replay_buffer"])
 
         return checkpoint
@@ -439,7 +447,7 @@ class IndependentDQNAgent:
             ).squeeze(1)
             target = rewards_flat + self.gamma * next_q_best * (1 - dones_flat)
 
-        loss = nn.functional.mse_loss(q_taken, target)
+        loss = nn.functional.smooth_l1_loss(q_taken, target)
 
         self.optimizer.zero_grad()
         loss.backward()
@@ -468,16 +476,21 @@ class IndependentDQNAgent:
             checkpoint.update(extra_state)
         torch.save(checkpoint, path)
 
-    def load(self, path: str) -> Dict[str, Any]:
+    def load(
+        self,
+        path: str,
+        load_optimizer: bool = True,
+        load_replay_buffer: bool = True,
+    ) -> Dict[str, Any]:
         checkpoint = torch.load(path, map_location="cpu", weights_only=False)
         self.q_network.load_state_dict(checkpoint["q_network"])
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
-        if "optimizer" in checkpoint:
+        if load_optimizer and "optimizer" in checkpoint:
             self.optimizer.load_state_dict(checkpoint["optimizer"])
             _move_optimizer_state_to_device(self.optimizer, self.device)
         self.epsilon = checkpoint.get("epsilon", self.epsilon)
         self._train_steps = checkpoint.get("train_steps", self._train_steps)
-        if "replay_buffer" in checkpoint:
+        if load_replay_buffer and "replay_buffer" in checkpoint:
             self.replay_buffer.load_state_dict(checkpoint["replay_buffer"])
 
         return checkpoint

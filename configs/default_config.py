@@ -16,6 +16,14 @@ DEFAULT_CONFIG = {
         "recovery_exit_delay": 10.0,
         "recovery_exit_queue": 1.5,
         "recovery_hold_seconds": 30,
+        "local_safety_enabled": False,
+        "local_safety_lane_queue": 25.0,
+        "local_safety_tl_queue": 120.0,
+        "local_safety_mode": "queue",
+        "local_safety_downstream_weight": 1.0,
+        "local_safety_downstream_block_queue": 40.0,
+        "local_safety_downstream_block_occupancy": 0.8,
+        "local_safety_downstream_block_penalty": 50.0,
         "reward_alpha": 0.5,       # r = -(queue + alpha * waiting)
         # Normalization parameters (best practice)
         "max_queue_per_lane": 30,      # Max vehicles per lane
@@ -75,6 +83,13 @@ SCENARIOS = {
         "route_file": "data/networks/grid_3x3/grid_3x3.rou.xml",
         "description": "3x3 grid (9 intersections) for main experiments",
     },
+    "grid_3x3_dynamic": {
+        "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml",
+        "route_file": "data/networks/grid_3x3/grid_3x3_dynamic.rou.xml",
+        "description": "3x3 grid (9 TL) with moving bottlenecks and heavy cross-traffic",
+        "lateral_resolution": 0.8,
+        "eff_vehicle_length": 3.6,
+    },
     "grid_3x3_pkji_m1": {
         "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml",
         "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml",
@@ -84,6 +99,29 @@ SCENARIOS = {
         "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.net.xml",
         "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.rou.xml",
         "description": "3x3 grid with PKJI calibrated fixed-time net and PKJI-aware synthetic demand m1.5",
+    },
+    "arterial_stable": {
+        "net_file": "data/networks/arterial_3x3/arterial_fixed.net.xml",
+        "route_file": "data/networks/arterial_3x3/arterial_stable.rou.xml",
+        "lateral_resolution": 0.7,
+        # Per-lane queue normalization: 35% car (4.5+1.0=5.5m) + 65% moto (2.0+0.5=2.5m)
+        # eff_vehicle_length = 0.35*5.5 + 0.65*2.5 = 3.55m (Indonesia minGap)
+        "eff_vehicle_length": 3.55,
+        "description": "Arterial+collector network (9 TL), PKJI-calibrated, 6000 veh uniform demand (stable)",
+    },
+    "arterial_peak": {
+        "net_file": "data/networks/arterial_3x3/arterial_fixed.net.xml",
+        "route_file": "data/networks/arterial_3x3/arterial_peak.rou.xml",
+        "lateral_resolution": 0.7,
+        "eff_vehicle_length": 3.55,
+        "description": "Arterial+collector network (9 TL), PKJI-calibrated, 9000 veh Gaussian peak demand",
+    },
+    "arterial_unbalanced": {
+        "net_file": "data/networks/arterial_3x3/arterial_fixed.net.xml",
+        "route_file": "data/networks/arterial_3x3/arterial_unbalanced.rou.xml",
+        "lateral_resolution": 0.7,
+        "eff_vehicle_length": 3.55,
+        "description": "Arterial+collector network (9 TL), PKJI-calibrated, 6000 veh directional imbalance (E->W dominates 6x)",
     },
     "toronto_small": {
         "net_file": "data/networks/toronto_small/toronto_small.net.xml",
