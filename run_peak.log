@@ -1,0 +1,11 @@
+==========================================
+ARTERIAL PEAK - 50 EPISODES LAUNCH
+2x GAT-DQN, 2x Independent DQN
+Scenario: arterial_peak (12000 veh)
+==========================================
+  Started gat_dqn seed=42 PID=2152
+  Started gat_dqn seed=123 PID=7200
+  Started independent_dqn seed=42 PID=27144
+  Started independent_dqn seed=123 PID=26324
+Waiting for all 4 runs to complete...
+All runs done. Logs: logs\arterial_peak_launch_20260528_235611

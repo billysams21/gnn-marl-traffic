@@ -1,3 +1,9 @@
 *.pyc
 /helm
 /.github
+/logs
+/src/baselines/__pycache__
+/src/envs/__pycache__
+/src/utils/__pycache__
+/src/agents/__pycache__
+/configs/__pycache__

@@ -1,10 +1,3 @@
-"""
-GAT (Graph Attention Network) Encoder for spatial aggregation.
-
-Takes per-node observations and produces spatially-enriched embeddings
-by attending to neighboring intersection features.
-"""
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -15,7 +8,7 @@ class GATEncoder(nn.Module):
     """
     2-layer Graph Attention Network encoder.
 
-    Architecture (from ARSITEKTUR_GNN_MARL.md):
+    Architecture:
         Layer 1: in=obs_dim, out=hidden_dim, heads=num_heads -> hidden_dim * num_heads
         Layer 2: in=hidden_dim*num_heads, out=embed_dim, heads=1 -> embed_dim (h'_i)
 

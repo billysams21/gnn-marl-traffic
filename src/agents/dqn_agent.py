@@ -11,12 +11,20 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 import copy
 
 from src.models.gat_encoder import GATEncoder
 from src.models.q_network import QNetwork, PredictionHead
 from src.agents.replay_buffer import ReplayBuffer
+
+
+def _move_optimizer_state_to_device(optimizer: optim.Optimizer, device: torch.device):
+    """Move optimizer state tensors to the active device after checkpoint load."""
+    for state in optimizer.state.values():
+        for key, value in state.items():
+            if torch.is_tensor(value):
+                state[key] = value.to(device)
 
 
 class GATDoubleDQNAgent:
@@ -52,6 +60,7 @@ class GATDoubleDQNAgent:
         batch_size: int = 64,
         buffer_size: int = 50000,
         target_update_freq: int = 1000,
+        grad_clip_norm: float = 10.0,
         # Device
         device: str = "auto",
     ):
@@ -115,6 +124,8 @@ class GATDoubleDQNAgent:
             + list(self.prediction_head.parameters()),
             lr=lr,
         )
+
+        self.grad_clip_norm = grad_clip_norm
 
         # ---- Replay Buffer ----
         self.replay_buffer = ReplayBuffer(capacity=buffer_size)
@@ -221,7 +232,7 @@ class GATDoubleDQNAgent:
 
             target = rewards_flat + self.gamma * next_q_best * (1 - dones_flat)
 
-        rl_loss = nn.functional.mse_loss(q_taken, target)
+        rl_loss = nn.functional.smooth_l1_loss(q_taken, target)
 
         # ---- Prediction Head Loss ----
         # Target format is determined by prediction_mode:
@@ -242,7 +253,7 @@ class GATDoubleDQNAgent:
             list(self.gat_encoder.parameters())
             + list(self.q_network.parameters())
             + list(self.prediction_head.parameters()),
-            max_norm=10.0,
+            max_norm=self.grad_clip_norm,
         )
         self.optimizer.step()
 
@@ -271,25 +282,33 @@ class GATDoubleDQNAgent:
             )
         return attn_weights.cpu().numpy()
 
-    def save(self, path: str):
+    def save(self, path: str, extra_state: Optional[Dict[str, Any]] = None):
         """Save model checkpoint."""
-        torch.save(
-            {
-                "gat_encoder": self.gat_encoder.state_dict(),
-                "q_network": self.q_network.state_dict(),
-                "prediction_head": self.prediction_head.state_dict(),
-                "target_gat_encoder": self.target_gat_encoder.state_dict(),
-                "target_q_network": self.target_q_network.state_dict(),
-                "optimizer": self.optimizer.state_dict(),
-                "epsilon": self.epsilon,
-                "train_steps": self._train_steps,
-            },
-            path,
-        )
+        checkpoint = {
+            "gat_encoder": self.gat_encoder.state_dict(),
+            "q_network": self.q_network.state_dict(),
+            "prediction_head": self.prediction_head.state_dict(),
+            "target_gat_encoder": self.target_gat_encoder.state_dict(),
+            "target_q_network": self.target_q_network.state_dict(),
+            "optimizer": self.optimizer.state_dict(),
+            "epsilon": self.epsilon,
+            "train_steps": self._train_steps,
+            "replay_buffer": self.replay_buffer.state_dict(),
+        }
+        if extra_state:
+            checkpoint.update(extra_state)
+        torch.save(checkpoint, path)
 
-    def load(self, path: str):
+    def load(
+        self,
+        path: str,
+        load_optimizer: bool = True,
+        load_replay_buffer: bool = True,
+    ) -> Dict[str, Any]:
         """Load model checkpoint."""
-        checkpoint = torch.load(path, map_location=self.device, weights_only=False)
+        # Always load checkpoints on CPU first so non-model tensors (e.g., RNG state)
+        # remain compatible with torch.set_rng_state during resume.
+        checkpoint = torch.load(path, map_location="cpu", weights_only=False)
         self.gat_encoder.load_state_dict(checkpoint["gat_encoder"])
         self.q_network.load_state_dict(checkpoint["q_network"])
 
@@ -308,14 +327,19 @@ class GATDoubleDQNAgent:
 
         self.target_gat_encoder.load_state_dict(checkpoint["target_gat_encoder"])
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
-        if "optimizer" in checkpoint:
+        if load_optimizer and "optimizer" in checkpoint:
             try:
                 self.optimizer.load_state_dict(checkpoint["optimizer"])
+                _move_optimizer_state_to_device(self.optimizer, self.device)
             except ValueError:
                 # Ignore optimizer incompatibility across architecture changes.
                 pass
         self.epsilon = checkpoint.get("epsilon", self.epsilon)
         self._train_steps = checkpoint.get("train_steps", self._train_steps)
+        if load_replay_buffer and "replay_buffer" in checkpoint:
+            self.replay_buffer.load_state_dict(checkpoint["replay_buffer"])
+
+        return checkpoint
 
 
 class IndependentDQNAgent:
@@ -331,6 +355,7 @@ class IndependentDQNAgent:
         obs_dim: int,
         num_actions: int,
         num_agents: int,
+        q_hidden_dims: list = None,
         lr: float = 3e-4,
         gamma: float = 0.95,
         epsilon_start: float = 1.0,
@@ -360,7 +385,7 @@ class IndependentDQNAgent:
         self.q_network = QNetwork(
             embed_dim=obs_dim,  # directly from observation
             num_actions=num_actions,
-            hidden_dims=[128, 64],
+            hidden_dims=q_hidden_dims,
         ).to(self.device)
 
         self.target_q_network = copy.deepcopy(self.q_network).to(self.device)
@@ -422,7 +447,7 @@ class IndependentDQNAgent:
             ).squeeze(1)
             target = rewards_flat + self.gamma * next_q_best * (1 - dones_flat)
 
-        loss = nn.functional.mse_loss(q_taken, target)
+        loss = nn.functional.smooth_l1_loss(q_taken, target)
 
         self.optimizer.zero_grad()
         loss.backward()
@@ -438,22 +463,34 @@ class IndependentDQNAgent:
     def decay_epsilon(self):
         self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)
 
-    def save(self, path: str):
-        torch.save(
-            {
-                "q_network": self.q_network.state_dict(),
-                "target_q_network": self.target_q_network.state_dict(),
-                "optimizer": self.optimizer.state_dict(),
-                "epsilon": self.epsilon,
-                "train_steps": self._train_steps,
-            },
-            path,
-        )
+    def save(self, path: str, extra_state: Optional[Dict[str, Any]] = None):
+        checkpoint = {
+            "q_network": self.q_network.state_dict(),
+            "target_q_network": self.target_q_network.state_dict(),
+            "optimizer": self.optimizer.state_dict(),
+            "epsilon": self.epsilon,
+            "train_steps": self._train_steps,
+            "replay_buffer": self.replay_buffer.state_dict(),
+        }
+        if extra_state:
+            checkpoint.update(extra_state)
+        torch.save(checkpoint, path)
 
-    def load(self, path: str):
-        checkpoint = torch.load(path, map_location=self.device, weights_only=False)
+    def load(
+        self,
+        path: str,
+        load_optimizer: bool = True,
+        load_replay_buffer: bool = True,
+    ) -> Dict[str, Any]:
+        checkpoint = torch.load(path, map_location="cpu", weights_only=False)
         self.q_network.load_state_dict(checkpoint["q_network"])
         self.target_q_network.load_state_dict(checkpoint["target_q_network"])
-        self.optimizer.load_state_dict(checkpoint["optimizer"])
-        self.epsilon = checkpoint["epsilon"]
-        self._train_steps = checkpoint["train_steps"]
+        if load_optimizer and "optimizer" in checkpoint:
+            self.optimizer.load_state_dict(checkpoint["optimizer"])
+            _move_optimizer_state_to_device(self.optimizer, self.device)
+        self.epsilon = checkpoint.get("epsilon", self.epsilon)
+        self._train_steps = checkpoint.get("train_steps", self._train_steps)
+        if load_replay_buffer and "replay_buffer" in checkpoint:
+            self.replay_buffer.load_state_dict(checkpoint["replay_buffer"])
+
+        return checkpoint
