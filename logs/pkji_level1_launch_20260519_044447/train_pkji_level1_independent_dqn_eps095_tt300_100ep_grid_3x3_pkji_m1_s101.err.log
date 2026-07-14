@@ -1,0 +1,50 @@
+Warning: Vehicle '763' performs emergency braking on lane ':B1_6_1' with decel=10.00, wished=5.00, severity=1.00, time=828.00.
+Warning: Teleporting vehicle '345'; waited too long (yield), lane=':B1_13_0', time=691.00.
+Warning: Vehicle '345' ends teleporting on edge 'B1A1', time=691.00.
+Warning: Teleporting vehicle '327'; waited too long (jam), lane=':B1_1_1', time=700.00.
+Warning: Vehicle '327' ends teleporting on edge 'B1B0', time=700.00.
+Warning: Teleporting vehicle '329'; waited too long (yield), lane='B0B1_1', time=701.00.
+Warning: Vehicle '329' ends teleporting on edge 'B1A1', time=701.00.
+Warning: Teleporting vehicle '356'; waited too long (yield), lane='A1B1_1', time=710.00.
+Warning: Vehicle '356' ends teleporting on edge 'B1B2', time=710.00.
+Warning: Teleporting vehicle '383'; waited too long (jam), lane=':B1_1_1', time=724.00.
+Warning: Vehicle '383' ends teleporting on edge 'B1B0', time=724.00.
+Warning: Teleporting vehicle '326'; waited too long (jam), lane=':B1_1_0', time=727.00.
+Warning: Vehicle '326' ends teleporting on edge 'B1B0', time=727.00.
+Warning: Teleporting vehicle '361'; waited too long (yield), lane='B0B1_0', time=750.00.
+Warning: Vehicle '361' ends teleporting on edge 'B1B2', time=750.00.
+Warning: Teleporting vehicle '418'; waited too long (jam), lane=':B1_6_0', time=768.00.
+Warning: Vehicle '418' ends teleporting on edge 'B1A1', time=768.00.
+Warning: Teleporting vehicle '406'; waited too long (jam), lane=':B1_1_1', time=1027.00.
+Warning: Vehicle '406' ends teleporting on edge 'B1B0', time=1027.00.
+Warning: Teleporting vehicle '390'; waited too long (jam), lane=':B1_1_0', time=1114.00.
+Warning: Vehicle '390' ends teleporting on edge 'B1B0', time=1114.00.
+Warning: Teleporting vehicle '376'; waited too long (yield), lane=':B1_18_0', time=1116.00.
+Warning: Vehicle '376' ends teleporting on edge 'B1B2', time=1116.00.
+Warning: Teleporting vehicle '439'; waited too long (yield), lane='A1B1_1', time=1120.00.
+Warning: Vehicle '439' ends teleporting on edge 'B1A1', time=1120.00.
+Warning: Teleporting vehicle '436'; waited too long (jam), lane='B2B1_1', time=1124.00.
+Warning: Vehicle '436' ends teleporting on edge 'B1B0', time=1124.00.
+Warning: Teleporting vehicle '1780'; waited too long (yield), lane=':B2_8_0', time=2176.00.
+Warning: Vehicle '1780' ends teleporting on edge 'B2B1', time=2176.00.
+Warning: Teleporting vehicle '1830'; waited too long (jam), lane=':B2_16_1', time=2183.00.
+Warning: Vehicle '1830' ends teleporting on edge 'B2C2', time=2183.00.
+Warning: Teleporting vehicle '3148'; waited too long (yield), lane=':B1_3_0', time=3474.00.
+Warning: Vehicle '3148' ends teleporting on edge 'B1C1', time=3474.00.
+Warning: Teleporting vehicle '150'; waited too long (yield), lane=':B1_3_0', time=516.00.
+Warning: Vehicle '150' ends teleporting on edge 'B1C1', time=516.00.
+Warning: Teleporting vehicle '188'; waited too long (jam), lane='C1B1_0', time=559.00.
+Warning: Vehicle '188' ends teleporting on edge 'B1A1', time=559.00.
+Warning: Teleporting vehicle '199'; waited too long (jam), lane=':B1_6_1', time=561.00.
+Warning: Vehicle '199' ends teleporting on edge 'B1A1', time=561.00.
+Warning: Teleporting vehicle '232'; waited too long (jam), lane=':B1_6_1', time=564.00.
+Warning: Vehicle '232' ends teleporting on edge 'B1A1', time=564.00.
+Warning: Teleporting vehicle '196'; waited too long (jam), lane=':B1_16_0', time=565.00.
+Warning: Vehicle '196' ends teleporting on edge 'B1C1', time=565.00.
+Warning: Teleporting vehicle '217'; waited too long (jam), lane=':B1_6_1', time=567.00.
+Warning: Vehicle '217' ends teleporting on edge 'B1A1', time=567.00.
+Warning: Teleporting vehicle '265'; waited too long (jam), lane=':B1_16_0', time=589.00.
+Warning: Vehicle '265' ends teleporting on edge 'B1C1', time=589.00.
+Warning: Vehicle '3174' performs emergency braking on lane ':B2_11_1' with decel=7.00, wished=4.00, severity=1.00, time=3269.00.
+Warning: Teleporting vehicle '1238'; waited too long (yield), lane=':A1_13_0', time=1609.00.
+Warning: Vehicle '1238' ends teleporting on edge 'A1left1', time=1609.00.

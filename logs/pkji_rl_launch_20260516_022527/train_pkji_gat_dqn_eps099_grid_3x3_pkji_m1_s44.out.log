@@ -1,0 +1,30 @@
+============================================================
+Training gat_dqn on grid_3x3_pkji_m1
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml
+Episodes: 5
+Seed: 44 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A1', 'B0', 'A0', 'A2', 'B1', 'B2', 'C0', 'C1', 'C2']
+Observation dim: 43
+Number of actions: 2
+Number of lanes per intersection: 8
+Adjacency matrix:
+[[1. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 1. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 1.]]
+Episode    1 | reward: -6428.9444 | epsilon: 0.9900 | steps: 719 | avg_delay: 1.8542 | avg_queue: 0.2778 | throughput: 3504 | emergency_stops: 0 | loss_total: 117.2191 | loss_rl: 117.2156 | loss_pred: 0.0117
+Episode    2 | reward: -7108.8889 | epsilon: 0.9801 | steps: 719 | avg_delay: 1.2258 | avg_queue: 0.2083 | throughput: 3507 | emergency_stops: 0 | loss_total: 71.2102 | loss_rl: 71.2075 | loss_pred: 0.0090
+Episode    3 | reward: -12974.9444 | epsilon: 0.9703 | steps: 719 | avg_delay: 44.0134 | avg_queue: 1.1667 | throughput: 3450 | emergency_stops: 0 | loss_total: 103.7531 | loss_rl: 103.7505 | loss_pred: 0.0086
+Episode    4 | reward: -6203.8333 | epsilon: 0.9606 | steps: 719 | avg_delay: 1.2637 | avg_queue: 0.2083 | throughput: 3509 | emergency_stops: 0 | loss_total: 1750.0944 | loss_rl: 1750.0917 | loss_pred: 0.0089
+Episode    5 | reward: -22828262.7778 | epsilon: 0.9510 | steps: 719 | avg_delay: 1303.9093 | avg_queue: 24.6389 | throughput: 1367 | emergency_stops: 0 | loss_total: 104108657.7372 | loss_rl: 104108657.7362 | loss_pred: 0.0375
+
+Training complete! Best train reward: -6203.83 | Best eval reward: -inf
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_grid_3x3_pkji_m1_20260516_022534_pkji_gat_dqn_eps099_grid_3x3_pkji_m1_s44

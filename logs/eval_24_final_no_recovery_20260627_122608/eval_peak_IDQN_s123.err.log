@@ -1,0 +1,7 @@
+Warning: Teleporting vehicle '1745'; junction collision with vehicle '1741', lane=':A2_14_0', gap=-0.09, latGap=-0.10, time=1963.00, stage=move.
+Warning: Vehicle '1745' ends teleporting on edge 'A2A3', time=1963.00.
+Warning: Teleporting vehicle '4492'; side collision with vehicle '1940', lane='A1A2_0', gap=-2.89, latGap=-0.15, time=2339.00, stage=laneChange.
+Warning: Vehicle '4492' ends teleporting on edge 'A2A3', time=2344.00.
+Warning: Teleporting vehicle '6817'; side collision with vehicle '6775', lane='E_A4A3_1', gap=-2.50, latGap=-0.50, time=3150.00, stage=laneChange.
+Warning: Vehicle '6775' ends teleporting on edge 'A3A2', time=3150.00.
+Warning: Vehicle '6817' ends teleporting on edge 'A3A2', time=3152.00.

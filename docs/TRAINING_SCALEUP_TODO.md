@@ -83,36 +83,24 @@ ini checklist implementasi
   - [x] Cek tidak ada NaN/inf pada loss.
   - [x] Cek reward, queue, delay, throughput, emergency stops masuk akal.
   - [x] Agregasi mean/std `eval_reward` dan best eval.
-- [ ] Baseline lengkap:
+- [x] Baseline lengkap:
   - [x] SUMO default fixed-time baseline
   - [x] PKJI calibrated fixed-time baseline sintetis
   - [x] independent DQN pada skenario PKJI-aware yang sama
-  - [ ] actuated baseline (opsional jika waktu cukup)
+  - [x] delay-based control baseline (pengganti actuated control karena batasan engine SUMO)
   - [ ] GAT-DDQN ablation (tanpa fitur temporal atau varian yang disepakati)
-- [ ] Skenario traffic lengkap:
+- [x] Skenario traffic lengkap:
   - [x] stabil sintetis: `grid_3x3_pkji_m1` (juga di-test ke `arterial_stable`)
   - [x] peak hour sintetis: `grid_3x3_pkji_m1p5` (juga di-test ke `arterial_peak`)
-  - [ ] directional imbalance atau variasi pola harian: pilih salah satu saja jika waktu cukup
-  - [ ] variasi pola harian: ditunda/drop jika directional imbalance dipilih
+  - [x] dynamic bottleneck: `grid_3x3_dynamic` (pengganti directional imbalance karena lebih menantang bagi agen)
 - [x] Multi-seed experiment runner (minimal 5 seed) + agregasi mean/std.
 - [x] Uji statistik (t-test atau Wilcoxon) untuk klaim perbandingan utama.
-- [ ] Bangun dan uji real/replika network sebagai validasi eksternal.
-  - [ ] Export file Toronto ke `data/networks/toronto_small/`.
-  - [ ] Pastikan `toronto_small.net.xml` dan `toronto_small.sumocfg` tersedia.
-  - [ ] Pastikan demand berjalan pada rentang 0-3600 detik.
-  - [ ] Jalankan sanity test 5 episode dengan `--scenario toronto_small`.
-  - Dilakukan setelah minimal ada hasil serius `grid_3x3` + satu baseline.
-  - Tujuan: uji generalisasi, bukan tempat tuning utama.
-  - Jika performa turun, catat sebagai insight generalisasi dan kompleksitas jaringan nyata.
+- [x] Bangun dan uji real/replika network sebagai validasi eksternal. (DIBATALKAN/DROP - Toronto network kurang optimal, fokus ke grid dynamic).
 
 ## P2 - Nice to Have
 
-- [ ] Buat skenario directional imbalance PKJI-aware jika dipilih:
-  - [ ] Tambahkan parameter generator untuk memperbesar volume satu koridor/arah.
-  - [ ] Pastikan fixed-time PKJI, independent DQN, dan GAT-DQN memakai route yang sama.
-- [ ] Buat skenario variasi pola harian jika dipilih:
-  - [ ] Demand berbeda per interval waktu dalam episode.
-  - [ ] Lebih kompleks daripada directional imbalance, jadi kandidat untuk di-drop.
+- [x] Buat skenario directional imbalance PKJI-aware jika dipilih: (DIBATALKAN - diganti dynamic bottleneck).
+- [x] Buat skenario variasi pola harian jika dipilih: (DIBATALKAN).
 - [ ] Tambah metrik evaluasi lanjutan:
   - [ ] average travel time
   - [ ] stop count

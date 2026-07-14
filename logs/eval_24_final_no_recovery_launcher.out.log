@@ -1,0 +1,43 @@
+==========================================
+EVAL 24 FINAL MODELS -- NO RECOVERY
+teleport DISABLED (time_to_teleport=-1)
+recovery DISABLED (recovery_enabled=false)
+episodes=4 | outdir=logs\eval_24_final_no_recovery_20260627_122608
+==========================================
+  Started stable_GAT_s42 PID=7916
+  Started stable_GAT_s123 PID=20856
+  Started stable_GAT_s77 PID=6296
+  Started stable_GAT_s111 PID=7804
+  Started stable_IDQN_s42 PID=23344
+  Started stable_IDQN_s123 PID=21208
+  Started stable_IDQN_s77 PID=11336
+  Started stable_IDQN_s111 PID=21136
+  Started peak_GAT_s42 PID=6860
+  Started peak_GAT_s123 PID=4676
+  Started peak_GAT_s77 PID=17480
+  Started peak_GAT_s111 PID=11508
+  Started peak_IDQN_s42 PID=15648
+  Started peak_IDQN_s123 PID=4020
+  Started peak_IDQN_s77 PID=12596
+  Started peak_IDQN_s111 PID=17508
+  Started grid_GAT_s42 PID=2356
+  Started grid_GAT_s123 PID=13664
+  Started grid_GAT_s77 PID=16036
+  Started grid_GAT_s111 PID=4748
+  Started grid_IDQN_s42 PID=15252
+  Started grid_IDQN_s123 PID=2728
+  Started grid_IDQN_s77 PID=14624
+  Started grid_IDQN_s111 PID=16424
+Waiting for all evals...
+Completed with non-empty stderr logs:
+  stable_GAT_s42
+  stable_GAT_s77
+  peak_GAT_s123
+  peak_GAT_s111
+  peak_IDQN_s123
+  grid_GAT_s42
+  grid_GAT_s123
+  grid_GAT_s77
+  grid_GAT_s111
+  grid_IDQN_s77
+Done. Logs: logs\eval_24_final_no_recovery_20260627_122608

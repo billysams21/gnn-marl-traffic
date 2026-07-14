@@ -1,0 +1,18 @@
+Episode 1: reward=-24.03, delay=0.93, queue=2.81, mean_delay=1.09, max_delay=5.08, mean_queue=1.57, max_queue=3.21, throughput=5218, emergency_stops=0, teleport_started=0
+Episode 2: reward=-26.24, delay=1.98, queue=2.43, mean_delay=1.37, max_delay=13.32, mean_queue=1.60, max_queue=3.29, throughput=5200, emergency_stops=0, teleport_started=0
+Episode 3: reward=-26.00, delay=3.84, queue=4.67, mean_delay=1.16, max_delay=4.59, mean_queue=1.66, max_queue=5.24, throughput=5168, emergency_stops=0, teleport_started=0
+Episode 4: reward=-23.86, delay=0.59, queue=1.71, mean_delay=1.17, max_delay=3.55, mean_queue=1.53, max_queue=3.07, throughput=5225, emergency_stops=0, teleport_started=0
+
+==================================================
+Evaluation Results (4 episodes)
+==================================================
+Avg Reward:  -25.03 ± 1.09
+Avg Delay:   1.84 ± 1.27
+Avg Queue:   2.90 ± 1.09
+Mean Delay:  1.19 ± 0.10
+Max Delay:   6.63 ± 3.90
+Mean Queue:  1.59 ± 0.05
+Max Queue:   3.70 ± 0.89
+Throughput:  5202.75 ± 22.04
+Emergency:   0.00 ± 0.00
+Teleport:    0.00 ± 0.00

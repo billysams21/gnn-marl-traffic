@@ -1,0 +1,29 @@
+============================================================
+Training gat_dqn on arterial_peak
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/arterial_3x3/arterial_fixed.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/arterial_3x3/arterial_peak.rou.xml
+Episodes: 4
+Seed: 42 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A2', 'B1', 'C1', 'A1', 'A3', 'B2', 'C2', 'B3', 'C3']
+Observation dim: 33
+Number of actions: 2
+Number of lanes per intersection (max): 6
+Adjacency matrix:
+[[1. 0. 0. 1. 1. 1. 1. 0. 0.]
+ [0. 1. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 1. 0. 0. 1. 0. 0.]
+ [1. 1. 1. 1. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 1. 0. 0. 1. 1.]
+ [1. 1. 0. 0. 0. 1. 0. 1. 0.]
+ [1. 0. 1. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 1.]]
+Episode    1 | reward: -74.0162 | epsilon: 0.7680 | steps: 719 | avg_delay: 2.2130 | avg_queue: 4.2143 | throughput: 6091 | arrived_vehicles: 6091 | departed_vehicles: 6814 | num_vehicles: 723 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | local_safety_active_tls: 0 | local_safety_overrides: 0 | episode_mean_avg_delay: 2.8841 | episode_max_avg_delay: 11.7176 | episode_mean_avg_queue: 3.2279 | episode_max_avg_queue: 6.7143 | episode_mean_num_vehicles: 652.9791 | episode_max_num_vehicles: 1062.0000 | episode_recovery_steps: 395 | episode_local_safety_steps: 0 | episode_local_safety_overrides: 0 | episode_peak_top_tl: A1 | episode_peak_top_tl_queue: 143.0000 | episode_peak_top_tl_waiting: 4545.0000 | episode_peak_top_tl_phase: 1 | episode_peak_top_tl_phase_duration: 13 | episode_peak_top_tl_action: 0 | episode_peak_top_lane: W_A0A1_1 | episode_peak_top_lane_queue: 86.0000 | episode_peak_top_lane_waiting: 3781.0000 | loss_total: 0.0048 | loss_rl: 0.0034 | loss_pred: 0.0295
+Episode    2 | reward: -89.0034 | epsilon: 0.7373 | steps: 719 | avg_delay: 2.8051 | avg_queue: 3.2143 | throughput: 6048 | arrived_vehicles: 6048 | departed_vehicles: 6797 | num_vehicles: 749 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | local_safety_active_tls: 0 | local_safety_overrides: 0 | episode_mean_avg_delay: 2.8884 | episode_max_avg_delay: 12.8177 | episode_mean_avg_queue: 3.7139 | episode_max_avg_queue: 10.5238 | episode_mean_num_vehicles: 723.1600 | episode_max_num_vehicles: 1206.0000 | episode_recovery_steps: 419 | episode_local_safety_steps: 0 | episode_local_safety_overrides: 0 | episode_peak_top_tl: A1 | episode_peak_top_tl_queue: 208.0000 | episode_peak_top_tl_waiting: 4055.0000 | episode_peak_top_tl_phase: 0 | episode_peak_top_tl_phase_duration: 33 | episode_peak_top_tl_action: 0 | episode_peak_top_lane: W_A0A1_1 | episode_peak_top_lane_queue: 120.0000 | episode_peak_top_lane_waiting: 2482.0000 | loss_total: 0.0105 | loss_rl: 0.0089 | loss_pred: 0.0303
+Episode    3 | reward: -96.7298 | epsilon: 0.7078 | steps: 719 | avg_delay: 6.2582 | avg_queue: 5.4048 | throughput: 6044 | arrived_vehicles: 6044 | departed_vehicles: 6780 | num_vehicles: 736 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | local_safety_active_tls: 0 | local_safety_overrides: 0 | episode_mean_avg_delay: 3.1021 | episode_max_avg_delay: 12.8136 | episode_mean_avg_queue: 3.9582 | episode_max_avg_queue: 12.2619 | episode_mean_num_vehicles: 715.8053 | episode_max_num_vehicles: 1300.0000 | episode_recovery_steps: 394 | episode_local_safety_steps: 0 | episode_local_safety_overrides: 0 | episode_peak_top_tl: A2 | episode_peak_top_tl_queue: 258.0000 | episode_peak_top_tl_waiting: 8152.0000 | episode_peak_top_tl_phase: 1 | episode_peak_top_tl_phase_duration: 13 | episode_peak_top_tl_action: 0 | episode_peak_top_lane: A1A2_1 | episode_peak_top_lane_queue: 147.0000 | episode_peak_top_lane_waiting: 4391.0000 | loss_total: 0.0127 | loss_rl: 0.0112 | loss_pred: 0.0303
+Episode    4 | reward: -119.9535 | epsilon: 0.6795 | steps: 719 | avg_delay: 6.0761 | avg_queue: 4.7857 | throughput: 6003 | arrived_vehicles: 6003 | departed_vehicles: 6699 | num_vehicles: 696 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | local_safety_active_tls: 0 | local_safety_overrides: 0 | episode_mean_avg_delay: 4.0892 | episode_max_avg_delay: 21.4100 | episode_mean_avg_queue: 4.1840 | episode_max_avg_queue: 11.5952 | episode_mean_num_vehicles: 759.8456 | episode_max_num_vehicles: 1356.0000 | episode_recovery_steps: 399 | episode_local_safety_steps: 0 | episode_local_safety_overrides: 0 | episode_peak_top_tl: A2 | episode_peak_top_tl_queue: 269.0000 | episode_peak_top_tl_waiting: 17739.0000 | episode_peak_top_tl_phase: 1 | episode_peak_top_tl_phase_duration: 13 | episode_peak_top_tl_action: 0 | episode_peak_top_lane: A1A2_1 | episode_peak_top_lane_queue: 159.0000 | episode_peak_top_lane_waiting: 10654.0000 | loss_total: 0.0161 | loss_rl: 0.0146 | loss_pred: 0.0298
+
+Training complete! Best train reward: -74.02 | Best eval reward: -inf
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_arterial_peak_20260707_025839_test_norm_75pct_arterial_peak_gat_s42

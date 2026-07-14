@@ -1,0 +1,2 @@
+Warning: Teleporting vehicle 'dyn_1484'; side collision with vehicle 'dyn_1511', lane='A1B1_0', gap=-2.12, latGap=-0.65, time=1252.00, stage=laneChange.
+Warning: Vehicle 'dyn_1484' ends teleporting on edge 'B1C1', time=1252.00.

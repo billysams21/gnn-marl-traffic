@@ -1,0 +1,5 @@
+Warning: Vehicle '263_x1' performs emergency braking on lane ':A1_6_1' with decel=9.00, wished=4.50, severity=1.00, time=333.00.
+Warning: Vehicle '3075_x1' performs emergency braking on lane ':B1_6_1' with decel=10.00, wished=5.00, severity=1.00, time=3205.00.
+Warning: Vehicle '1926_x1' performs emergency braking on lane ':C1_6_1' with decel=9.00, wished=4.50, severity=1.00, time=1948.00.
+Warning: Teleporting vehicle '2328'; junction collision with vehicle '2328_x1', lane=':B1_6_1', gap=-0.08, time=2579.00, stage=move.
+Warning: Vehicle '2328' ends teleporting on edge 'B1A1', time=2579.00.

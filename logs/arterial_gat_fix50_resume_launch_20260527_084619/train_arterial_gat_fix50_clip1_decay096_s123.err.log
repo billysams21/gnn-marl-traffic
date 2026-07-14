@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '4219'; junction collision with vehicle '4290', lane=':A1_14_1', gap=-0.09, latGap=-0.60, time=2960.00, stage=move.
+Warning: Vehicle '4219' ends teleporting on edge 'A1A2', time=2965.00.
+Error: tcpip::Socket::recvAndCheck @ recv: Socket reset by peer
+Quitting (on error).

@@ -1,0 +1,35 @@
+============================================================
+Training independent_dqn on grid_3x3_pkji_m1
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml
+Episodes: 10
+Seed: 1101 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A1', 'B0', 'A0', 'A2', 'B1', 'B2', 'C0', 'C1', 'C2']
+Observation dim: 43
+Number of actions: 2
+Number of lanes per intersection: 8
+Adjacency matrix:
+[[1. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 1. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 1.]]
+Episode    1 | reward: -117.0955 | epsilon: 0.7840 | steps: 719 | avg_delay: 1.0745 | avg_queue: 0.2083 | throughput: 3506 | arrived_vehicles: 3506 | departed_vehicles: 3600 | num_vehicles: 94 | emergency_stops: 0 | teleport_started: 8 | teleport_ended: 8 | recovery_active: 0.0000 | episode_mean_avg_delay: 22.8814 | episode_max_avg_delay: 248.8753 | episode_mean_avg_queue: 0.7421 | episode_max_avg_queue: 4.3056 | episode_mean_num_vehicles: 143.4186 | episode_max_num_vehicles: 394.0000 | episode_recovery_steps: 119 | loss_rl: 0.0941
+Episode    2 | reward: -6.8165 | epsilon: 0.7683 | steps: 719 | avg_delay: 0.2584 | avg_queue: 0.0833 | throughput: 3510 | arrived_vehicles: 3510 | departed_vehicles: 3599 | num_vehicles: 89 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1867 | episode_max_avg_delay: 3.7158 | episode_mean_avg_queue: 0.2099 | episode_max_avg_queue: 0.5139 | episode_mean_num_vehicles: 91.4951 | episode_max_num_vehicles: 112.0000 | episode_recovery_steps: 0 | loss_rl: 0.0340
+Episode    3 | reward: -6.5264 | epsilon: 0.7530 | steps: 719 | avg_delay: 2.9574 | avg_queue: 0.2361 | throughput: 3506 | arrived_vehicles: 3506 | departed_vehicles: 3600 | num_vehicles: 94 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1314 | episode_max_avg_delay: 4.3191 | episode_mean_avg_queue: 0.2020 | episode_max_avg_queue: 0.4722 | episode_mean_num_vehicles: 90.6773 | episode_max_num_vehicles: 112.0000 | episode_recovery_steps: 0 | loss_rl: 0.0149
+Episode    4 | reward: -6.4459 | epsilon: 0.7379 | steps: 719 | avg_delay: 0.8750 | avg_queue: 0.2639 | throughput: 3503 | arrived_vehicles: 3503 | departed_vehicles: 3599 | num_vehicles: 96 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1133 | episode_max_avg_delay: 3.5778 | episode_mean_avg_queue: 0.1999 | episode_max_avg_queue: 0.4167 | episode_mean_num_vehicles: 90.2935 | episode_max_num_vehicles: 108.0000 | episode_recovery_steps: 0 | loss_rl: 0.0124
+Episode    5 | reward: -6.6469 | epsilon: 0.7231 | steps: 719 | avg_delay: 0.6737 | avg_queue: 0.1389 | throughput: 3504 | arrived_vehicles: 3504 | departed_vehicles: 3599 | num_vehicles: 95 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1498 | episode_max_avg_delay: 3.8788 | episode_mean_avg_queue: 0.2058 | episode_max_avg_queue: 0.4722 | episode_mean_num_vehicles: 91.1321 | episode_max_num_vehicles: 112.0000 | episode_recovery_steps: 0 | loss_rl: 0.0118 | eval_reward: -4.7276 | eval_reward_std: 0.0000 | eval_avg_delay: 0.8132 | eval_avg_queue: 0.2083 | eval_throughput: 3509.0000 | eval_emergency_stops: 0.0000 | eval_teleport_started: 0.0000 | eval_teleport_ended: 0.0000 | eval_episode_mean_delay: 0.7292 | eval_episode_max_delay: 3.0989 | eval_episode_mean_queue: 0.1547 | eval_episode_max_queue: 0.3611
+Episode    6 | reward: -6.6446 | epsilon: 0.7087 | steps: 719 | avg_delay: 2.2247 | avg_queue: 0.2778 | throughput: 3511 | arrived_vehicles: 3511 | departed_vehicles: 3600 | num_vehicles: 89 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1578 | episode_max_avg_delay: 4.7053 | episode_mean_avg_queue: 0.2050 | episode_max_avg_queue: 0.5139 | episode_mean_num_vehicles: 90.7177 | episode_max_num_vehicles: 106.0000 | episode_recovery_steps: 0 | loss_rl: 0.0096
+Episode    7 | reward: -99.4298 | epsilon: 0.6945 | steps: 719 | avg_delay: 2.3528 | avg_queue: 1.4306 | throughput: 3249 | arrived_vehicles: 3249 | departed_vehicles: 3592 | num_vehicles: 343 | emergency_stops: 0 | teleport_started: 3 | teleport_ended: 3 | recovery_active: 0.0000 | episode_mean_avg_delay: 20.9817 | episode_max_avg_delay: 249.1296 | episode_mean_avg_queue: 0.5669 | episode_max_avg_queue: 4.0278 | episode_mean_num_vehicles: 119.6384 | episode_max_num_vehicles: 371.0000 | episode_recovery_steps: 108 | loss_rl: 0.0086
+Episode    8 | reward: -73.2997 | epsilon: 0.6806 | steps: 719 | avg_delay: 136.6241 | avg_queue: 2.8333 | throughput: 3305 | arrived_vehicles: 3305 | departed_vehicles: 3595 | num_vehicles: 290 | emergency_stops: 0 | teleport_started: 3 | teleport_ended: 3 | recovery_active: 1.0000 | episode_mean_avg_delay: 18.4747 | episode_max_avg_delay: 230.0810 | episode_mean_avg_queue: 0.4464 | episode_max_avg_queue: 3.1111 | episode_mean_num_vehicles: 106.7524 | episode_max_num_vehicles: 292.0000 | episode_recovery_steps: 90 | loss_rl: 0.0142
+Episode    9 | reward: -6.6825 | epsilon: 0.6670 | steps: 719 | avg_delay: 0.4536 | avg_queue: 0.1389 | throughput: 3502 | arrived_vehicles: 3502 | departed_vehicles: 3599 | num_vehicles: 97 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1665 | episode_max_avg_delay: 4.0115 | episode_mean_avg_queue: 0.2061 | episode_max_avg_queue: 0.4722 | episode_mean_num_vehicles: 91.2156 | episode_max_num_vehicles: 111.0000 | episode_recovery_steps: 0 | loss_rl: 0.0154
+Episode   10 | reward: -6.5598 | epsilon: 0.6537 | steps: 719 | avg_delay: 0.7253 | avg_queue: 0.2361 | throughput: 3509 | arrived_vehicles: 3509 | departed_vehicles: 3600 | num_vehicles: 91 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | episode_mean_avg_delay: 1.1403 | episode_max_avg_delay: 4.1789 | episode_mean_avg_queue: 0.2027 | episode_max_avg_queue: 0.5000 | episode_mean_num_vehicles: 90.6704 | episode_max_num_vehicles: 107.0000 | episode_recovery_steps: 0 | loss_rl: 0.0148 | eval_reward: -4.5960 | eval_reward_std: 0.0000 | eval_avg_delay: 0.8452 | eval_avg_queue: 0.1806 | eval_throughput: 3515.0000 | eval_emergency_stops: 0.0000 | eval_teleport_started: 0.0000 | eval_teleport_ended: 0.0000 | eval_episode_mean_delay: 0.6629 | eval_episode_max_delay: 1.8681 | eval_episode_mean_queue: 0.1532 | eval_episode_max_queue: 0.3472
+
+Training complete! Best train reward: -6.45 | Best eval reward: -4.60
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\independent_dqn_grid_3x3_pkji_m1_20260523_013455_pkji_stage1_fresh_smoke_independent_dqn_tt600_eps08_decay098_10ep_s1101

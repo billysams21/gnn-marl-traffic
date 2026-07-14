@@ -1,0 +1,26 @@
+Warning: Teleporting vehicle '277'; waited too long (yield), lane=':B2_8_0', time=1027.00.
+Warning: Vehicle '277' ends teleporting on edge 'B2B1', time=1027.00.
+Warning: Teleporting vehicle '361'; waited too long (yield), lane=':B2_13_0', time=1040.00.
+Warning: Vehicle '361' ends teleporting on edge 'B2A2', time=1040.00.
+Warning: Teleporting vehicle '380'; waited too long (yield), lane='A2B2_0', time=1094.00.
+Warning: Vehicle '380' ends teleporting on edge 'B2C2', time=1094.00.
+Warning: Teleporting vehicle '1006'; waited too long (yield), lane='top0A2_1', time=1630.00.
+Warning: Teleporting vehicle '407'; waited too long (yield), lane=':B2_13_0', time=1652.00.
+Warning: Vehicle '407' ends teleporting on edge 'B2A2', time=1652.00.
+Warning: Teleporting vehicle '448'; waited too long (yield), lane='B1B2_1', time=1656.00.
+Warning: Vehicle '448' ends teleporting on edge 'B2A2', time=1656.00.
+Warning: Teleporting vehicle '1005'; waited too long (jam), lane='B0B1_0', time=1659.00.
+Warning: Teleporting vehicle '1000'; waited too long (yield), lane='A1B1_1', time=1659.00.
+Warning: Teleporting vehicle '429'; waited too long (jam), lane=':B2_16_1', time=1666.00.
+Warning: Vehicle '429' ends teleporting on edge 'B2C2', time=1666.00.
+Warning: Teleporting vehicle '551'; waited too long (jam), lane=':B2_11_0', time=1668.00.
+Warning: Vehicle '551' ends teleporting on edge 'B2top1', time=1668.00.
+Warning: Teleporting vehicle '1043'; waited too long (yield), lane='B0B1_1', time=1697.00.
+Warning: Teleporting vehicle '1045'; waited too long (jam), lane='left2A2_1', time=1702.00.
+Warning: Vehicle '1045' ends teleporting on edge 'A2B2', time=1731.00.
+Warning: Teleporting vehicle '1092'; waited too long (yield), lane='B2A2_1', time=1756.00.
+Warning: Vehicle '1092' ends teleporting on edge 'A2B2', time=1771.00.
+Warning: Vehicle '1006' ends teleporting on edge 'A2B2', time=1802.00.
+Warning: Vehicle '1000' ends teleporting on edge 'B2top1', time=1840.00.
+Warning: Vehicle '1005' ends teleporting on edge 'B2C2', time=1840.00.
+Warning: Vehicle '1043' ends teleporting on edge 'B2top1', time=1878.00.

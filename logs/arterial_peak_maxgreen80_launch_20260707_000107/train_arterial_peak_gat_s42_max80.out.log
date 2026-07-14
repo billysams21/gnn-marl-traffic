@@ -1,0 +1,26 @@
+============================================================
+Training gat_dqn on arterial_peak
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/arterial_3x3/arterial_fixed.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/arterial_3x3/arterial_peak.rou.xml
+Episodes: 1
+Seed: 42 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A2', 'B1', 'C1', 'A1', 'A3', 'B2', 'C2', 'B3', 'C3']
+Observation dim: 33
+Number of actions: 2
+Number of lanes per intersection (max): 6
+Adjacency matrix:
+[[1. 0. 0. 1. 1. 1. 1. 0. 0.]
+ [0. 1. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 1. 0. 0. 1. 0. 0.]
+ [1. 1. 1. 1. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 1. 0. 0. 1. 1.]
+ [1. 1. 0. 0. 0. 1. 0. 1. 0.]
+ [1. 0. 1. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 1.]]
+Episode    1 | reward: -130.9122 | epsilon: 0.7680 | steps: 719 | avg_delay: 2.0300 | avg_queue: 3.4762 | throughput: 5993 | arrived_vehicles: 5993 | departed_vehicles: 6726 | num_vehicles: 733 | emergency_stops: 0 | teleport_started: 0 | teleport_ended: 0 | recovery_active: 0.0000 | local_safety_active_tls: 0 | local_safety_overrides: 0 | episode_mean_avg_delay: 4.9185 | episode_max_avg_delay: 30.4592 | episode_mean_avg_queue: 4.1216 | episode_max_avg_queue: 12.9048 | episode_mean_num_vehicles: 677.5341 | episode_max_num_vehicles: 1093.0000 | episode_recovery_steps: 382 | episode_local_safety_steps: 0 | episode_local_safety_overrides: 0 | episode_peak_top_tl: A2 | episode_peak_top_tl_queue: 361.0000 | episode_peak_top_tl_waiting: 27420.0000 | episode_peak_top_tl_phase: 1 | episode_peak_top_tl_phase_duration: 13 | episode_peak_top_tl_action: 0 | episode_peak_top_lane: A1A2_1 | episode_peak_top_lane_queue: 200.0000 | episode_peak_top_lane_waiting: 16372.0000 | loss_total: 0.0222 | loss_rl: 0.0206 | loss_pred: 0.0313
+
+Training complete! Best train reward: -130.91 | Best eval reward: -inf
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_arterial_peak_20260707_000110_arterial_peak_gat_s42_max80

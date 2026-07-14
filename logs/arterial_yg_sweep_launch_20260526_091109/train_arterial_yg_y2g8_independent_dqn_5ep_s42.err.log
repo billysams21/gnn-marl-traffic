@@ -1,0 +1,13 @@
+Warning: Vehicle '2238' performs emergency braking on lane ':A2_14_1' with decel=9.00, wished=4.50, severity=1.00, time=2793.00.
+Warning: Teleporting vehicle '2267'; junction collision with vehicle '2238', lane=':A2_14_1', gap=-2.19, latGap=-0.20, time=2793.00, stage=move.
+Warning: Vehicle '2267' ends teleporting on edge 'A2A3', time=2793.00.
+Warning: Teleporting vehicle '2524'; junction collision with vehicle '2499', lane=':A1_14_1', gap=-0.16, latGap=-0.45, time=2074.00, stage=move.
+Warning: Vehicle '2524' ends teleporting on edge 'A1A2', time=2074.00.
+Warning: Teleporting vehicle '3443'; waited too long (yield), lane='W_A0A1_1', time=3081.00.
+Warning: Vehicle '3443' ends teleporting on edge 'A1C1', time=3081.00.
+Warning: Teleporting vehicle '4328'; waited too long (jam), lane=':A1_5_0', time=3100.00.
+Warning: Teleporting vehicle '4492'; waited too long (jam), lane=':A1_2_0', time=3100.00.
+Warning: Vehicle '4328' ends teleporting on edge 'A1W_A0', time=3100.00.
+Warning: Vehicle '4492' ends teleporting on edge 'A1A2', time=3100.00.
+Warning: Teleporting vehicle '3463'; waited too long (jam), lane=':A1_14_1', time=3117.00.
+Warning: Vehicle '3463' ends teleporting on edge 'A1A2', time=3117.00.

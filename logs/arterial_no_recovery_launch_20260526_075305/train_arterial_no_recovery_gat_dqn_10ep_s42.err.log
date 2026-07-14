@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '230'; side collision with vehicle '243', lane=':A1_5_0', gap=-2.22, latGap=-0.15, time=337.00, stage=laneChange.
+Warning: Vehicle '230' ends teleporting on edge 'A1W_A0', time=337.00.
+Warning: Teleporting vehicle '625'; waited too long (yield), lane='A1A2_1', time=1075.00.
+Warning: Vehicle '625' ends teleporting on edge 'A2C2', time=1075.00.

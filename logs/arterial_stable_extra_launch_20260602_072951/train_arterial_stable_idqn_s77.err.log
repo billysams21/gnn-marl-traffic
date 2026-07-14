@@ -1,0 +1,10 @@
+Warning: Teleporting vehicle '1332'; junction collision with vehicle '1310', lane=':A1_14_1', gap=-0.42, latGap=-0.45, time=1361.00, stage=move.
+Warning: Vehicle '1332' ends teleporting on edge 'A1A2', time=1361.00.
+Warning: Teleporting vehicle '4829'; waited too long (jam), lane=':A1_2_0', time=3374.00.
+Warning: Vehicle '4829' ends teleporting on edge 'A1A2', time=3374.00.
+Warning: Teleporting vehicle '4567'; waited too long (yield), lane='W_A0A1_1', time=3375.00.
+Warning: Vehicle '4567' ends teleporting on edge 'A1C1', time=3375.00.
+Warning: Teleporting vehicle '4835'; waited too long (jam), lane=':A1_2_0', time=3301.00.
+Warning: Vehicle '4835' ends teleporting on edge 'A1A2', time=3301.00.
+Warning: Teleporting vehicle '97'; junction collision with vehicle '222', lane=':A3_14_1', gap=-0.28, latGap=-1.00, time=251.00, stage=move.
+Warning: Vehicle '97' ends teleporting on edge 'A3E_A4', time=251.00.

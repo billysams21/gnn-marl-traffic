@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1044.00.
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1044.00.
+Warning: Teleporting vehicle '725'; waited too long (yield), lane='B0B1_1', time=1062.00.
+Warning: Vehicle '725' ends teleporting on edge 'B1A1', time=1062.00.

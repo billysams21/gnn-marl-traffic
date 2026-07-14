@@ -1,0 +1,9 @@
+Warning: Vehicle '1658' performs emergency braking on lane ':C1_1_1' with decel=10.00, wished=5.00, severity=1.00, time=1743.00.
+Warning: Teleporting vehicle '1463_x1'; waited too long (yield), lane=':A1_14_0', time=1851.00.
+Warning: Vehicle '1463_x1' ends teleporting on edge 'A1A0', time=1851.00.
+Warning: Teleporting vehicle '1485'; waited too long (yield), lane='B1A1_0', time=1875.00.
+Warning: Teleporting vehicle '1454'; waited too long (jam), lane=':A1_1_1', time=1875.00.
+Warning: Vehicle '1454' ends teleporting on edge 'A1A0', time=1875.00.
+Warning: Vehicle '1485' ends teleporting on edge 'A1left1', time=1875.00.
+Warning: Teleporting vehicle '1465_x1'; waited too long (yield), lane='A0A1_0', time=1895.00.
+Warning: Vehicle '1465_x1' ends teleporting on edge 'A1A2', time=1895.00.

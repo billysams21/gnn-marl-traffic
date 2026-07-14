@@ -1,0 +1,2 @@
+reward,steps,avg_delay,avg_queue,throughput,emergency_stops,episode,timestamp
+-8511.277777777766,719,0.5047619047619047,0.2361111111111111,3494,0,1,2026-05-16T01:55:11.418467

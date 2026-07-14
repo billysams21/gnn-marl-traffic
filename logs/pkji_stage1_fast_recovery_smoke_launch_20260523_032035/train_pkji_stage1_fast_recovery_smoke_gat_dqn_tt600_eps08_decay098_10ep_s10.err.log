@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '403'; waited too long (yield), lane=':B1_8_0', time=1035.00.
+Warning: Vehicle '403' ends teleporting on edge 'B1B0', time=1035.00.
+Warning: Teleporting vehicle '1849'; waited too long (yield), lane=':B1_8_0', time=2519.00.
+Warning: Vehicle '1849' ends teleporting on edge 'B1B0', time=2519.00.

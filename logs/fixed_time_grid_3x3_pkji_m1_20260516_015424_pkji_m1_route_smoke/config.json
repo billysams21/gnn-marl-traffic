@@ -1,0 +1,75 @@
+{
+  "config": {
+    "env": {
+      "num_seconds": 3600,
+      "delta_time": 5,
+      "yellow_time": 2,
+      "min_green": 10,
+      "max_green": 60,
+      "reward_alpha": 0.5,
+      "max_queue_per_lane": 30,
+      "max_waiting_time": 300.0,
+      "max_delta_queue": 10.0,
+      "max_delta_density": 0.5
+    },
+    "gat": {
+      "hidden_dim": 64,
+      "embed_dim": 64,
+      "num_heads": 4,
+      "dropout": 0.0
+    },
+    "q_network": {
+      "hidden_dims": [
+        128,
+        64
+      ]
+    },
+    "prediction": {
+      "lambda": 0.3,
+      "action_embed_dim": 8,
+      "mode": "full"
+    },
+    "rl": {
+      "lr": 0.0003,
+      "gamma": 0.95,
+      "epsilon_start": 1.0,
+      "epsilon_end": 0.05,
+      "epsilon_decay": 0.997,
+      "batch_size": 64,
+      "buffer_size": 50000,
+      "target_update_freq": 1000
+    },
+    "training": {
+      "num_episodes": 200,
+      "eval_interval": 10,
+      "eval_episodes": 1,
+      "eval_seed_offset": 10000,
+      "save_interval": 50,
+      "log_interval": 1,
+      "deterministic": true
+    }
+  },
+  "scenario": {
+    "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml",
+    "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml",
+    "description": "3x3 grid with PKJI calibrated fixed-time net and PKJI-aware synthetic demand m1"
+  },
+  "run": {
+    "agent_type": "fixed_time",
+    "scenario_name": "grid_3x3_pkji_m1",
+    "seed": 42,
+    "num_episodes_target": 1,
+    "use_gui": false,
+    "deterministic": true,
+    "exp_suffix": "pkji_m1_route_smoke",
+    "env_overrides": {
+      "yellow_time": null,
+      "min_green": null
+    },
+    "file_overrides": {
+      "net_file": null,
+      "route_file": null,
+      "sumocfg_file": null
+    }
+  }
+}

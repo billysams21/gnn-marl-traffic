@@ -1,0 +1,17 @@
+Warning: Teleporting vehicle '3116'; junction collision with vehicle '3131', lane=':A3_5_0', gap=-0.07, latGap=-0.50, time=2945.00, stage=move.
+Warning: Vehicle '3116' ends teleporting on edge 'A3A2', time=2949.00.
+Warning: Teleporting vehicle '1850'; side collision with vehicle '1823', lane=':A2_14_0', gap=-1.81, latGap=-0.35, time=1157.00, stage=laneChange.
+Warning: Vehicle '1850' ends teleporting on edge 'A2A3', time=1157.00.
+Warning: Teleporting vehicle '3029'; collision with vehicle '3003', lane='A1A2_0', gap=-0.18, latGap=-0.45, time=1860.00, stage=move.
+Warning: Vehicle '3029' ends teleporting on edge 'A2A3', time=1860.00.
+Warning: Teleporting vehicle '1997'; waited too long (jam), lane=':A3_11_0', time=1609.00.
+Warning: Vehicle '1997' ends teleporting on edge 'A3A2', time=1609.00.
+Warning: Vehicle '5771' performs emergency braking on lane ':A3_11_0' with decel=10.00, wished=5.00, severity=1.00, time=3521.00.
+Warning: Teleporting vehicle '3001'; junction collision with vehicle '3020', lane=':A3_5_1', gap=-0.03, latGap=-0.75, time=2351.00, stage=move.
+Warning: Vehicle '3001' ends teleporting on edge 'A3A2', time=2351.00.
+Warning: Teleporting vehicle '4161'; waited too long (jam), lane=':A3_11_0', time=2849.00.
+Warning: Vehicle '4161' ends teleporting on edge 'A3A2', time=2849.00.
+Warning: Teleporting vehicle '4160'; waited too long (jam), lane=':A3_11_0', time=2850.00.
+Warning: Vehicle '4160' ends teleporting on edge 'A3A2', time=2850.00.
+Warning: Teleporting vehicle '4055'; waited too long (jam), lane=':A3_14_0', time=2853.00.
+Warning: Vehicle '4055' ends teleporting on edge 'A3E_A4', time=2853.00.

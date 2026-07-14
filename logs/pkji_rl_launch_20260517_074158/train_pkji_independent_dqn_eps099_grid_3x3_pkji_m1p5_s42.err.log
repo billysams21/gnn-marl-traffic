@@ -1,0 +1,6 @@
+Warning: Vehicle '825_x1' performs emergency braking on lane ':A2_11_1' with decel=10.00, wished=5.00, severity=1.00, time=989.00.
+Warning: Vehicle '1757' performs emergency braking on lane ':B1_1_1' with decel=7.00, wished=4.00, severity=1.00, time=1833.00.
+Warning: Vehicle '1710' performs emergency braking on lane ':B0_6_1' with decel=9.00, wished=4.50, severity=1.00, time=1826.00.
+Warning: Vehicle '3291' performs emergency braking on lane ':B1_16_1' with decel=7.00, wished=4.00, severity=1.00, time=3394.00.
+Warning: Vehicle '1574_x1' performs emergency braking on lane ':C1_6_1' with decel=9.00, wished=4.50, severity=1.00, time=1594.00.
+Warning: Vehicle '3247' performs emergency braking on lane ':B0_1_1' with decel=9.00, wished=4.50, severity=1.00, time=3383.00.

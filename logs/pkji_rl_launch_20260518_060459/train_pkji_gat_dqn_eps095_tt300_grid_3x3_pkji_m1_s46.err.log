@@ -1,0 +1,6 @@
+Warning: Teleporting vehicle '1695'; waited too long (yield), lane=':B1_13_0', time=2076.00.
+Warning: Vehicle '1695' ends teleporting on edge 'B1A1', time=2076.00.
+Warning: Teleporting vehicle '1723'; waited too long (yield), lane=':B1_18_0', time=2089.00.
+Warning: Vehicle '1723' ends teleporting on edge 'B1B2', time=2089.00.
+Warning: Teleporting vehicle '1732'; waited too long (yield), lane='C1B1_1', time=2107.00.
+Warning: Vehicle '1732' ends teleporting on edge 'B1A1', time=2107.00.

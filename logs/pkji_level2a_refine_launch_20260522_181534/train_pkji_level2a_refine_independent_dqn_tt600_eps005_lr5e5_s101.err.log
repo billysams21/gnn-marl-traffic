@@ -1,0 +1,24 @@
+Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1334.00.
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1334.00.
+Warning: Teleporting vehicle '664'; waited too long (jam), lane=':B1_1_1', time=1345.00.
+Warning: Vehicle '664' ends teleporting on edge 'B1B0', time=1345.00.
+Warning: Teleporting vehicle '652'; waited too long (yield), lane=':B1_18_0', time=1352.00.
+Warning: Vehicle '652' ends teleporting on edge 'B1B2', time=1352.00.
+Warning: Teleporting vehicle '731'; waited too long (jam), lane=':B1_6_0', time=1384.00.
+Warning: Vehicle '731' ends teleporting on edge 'B1A1', time=1384.00.
+Warning: Teleporting vehicle '693'; waited too long (yield), lane='B2B1_0', time=1393.00.
+Warning: Vehicle '693' ends teleporting on edge 'B1B0', time=1393.00.
+Warning: Teleporting vehicle '1282'; waited too long (yield), lane=':B1_13_0', time=2372.00.
+Warning: Vehicle '1282' ends teleporting on edge 'B1A1', time=2372.00.
+Warning: Teleporting vehicle '1375'; waited too long (jam), lane=':B1_25_0', time=2373.00.
+Warning: Vehicle '1375' ends teleporting on edge 'B1B0', time=2373.00.
+Warning: Teleporting vehicle '1266'; waited too long (yield), lane='B0B1_1', time=2374.00.
+Warning: Vehicle '1266' ends teleporting on edge 'B1B0', time=2374.00.
+Warning: Teleporting vehicle '1229'; waited too long (jam), lane=':B1_1_1', time=2379.00.
+Warning: Vehicle '1229' ends teleporting on edge 'B1B0', time=2379.00.
+Warning: Teleporting vehicle '1732'; waited too long (yield), lane='C1B1_0', time=2390.00.
+Warning: Vehicle '1732' ends teleporting on edge 'B1A1', time=2390.00.
+Warning: Vehicle '1973' performs emergency braking on lane ':B1_1_1' with decel=9.00, wished=4.50, severity=1.00, time=2038.00.
+Warning: Vehicle '1762' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=1834.00.
+Error: tcpip::Socket::recvAndCheck @ recv: Socket reset by peer
+Quitting (on error).

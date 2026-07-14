@@ -64,6 +64,7 @@ def evaluate(
     yellow_time: int = None,
     min_green: int = None,
     time_to_teleport: int = None,
+    recovery_enabled: bool = None,
 ):
     config = _load_config_for_model(model_path)
     if yellow_time is not None:
@@ -72,8 +73,18 @@ def evaluate(
         config["env"]["min_green"] = min_green
     if time_to_teleport is not None:
         config["env"]["time_to_teleport"] = time_to_teleport
+    if recovery_enabled is not None:
+        config["env"]["recovery_enabled"] = recovery_enabled
     scenario = SCENARIOS[scenario_name]
     deterministic = config["training"].get("deterministic", True)
+
+    print(
+        "Evaluation env overrides: "
+        f"time_to_teleport={config['env'].get('time_to_teleport')}, "
+        f"recovery_enabled={config['env'].get('recovery_enabled')}, "
+        f"yellow_time={config['env'].get('yellow_time')}, "
+        f"min_green={config['env'].get('min_green')}"
+    )
 
     # Global seeding for reproducibility across python/numpy/torch.
     set_global_seed(seed, deterministic=deterministic)
@@ -238,8 +249,10 @@ if __name__ == "__main__":
     parser.add_argument("--yellow-time", type=int, default=None, help="Override env.yellow_time")
     parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
     parser.add_argument("--time-to-teleport", type=int, default=None, help="Override env.time_to_teleport")
+    parser.add_argument("--no-recovery", action="store_true", help="Disable env.recovery_enabled for clean evaluation")
 
     args = parser.parse_args()
+    recovery_enabled = False if args.no_recovery else None
     evaluate(
         args.model,
         args.scenario,
@@ -250,4 +263,5 @@ if __name__ == "__main__":
         args.yellow_time,
         args.min_green,
         args.time_to_teleport,
+        recovery_enabled,
     )

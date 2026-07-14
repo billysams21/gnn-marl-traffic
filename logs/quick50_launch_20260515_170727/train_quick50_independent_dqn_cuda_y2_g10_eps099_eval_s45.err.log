@@ -1,0 +1,15 @@
+Warning: Vehicle '2828' performs emergency braking on lane ':B1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=2848.00.
+Warning: Vehicle '994' performs emergency braking on lane ':C1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=1078.00.
+Warning: Vehicle '1520' performs emergency braking on lane 'C1B1_0' with decel=9.00, wished=4.50, severity=1.00, time=1567.00.
+Warning: Vehicle '1520' performs emergency stop at the end of lane 'C1B1_0' because of a red traffic light (decel=-10.52, offset=1.52), time=1567.00.
+Warning: Vehicle '2131' performs emergency braking on lane 'right1C1_0' with decel=9.00, wished=4.50, severity=1.00, time=2147.00.
+Warning: Vehicle '2131' performs emergency stop at the end of lane 'right1C1_0' because of a red traffic light (decel=-9.55, offset=0.55), time=2147.00.
+Warning: Vehicle '1520' performs emergency braking on lane 'C1B1_0' with decel=9.00, wished=4.50, severity=1.00, time=1557.00.
+Warning: Vehicle '1520' performs emergency stop at the end of lane 'C1B1_0' because of a red traffic light (decel=-11.33, offset=2.33), time=1557.00.
+Warning: Vehicle '631' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=668.00.
+Warning: Vehicle '829' performs emergency braking on lane ':B2_1_1' with decel=9.00, wished=4.50, severity=1.00, time=848.00.
+Warning: Vehicle '715' performs emergency braking on lane 'B1B0_0' with decel=9.00, wished=4.50, severity=1.00, time=757.00.
+Warning: Vehicle '715' performs emergency stop at the end of lane 'B1B0_0' because of a red traffic light (decel=-10.17, offset=1.17), time=757.00.
+Warning: Vehicle '678' performs emergency braking on lane 'B1B2_1' with decel=9.00, wished=4.50, severity=1.00, time=748.00.
+Warning: Vehicle '1520' performs emergency braking on lane 'C1B1_0' with decel=9.00, wished=4.50, severity=1.00, time=1557.00.
+Warning: Vehicle '1520' performs emergency stop at the end of lane 'C1B1_0' because of a red traffic light (decel=-9.77, offset=0.77), time=1557.00.

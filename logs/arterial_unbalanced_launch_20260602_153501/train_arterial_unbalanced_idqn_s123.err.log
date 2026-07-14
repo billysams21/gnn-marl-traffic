@@ -1,0 +1,26 @@
+Warning: Teleporting vehicle '5010'; waited too long (jam), lane=':A3_11_0', time=3394.00.
+Warning: Vehicle '5010' ends teleporting on edge 'A3A2', time=3394.00.
+Warning: Teleporting vehicle '5037'; waited too long (jam), lane=':A3_11_0', time=3395.00.
+Warning: Vehicle '5037' ends teleporting on edge 'A3A2', time=3395.00.
+Warning: Teleporting vehicle '4070'; waited too long (yield), lane='E_A4A3_1', time=3415.00.
+Warning: Vehicle '4070' ends teleporting on edge 'A3B3', time=3415.00.
+Warning: Teleporting vehicle '5135'; waited too long (yield), lane='B3A3_0', time=3435.00.
+Warning: Vehicle '5135' ends teleporting on edge 'A3A2', time=3435.00.
+Warning: Teleporting vehicle '4108'; waited too long (yield), lane='E_A4A3_1', time=3448.00.
+Warning: Vehicle '4108' ends teleporting on edge 'A3B3', time=3448.00.
+Warning: Teleporting vehicle '2830'; waited too long (jam), lane=':A3_11_0', time=2054.00.
+Warning: Vehicle '2830' ends teleporting on edge 'A3A2', time=2054.00.
+Warning: Teleporting vehicle '2897'; waited too long (jam), lane=':A3_1_0', time=2077.00.
+Warning: Vehicle '2897' ends teleporting on edge 'A3B3', time=2077.00.
+Warning: Teleporting vehicle '4092'; waited too long (jam), lane=':A3_11_0', time=2804.00.
+Warning: Vehicle '4092' ends teleporting on edge 'A3A2', time=2804.00.
+Warning: Teleporting vehicle '4084'; waited too long (jam), lane=':A3_11_0', time=2843.00.
+Warning: Vehicle '4084' ends teleporting on edge 'A3A2', time=2843.00.
+Warning: Teleporting vehicle '4101'; waited too long (jam), lane=':A3_11_0', time=2844.00.
+Warning: Vehicle '4101' ends teleporting on edge 'A3A2', time=2844.00.
+Warning: Teleporting vehicle '4134'; waited too long (yield), lane='B3A3_0', time=2845.00.
+Warning: Vehicle '4134' ends teleporting on edge 'A3C3', time=2845.00.
+Warning: Teleporting vehicle '3293'; waited too long (yield), lane='E_A4A3_1', time=2853.00.
+Warning: Vehicle '3293' ends teleporting on edge 'A3B3', time=2853.00.
+Warning: Teleporting vehicle '3375'; side collision with vehicle '3385', lane='E_A4A3_1', gap=-0.93, latGap=-0.20, time=2858.00, stage=laneChange.
+Warning: Vehicle '3375' ends teleporting on edge 'A3A2', time=2859.00.

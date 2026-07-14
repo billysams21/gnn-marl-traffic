@@ -1,0 +1,26 @@
+Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1042.00.
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1042.00.
+Warning: Teleporting vehicle '683'; waited too long (jam), lane=':B1_6_0', time=1062.00.
+Warning: Vehicle '683' ends teleporting on edge 'B1A1', time=1062.00.
+Warning: Teleporting vehicle '728'; waited too long (jam), lane=':B1_6_0', time=1063.00.
+Warning: Vehicle '728' ends teleporting on edge 'B1A1', time=1063.00.
+Warning: Teleporting vehicle '740'; waited too long (jam), lane=':B1_6_0', time=1068.00.
+Warning: Vehicle '740' ends teleporting on edge 'B1A1', time=1068.00.
+Warning: Teleporting vehicle '2646'; waited too long (yield), lane=':A1_3_0', time=3029.00.
+Warning: Vehicle '2646' ends teleporting on edge 'A1B1', time=3029.00.
+Warning: Teleporting vehicle '2687'; waited too long (jam), lane=':A1_11_1', time=3040.00.
+Warning: Vehicle '2687' ends teleporting on edge 'A1A2', time=3040.00.
+Warning: Teleporting vehicle '2714'; waited too long (jam), lane=':A1_11_1', time=3063.00.
+Warning: Vehicle '2714' ends teleporting on edge 'A1A2', time=3063.00.
+Warning: Teleporting vehicle '2719'; waited too long (yield), lane=':A1_8_0', time=3085.00.
+Warning: Vehicle '2719' ends teleporting on edge 'A1A0', time=3085.00.
+Warning: Teleporting vehicle '2737'; waited too long (jam), lane=':A1_11_1', time=3093.00.
+Warning: Vehicle '2737' ends teleporting on edge 'A1A2', time=3093.00.
+Warning: Teleporting vehicle '2696'; waited too long (jam), lane=':A1_11_1', time=3094.00.
+Warning: Vehicle '2696' ends teleporting on edge 'A1A2', time=3094.00.
+Warning: Teleporting vehicle '2827'; waited too long (jam), lane='left1A1_1', time=3165.00.
+Warning: Vehicle '2827' ends teleporting on edge 'A1B1', time=3165.00.
+Warning: Teleporting vehicle '2887'; waited too long (jam), lane=':A1_6_0', time=3383.00.
+Warning: Vehicle '2887' ends teleporting on edge 'A1left1', time=3383.00.
+Warning: Teleporting vehicle '2720'; waited too long (yield), lane=':A1_8_0', time=3415.00.
+Warning: Vehicle '2720' ends teleporting on edge 'A1A0', time=3415.00.

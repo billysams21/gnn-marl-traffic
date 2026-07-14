@@ -1,0 +1,303 @@
+{
+  "source_input": "D:\\ITB\\TA\\gnn-marl-traffic\\configs\\pkji_grid_3x3_full.json",
+  "settings": {
+    "preferred_yellow_s": 3,
+    "base_saturation_flow_per_lane": 1800,
+    "clamp_cycle": true,
+    "generator": {
+      "seed": 42,
+      "volume_multiplier": 1.0,
+      "note": "Synthetic volumes for probing only; replace with observed PKJI inputs for calibrated baseline."
+    }
+  },
+  "plans": [
+    {
+      "intersection_id": "A0",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 0.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.463653,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.235028,
+          "green_s": 15.207,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.228625,
+          "green_s": 14.793,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "A1",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 18.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.447097,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.228542,
+          "green_s": 15.335,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.218556,
+          "green_s": 14.665,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "A2",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 36.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.491722,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.247042,
+          "green_s": 15.072,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.244681,
+          "green_s": 14.928,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "B0",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 18.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.456056,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.22375,
+          "green_s": 14.719,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.232306,
+          "green_s": 15.281,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "B1",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 36.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.463722,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.227333,
+          "green_s": 14.707,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.236389,
+          "green_s": 15.293,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "B2",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 54.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.459486,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.227597,
+          "green_s": 14.86,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.231889,
+          "green_s": 15.14,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "C0",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 36.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.448514,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.228722,
+          "green_s": 15.299,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.219792,
+          "green_s": 14.701,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "C1",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 54.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.476944,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.243111,
+          "green_s": 15.292,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.233833,
+          "green_s": 14.708,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    },
+    {
+      "intersection_id": "C2",
+      "num_phases": 2,
+      "cycle_s": 40.0,
+      "offset_s": 72.0,
+      "total_lost_time_s": 10.0,
+      "sum_critical_ratio": 0.446833,
+      "oversaturated": false,
+      "cycle_clamped": true,
+      "cycle_range_s": [
+        40.0,
+        80.0
+      ],
+      "phases": [
+        {
+          "phase_id": 1,
+          "critical_ratio": 0.216083,
+          "green_s": 14.508,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        },
+        {
+          "phase_id": 2,
+          "critical_ratio": 0.23075,
+          "green_s": 15.492,
+          "intergreen_s": 5.0,
+          "yellow_s": 3.0,
+          "all_red_s": 2.0
+        }
+      ]
+    }
+  ]
+}

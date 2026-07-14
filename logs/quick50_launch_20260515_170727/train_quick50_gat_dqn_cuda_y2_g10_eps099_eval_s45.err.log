@@ -1,0 +1,8 @@
+Warning: Vehicle '573' performs emergency braking on lane ':B1_11_1' with decel=9.00, wished=4.50, severity=1.00, time=638.00.
+Warning: Vehicle '110' performs emergency braking on lane 'top1B2_0' with decel=9.00, wished=4.50, severity=1.00, time=127.00.
+Warning: Vehicle '110' performs emergency stop at the end of lane 'top1B2_0' because of a red traffic light (decel=-9.28, offset=0.28), time=127.00.
+Warning: Vehicle '110' performs emergency braking on lane 'top1B2_0' with decel=9.00, wished=4.50, severity=1.00, time=127.00.
+Warning: Vehicle '110' performs emergency stop at the end of lane 'top1B2_0' because of a red traffic light (decel=-9.18, offset=0.18), time=127.00.
+Warning: Vehicle '631' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=668.00.
+Warning: Vehicle '770' performs emergency braking on lane 'B0A0_0' with decel=9.00, wished=4.50, severity=1.00, time=827.00.
+Warning: Vehicle '770' performs emergency stop at the end of lane 'B0A0_0' because of a red traffic light (decel=-9.56, offset=0.56), time=827.00.

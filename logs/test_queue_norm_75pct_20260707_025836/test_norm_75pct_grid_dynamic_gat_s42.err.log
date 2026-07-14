@@ -1,0 +1,8 @@
+Warning: Teleporting vehicle 'dyn_3797'; junction collision with vehicle 'dyn_3803', lane=':B1_16_1', gap=-0.46, latGap=-0.55, time=2612.00, stage=move.
+Warning: Vehicle 'dyn_3797' ends teleporting on edge 'B1C1', time=2612.00.
+Warning: Teleporting vehicle 'dyn_3804'; collision with vehicle 'dyn_4048', lane='B0B1_1', gap=-0.07, latGap=-0.10, time=3404.00, stage=move.
+Warning: Vehicle 'dyn_3804' ends teleporting on edge 'B1A1', time=3404.00.
+Warning: Teleporting vehicle 'dyn_4308'; junction collision with vehicle 'dyn_4304', lane=':B2_15_0', gap=-1.51, latGap=-0.10, time=3566.00, stage=move.
+Warning: Vehicle 'dyn_4308' ends teleporting on edge 'B1C1', time=3566.00.
+Warning: Teleporting vehicle 'dyn_4133'; collision with vehicle 'dyn_4166', lane='left1A1_1', gap=-0.14, latGap=-0.60, time=3241.00, stage=move.
+Warning: Vehicle 'dyn_4133' ends teleporting on edge 'A1A2', time=3241.00.

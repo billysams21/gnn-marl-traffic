@@ -1,0 +1,244 @@
+Warning: Teleporting vehicle 'dyn_4357'; collision with vehicle 'dyn_4483', lane='B2B1_1', gap=-2.17, latGap=-0.10, time=3531.00, stage=move.
+Warning: Vehicle 'dyn_4357' ends teleporting on edge 'B1C1', time=3531.00.
+Warning: Teleporting vehicle 'dyn_1532'; waited too long (jam), lane=':B1_1_1', time=1711.00.
+Warning: Vehicle 'dyn_1532' ends teleporting on edge 'B1B0', time=1711.00.
+Warning: Teleporting vehicle 'dyn_1520'; waited too long (jam), lane=':B1_16_0', time=1731.00.
+Warning: Vehicle 'dyn_1520' ends teleporting on edge 'B1C1', time=1731.00.
+Warning: Teleporting vehicle 'dyn_1872'; waited too long (yield), lane='B0B1_1', time=1738.00.
+Warning: Vehicle 'dyn_1872' ends teleporting on edge 'B1A1', time=1738.00.
+Warning: Teleporting vehicle 'dyn_1495'; waited too long (yield), lane='A1B1_1', time=1752.00.
+Warning: Vehicle 'dyn_1495' ends teleporting on edge 'B1B2', time=1752.00.
+Warning: Teleporting vehicle 'dyn_1697'; side collision with vehicle 'dyn_1743', lane='B2B1_0', gap=-1.11, latGap=-0.80, time=1575.00, stage=laneChange.
+Warning: Vehicle 'dyn_1697' ends teleporting on edge 'B1B0', time=1575.00.
+Warning: Teleporting vehicle 'dyn_1995'; waited too long (yield), lane=':B1_13_0', time=1938.00.
+Warning: Teleporting vehicle 'dyn_2010'; waited too long (yield), lane='B0B1_1', time=1938.00.
+Warning: Vehicle 'dyn_1995' ends teleporting on edge 'B1A1', time=1938.00.
+Warning: Vehicle 'dyn_2010' ends teleporting on edge 'B1B2', time=1938.00.
+Warning: Teleporting vehicle 'dyn_1748'; waited too long (jam), lane=':B1_1_0', time=1942.00.
+Warning: Vehicle 'dyn_1748' ends teleporting on edge 'B1B0', time=1942.00.
+Warning: Teleporting vehicle 'dyn_3229'; side collision with vehicle 'dyn_3222', lane='B0B1_0', gap=-4.92, latGap=-0.20, time=2666.00, stage=laneChange.
+Warning: Vehicle 'dyn_3229' ends teleporting on edge 'B1B2', time=2666.00.
+Warning: Teleporting vehicle 'dyn_4291'; collision with vehicle 'dyn_4297', lane='B2B1_1', gap=-2.17, latGap=-0.10, time=3405.00, stage=move.
+Warning: Vehicle 'dyn_4291' ends teleporting on edge 'B1C1', time=3405.00.
+Warning: Teleporting vehicle 'dyn_3697'; collision with vehicle 'dyn_3735', lane='B0B1_1', gap=-0.59, latGap=-0.10, time=3319.00, stage=move.
+Warning: Vehicle 'dyn_3697' ends teleporting on edge 'B1A1', time=3319.00.
+Warning: Teleporting vehicle 'dyn_4308'; collision with vehicle 'dyn_4309', lane='B2B1_1', gap=-1.78, latGap=-0.10, time=3440.00, stage=move.
+Warning: Vehicle 'dyn_4308' ends teleporting on edge 'B1C1', time=3440.00.
+Warning: Teleporting vehicle 'dyn_3644'; waited too long (yield), lane='C1B1_0', time=3338.00.
+Warning: Vehicle 'dyn_3644' ends teleporting on edge 'B1A1', time=3338.00.
+Warning: Teleporting vehicle 'dyn_3664'; waited too long (jam), lane='C1B1_0', time=3359.00.
+Warning: Vehicle 'dyn_3664' ends teleporting on edge 'B1A1', time=3359.00.
+Warning: Teleporting vehicle 'dyn_3524'; waited too long (jam), lane='B0B1_0', time=3375.00.
+Warning: Vehicle 'dyn_3524' ends teleporting on edge 'B1B2', time=3375.00.
+Warning: Teleporting vehicle 'dyn_4311'; waited too long (jam), lane='A1B1_0', time=3421.00.
+Warning: Vehicle 'dyn_4311' ends teleporting on edge 'B1C1', time=3421.00.
+Warning: Teleporting vehicle 'dyn_4326'; waited too long (jam), lane='A1B1_0', time=3422.00.
+Warning: Vehicle 'dyn_4326' ends teleporting on edge 'B1C1', time=3422.00.
+Warning: Teleporting vehicle 'dyn_3476'; waited too long (jam), lane=':B1_11_0', time=3423.00.
+Warning: Vehicle 'dyn_3476' ends teleporting on edge 'B1B2', time=3423.00.
+Warning: Teleporting vehicle 'dyn_3324'; waited too long (yield), lane=':B1_13_0', time=3431.00.
+Warning: Teleporting vehicle 'dyn_3971'; waited too long (yield), lane='bottom1B0_0', time=3431.00.
+Warning: Vehicle 'dyn_3324' ends teleporting on edge 'B1A1', time=3431.00.
+Warning: Vehicle 'dyn_3971' ends teleporting on edge 'B0B1', time=3431.00.
+Warning: Teleporting vehicle 'dyn_3512'; waited too long (yield), lane=':B1_8_0', time=3434.00.
+Warning: Vehicle 'dyn_3512' ends teleporting on edge 'B1B0', time=3434.00.
+Warning: Teleporting vehicle 'dyn_3642'; waited too long (jam), lane='C0B0_0', time=3436.00.
+Warning: Teleporting vehicle 'dyn_3977'; waited too long (jam), lane='bottom1B0_0', time=3487.00.
+Warning: Vehicle 'dyn_3642' ends teleporting on edge 'B0B1', time=3533.00.
+Warning: Vehicle 'dyn_3977' ends teleporting on edge 'B0B1', time=3535.00.
+Warning: Teleporting vehicle 'dyn_1385'; waited too long (jam), lane=':B1_16_1', time=1575.00.
+Warning: Vehicle 'dyn_1385' ends teleporting on edge 'B1C1', time=1575.00.
+Warning: Teleporting vehicle 'dyn_1441'; waited too long (yield), lane='A1B1_0', time=1597.00.
+Warning: Vehicle 'dyn_1441' ends teleporting on edge 'B1C1', time=1597.00.
+Warning: Teleporting vehicle 'dyn_1718'; waited too long (yield), lane='left1A1_1', time=1654.00.
+Warning: Teleporting vehicle 'dyn_1763'; waited too long (yield), lane='left1A1_0', time=1662.00.
+Warning: Teleporting vehicle 'dyn_1767'; waited too long (yield), lane='left1A1_0', time=1663.00.
+Warning: Vehicle 'dyn_1763' ends teleporting on edge 'A1B1', time=1667.00.
+Warning: Vehicle 'dyn_1718' ends teleporting on edge 'A1B1', time=1681.00.
+Warning: Vehicle 'dyn_1767' ends teleporting on edge 'A1B1', time=1681.00.
+Warning: Teleporting vehicle 'dyn_2886'; waited too long (yield), lane=':B1_8_0', time=2925.00.
+Warning: Vehicle 'dyn_2886' ends teleporting on edge 'B1B0', time=2925.00.
+Warning: Teleporting vehicle 'dyn_2735'; waited too long (jam), lane=':B1_11_0', time=2929.00.
+Warning: Teleporting vehicle 'dyn_2889'; waited too long (yield), lane='C1B1_1', time=2929.00.
+Warning: Vehicle 'dyn_2735' ends teleporting on edge 'B1B2', time=2929.00.
+Warning: Vehicle 'dyn_2889' ends teleporting on edge 'B1B0', time=2929.00.
+Warning: Teleporting vehicle 'dyn_2902'; waited too long (yield), lane='C1B1_0', time=2930.00.
+Warning: Vehicle 'dyn_2902' ends teleporting on edge 'B1A1', time=2930.00.
+Warning: Teleporting vehicle 'dyn_2873'; waited too long (yield), lane='C1B1_0', time=2931.00.
+Warning: Vehicle 'dyn_2873' ends teleporting on edge 'B1A1', time=2931.00.
+Warning: Teleporting vehicle 'dyn_3855'; waited too long (jam), lane='A1B1_1', time=2936.00.
+Warning: Vehicle 'dyn_3855' ends teleporting on edge 'B1C1', time=2936.00.
+Warning: Teleporting vehicle 'dyn_2762'; waited too long (yield), lane='B0B1_0', time=2942.00.
+Warning: Vehicle 'dyn_2762' ends teleporting on edge 'B1B2', time=2942.00.
+Warning: Teleporting vehicle 'dyn_2802'; waited too long (yield), lane='B0B1_0', time=2943.00.
+Warning: Vehicle 'dyn_2802' ends teleporting on edge 'B1B2', time=2943.00.
+Warning: Teleporting vehicle 'dyn_3174'; waited too long (jam), lane='right1C1_1', time=2983.00.
+Warning: Teleporting vehicle 'dyn_3234'; waited too long (jam), lane='right1C1_0', time=2983.00.
+Warning: Vehicle 'dyn_3234' ends teleporting on edge 'C1B1', time=2989.00.
+Warning: Teleporting vehicle 'dyn_3085'; waited too long (jam), lane='bottom1B0_0', time=2999.00.
+Warning: Vehicle 'dyn_3174' ends teleporting on edge 'B1B0', time=3164.00.
+Warning: Vehicle 'dyn_3085' ends teleporting on edge 'B1B2', time=3180.00.
+Warning: Teleporting vehicle 'dyn_3095'; side collision with vehicle 'dyn_3172', lane='B1A1_0', gap=-1.25, latGap=-0.05, time=2582.00, stage=laneChange.
+Warning: Vehicle 'dyn_3095' ends teleporting on edge 'A1left1', time=2582.00.
+Warning: Teleporting vehicle 'dyn_3588'; waited too long (jam), lane=':B1_6_0', time=3366.00.
+Warning: Vehicle 'dyn_3588' ends teleporting on edge 'B1A1', time=3366.00.
+Warning: Teleporting vehicle 'dyn_4305'; waited too long (jam), lane='B2B1_1', time=3378.00.
+Warning: Vehicle 'dyn_4305' ends teleporting on edge 'B1B0', time=3378.00.
+Warning: Teleporting vehicle 'dyn_4223'; waited too long (wrong lane), lane='B2B1_0', time=3470.00.
+Warning: Vehicle 'dyn_4223' ends teleporting on edge 'B1C1', time=3470.00.
+Warning: Teleporting vehicle 'dyn_4249'; waited too long (yield), lane='A2B2_0', time=3494.00.
+Warning: Vehicle 'dyn_4249' ends teleporting on edge 'B2B1', time=3513.00.
+Warning: Teleporting vehicle 'dyn_1613'; side collision with vehicle 'dyn_1686', lane='B2B1_0', gap=-0.86, latGap=-0.45, time=1630.00, stage=laneChange.
+Warning: Vehicle 'dyn_1613' ends teleporting on edge 'B1B0', time=1630.00.
+Warning: Teleporting vehicle 'dyn_3943'; side collision with vehicle 'dyn_3985', lane='A1B1_1', gap=-2.08, latGap=-0.20, time=2754.00, stage=laneChange.
+Warning: Vehicle 'dyn_3943' ends teleporting on edge 'B1C1', time=2754.00.
+Warning: Teleporting vehicle 'dyn_3740'; waited too long (jam), lane=':B1_6_0', time=3373.00.
+Warning: Vehicle 'dyn_3740' ends teleporting on edge 'B1A1', time=3373.00.
+Warning: Teleporting vehicle 'dyn_3716'; waited too long (jam), lane=':B1_6_1', time=3380.00.
+Warning: Vehicle 'dyn_3716' ends teleporting on edge 'B1A1', time=3380.00.
+Warning: Teleporting vehicle 'dyn_3980'; waited too long (yield), lane=':B1_3_0', time=3387.00.
+Warning: Vehicle 'dyn_3980' ends teleporting on edge 'B1C1', time=3387.00.
+Warning: Teleporting vehicle 'dyn_3997'; waited too long (yield), lane=':B1_3_0', time=3392.00.
+Warning: Vehicle 'dyn_3997' ends teleporting on edge 'B1C1', time=3392.00.
+Warning: Teleporting vehicle 'dyn_4377'; waited too long (yield), lane='A1B1_1', time=3399.00.
+Warning: Vehicle 'dyn_4377' ends teleporting on edge 'B1C1', time=3399.00.
+Warning: Teleporting vehicle 'dyn_4014'; waited too long (yield), lane='B2B1_1', time=3415.00.
+Warning: Vehicle 'dyn_4014' ends teleporting on edge 'B1C1', time=3415.00.
+Warning: Teleporting vehicle 'dyn_3404'; waited too long (jam), lane=':B1_11_0', time=3419.00.
+Warning: Vehicle 'dyn_3404' ends teleporting on edge 'B1B2', time=3419.00.
+Warning: Teleporting vehicle 'dyn_1498'; waited too long (yield), lane=':B1_18_0', time=1865.00.
+Warning: Vehicle 'dyn_1498' ends teleporting on edge 'B1B2', time=1865.00.
+Warning: Teleporting vehicle 'dyn_1607'; waited too long (jam), lane=':B1_1_1', time=1866.00.
+Warning: Vehicle 'dyn_1607' ends teleporting on edge 'B1B0', time=1866.00.
+Warning: Teleporting vehicle 'dyn_1506'; waited too long (yield), lane='A1B1_1', time=1871.00.
+Warning: Vehicle 'dyn_1506' ends teleporting on edge 'B1B2', time=1871.00.
+Warning: Teleporting vehicle 'dyn_1385'; waited too long (jam), lane=':B1_16_0', time=1665.00.
+Warning: Vehicle 'dyn_1385' ends teleporting on edge 'B1C1', time=1665.00.
+Warning: Teleporting vehicle 'dyn_1863'; waited too long (yield), lane=':B1_13_0', time=1666.00.
+Warning: Vehicle 'dyn_1863' ends teleporting on edge 'B1A1', time=1666.00.
+Warning: Teleporting vehicle 'dyn_1868'; waited too long (yield), lane='B0B1_1', time=1669.00.
+Warning: Vehicle 'dyn_1868' ends teleporting on edge 'B1A1', time=1669.00.
+Warning: Teleporting vehicle 'dyn_1406'; waited too long (jam), lane=':B1_16_1', time=1679.00.
+Warning: Vehicle 'dyn_1406' ends teleporting on edge 'B1C1', time=1679.00.
+Warning: Teleporting vehicle 'dyn_1772'; waited too long (jam), lane='left1A1_1', time=1753.00.
+Warning: Vehicle 'dyn_1772' ends teleporting on edge 'A1B1', time=1762.00.
+Warning: Teleporting vehicle 'dyn_1697'; side collision with vehicle 'dyn_1630', lane='B2B1_0', gap=-0.57, latGap=-0.60, time=1820.00, stage=laneChange.
+Warning: Vehicle 'dyn_1697' ends teleporting on edge 'B1B0', time=1820.00.
+Warning: Teleporting vehicle 'dyn_3258'; waited too long (jam), lane=':B1_11_0', time=3279.00.
+Warning: Vehicle 'dyn_3258' ends teleporting on edge 'B1B2', time=3279.00.
+Warning: Teleporting vehicle 'dyn_3340'; waited too long (yield), lane=':B1_8_0', time=3282.00.
+Warning: Vehicle 'dyn_3340' ends teleporting on edge 'B1B0', time=3282.00.
+Warning: Teleporting vehicle 'dyn_3462'; waited too long (jam), lane='B0B1_0', time=3294.00.
+Warning: Vehicle 'dyn_3462' ends teleporting on edge 'B1B2', time=3294.00.
+Warning: Teleporting vehicle 'dyn_3606'; waited too long (yield), lane='C0B0_0', time=3370.00.
+Warning: Vehicle 'dyn_3606' ends teleporting on edge 'B0B1', time=3391.00.
+Warning: Teleporting vehicle 'dyn_3601'; waited too long (jam), lane='C0B0_0', time=3177.00.
+Warning: Vehicle 'dyn_3601' ends teleporting on edge 'B0B1', time=3246.00.
+Warning: Teleporting vehicle 'dyn_1676'; waited too long (jam), lane=':B1_16_0', time=1977.00.
+Warning: Vehicle 'dyn_1676' ends teleporting on edge 'B1C1', time=1977.00.
+Warning: Teleporting vehicle 'dyn_1659'; waited too long (yield), lane=':B1_18_0', time=1998.00.
+Warning: Vehicle 'dyn_1659' ends teleporting on edge 'B1B2', time=1998.00.
+Warning: Teleporting vehicle 'dyn_3188'; waited too long (jam), lane=':B1_11_0', time=3062.00.
+Warning: Vehicle 'dyn_3188' ends teleporting on edge 'B1B2', time=3062.00.
+Warning: Teleporting vehicle 'dyn_3371'; waited too long (yield), lane='C1B1_0', time=3075.00.
+Warning: Vehicle 'dyn_3371' ends teleporting on edge 'B1A1', time=3075.00.
+Warning: Teleporting vehicle 'dyn_4066'; waited too long (yield), lane='A1B1_1', time=3080.00.
+Warning: Vehicle 'dyn_4066' ends teleporting on edge 'B1C1', time=3080.00.
+Warning: Teleporting vehicle 'dyn_4092'; waited too long (yield), lane='A1B1_1', time=3081.00.
+Warning: Vehicle 'dyn_4092' ends teleporting on edge 'B1C1', time=3081.00.
+Warning: Teleporting vehicle 'dyn_3213'; waited too long (yield), lane='B0B1_1', time=3100.00.
+Warning: Vehicle 'dyn_3213' ends teleporting on edge 'B1A1', time=3100.00.
+Warning: Teleporting vehicle 'dyn_3559'; waited too long (jam), lane='bottom1B0_1', time=3157.00.
+Warning: Teleporting vehicle 'dyn_3581'; waited too long (jam), lane='bottom1B0_0', time=3160.00.
+Warning: Vehicle 'dyn_3559' ends teleporting on edge 'B0B1', time=3267.00.
+Warning: Vehicle 'dyn_3581' ends teleporting on edge 'B0B1', time=3319.00.
+Warning: Teleporting vehicle 'dyn_3987'; waited too long (yield), lane='B2B1_1', time=3022.00.
+Warning: Vehicle 'dyn_3987' ends teleporting on edge 'B1B0', time=3022.00.
+Warning: Teleporting vehicle 'dyn_3451'; waited too long (jam), lane=':B1_6_0', time=3044.00.
+Warning: Vehicle 'dyn_3451' ends teleporting on edge 'B1A1', time=3044.00.
+Warning: Teleporting vehicle 'dyn_3367'; waited too long (jam), lane=':B1_6_0', time=3045.00.
+Warning: Vehicle 'dyn_3367' ends teleporting on edge 'B1A1', time=3045.00.
+Warning: Teleporting vehicle 'dyn_3447'; waited too long (yield), lane='C1B1_0', time=3059.00.
+Warning: Vehicle 'dyn_3447' ends teleporting on edge 'B1A1', time=3059.00.
+Warning: Teleporting vehicle 'dyn_3978'; waited too long (yield), lane='A1B1_1', time=3060.00.
+Warning: Vehicle 'dyn_3978' ends teleporting on edge 'B1C1', time=3060.00.
+Warning: Teleporting vehicle 'dyn_3369'; waited too long (yield), lane='C1B1_1', time=3065.00.
+Warning: Vehicle 'dyn_3369' ends teleporting on edge 'B1B0', time=3065.00.
+Warning: Teleporting vehicle 'dyn_3436'; waited too long (yield), lane='C1B1_1', time=3066.00.
+Warning: Vehicle 'dyn_3436' ends teleporting on edge 'B1A1', time=3066.00.
+Warning: Teleporting vehicle 'dyn_4019'; waited too long (jam), lane='A1B1_0', time=3079.00.
+Warning: Vehicle 'dyn_4019' ends teleporting on edge 'B1C1', time=3079.00.
+Warning: Teleporting vehicle 'dyn_3162'; waited too long (yield), lane='B0B1_1', time=3082.00.
+Warning: Vehicle 'dyn_3162' ends teleporting on edge 'B1A1', time=3082.00.
+Warning: Teleporting vehicle 'dyn_3600'; waited too long (jam), lane='C0B0_0', time=3112.00.
+Warning: Vehicle 'dyn_3600' ends teleporting on edge 'B0B1', time=3130.00.
+Warning: Teleporting vehicle 'dyn_3606'; waited too long (yield), lane='C0B0_0', time=3132.00.
+Warning: Vehicle 'dyn_3606' ends teleporting on edge 'B0B1', time=3135.00.
+Warning: Teleporting vehicle 'dyn_3632'; collision with vehicle 'dyn_3633', lane='B0B1_1', gap=-1.77, latGap=-0.10, time=3316.00, stage=move.
+Warning: Vehicle 'dyn_3632' ends teleporting on edge 'B1A1', time=3317.00.
+Warning: Vehicle 'dyn_3792' performs emergency braking on lane ':B1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=2595.00.
+Warning: Teleporting vehicle 'dyn_3218'; side collision with vehicle 'dyn_3244', lane='B0B1_0', gap=-1.68, latGap=-0.65, time=2685.00, stage=laneChange.
+Warning: Vehicle 'dyn_3218' ends teleporting on edge 'B1B2', time=2685.00.
+Warning: Teleporting vehicle 'dyn_1981'; side collision with vehicle 'dyn_2034', lane='C1B1_0', gap=-2.42, latGap=-0.45, time=1496.00, stage=laneChange.
+Warning: Vehicle 'dyn_1981' ends teleporting on edge 'B1A1', time=1496.00.
+Warning: Teleporting vehicle 'dyn_1705'; side collision with vehicle 'dyn_1766', lane='B2B1_0', gap=-1.43, latGap=-0.45, time=1519.00, stage=laneChange.
+Warning: Vehicle 'dyn_1705' ends teleporting on edge 'B1B0', time=1519.00.
+Warning: Teleporting vehicle 'dyn_3173'; waited too long (jam), lane=':B1_6_1', time=3081.00.
+Warning: Vehicle 'dyn_3173' ends teleporting on edge 'B1A1', time=3081.00.
+Warning: Teleporting vehicle 'dyn_4087'; waited too long (yield), lane='A1B1_1', time=3104.00.
+Warning: Vehicle 'dyn_4087' ends teleporting on edge 'B1C1', time=3104.00.
+Warning: Teleporting vehicle 'dyn_4043'; waited too long (yield), lane='A1B1_0', time=3105.00.
+Warning: Vehicle 'dyn_4043' ends teleporting on edge 'B1C1', time=3105.00.
+Warning: Teleporting vehicle 'dyn_3437'; waited too long (jam), lane='right1C1_1', time=3143.00.
+Warning: Vehicle 'dyn_3437' ends teleporting on edge 'C1B1', time=3280.00.
+Warning: Teleporting vehicle 'dyn_3126'; side collision with vehicle 'dyn_3196', lane='B0B1_0', gap=-3.03, latGap=-0.20, time=2572.00, stage=laneChange.
+Warning: Vehicle 'dyn_3126' ends teleporting on edge 'B1B2', time=2572.00.
+Warning: Teleporting vehicle 'dyn_3520'; waited too long (jam), lane=':B1_6_0', time=3341.00.
+Warning: Vehicle 'dyn_3520' ends teleporting on edge 'B1A1', time=3341.00.
+Warning: Teleporting vehicle 'dyn_4950'; waited too long (yield), lane='top1B2_0', time=3597.00.
+Warning: Teleporting vehicle 'dyn_1820'; waited too long (yield), lane=':B1_13_0', time=1580.00.
+Warning: Vehicle 'dyn_1820' ends teleporting on edge 'B1A1', time=1580.00.
+Warning: Teleporting vehicle 'dyn_1825'; waited too long (yield), lane='B0B1_1', time=1582.00.
+Warning: Vehicle 'dyn_1825' ends teleporting on edge 'B1A1', time=1582.00.
+Warning: Teleporting vehicle 'dyn_1437'; waited too long (jam), lane=':B1_1_0', time=1589.00.
+Warning: Vehicle 'dyn_1437' ends teleporting on edge 'B1B0', time=1589.00.
+Warning: Teleporting vehicle 'dyn_1488'; waited too long (yield), lane='A1B1_0', time=1595.00.
+Warning: Vehicle 'dyn_1488' ends teleporting on edge 'B1C1', time=1595.00.
+Warning: Teleporting vehicle 'dyn_1778'; waited too long (jam), lane='left1A1_0', time=1660.00.
+Warning: Teleporting vehicle 'dyn_1750'; waited too long (jam), lane='left1A1_1', time=1664.00.
+Warning: Teleporting vehicle 'dyn_1722'; waited too long (jam), lane='top1B2_0', time=1679.00.
+Warning: Vehicle 'dyn_1750' ends teleporting on edge 'A1B1', time=1682.00.
+Warning: Vehicle 'dyn_1778' ends teleporting on edge 'A1B1', time=1689.00.
+Warning: Vehicle 'dyn_1722' ends teleporting on edge 'B2B1', time=1700.00.
+Warning: Teleporting vehicle 'dyn_3508'; waited too long (jam), lane=':B1_6_0', time=3371.00.
+Warning: Vehicle 'dyn_3508' ends teleporting on edge 'B1A1', time=3371.00.
+Warning: Teleporting vehicle 'dyn_3588'; waited too long (jam), lane=':B1_6_1', time=3374.00.
+Warning: Vehicle 'dyn_3588' ends teleporting on edge 'B1A1', time=3374.00.
+Warning: Teleporting vehicle 'dyn_3983'; waited too long (yield), lane=':B1_3_0', time=3375.00.
+Warning: Vehicle 'dyn_3983' ends teleporting on edge 'B1C1', time=3375.00.
+Warning: Teleporting vehicle 'dyn_4392'; waited too long (jam), lane='B2B1_1', time=3377.00.
+Warning: Vehicle 'dyn_4392' ends teleporting on edge 'B1B0', time=3377.00.
+Warning: Teleporting vehicle 'dyn_4352'; waited too long (yield), lane='A1B1_1', time=3380.00.
+Warning: Teleporting vehicle 'dyn_3598'; waited too long (yield), lane='C1B1_0', time=3380.00.
+Warning: Vehicle 'dyn_3598' ends teleporting on edge 'B1B2', time=3380.00.
+Warning: Vehicle 'dyn_4352' ends teleporting on edge 'B1C1', time=3380.00.
+Warning: Teleporting vehicle 'dyn_3690'; waited too long (yield), lane='C0B0_0', time=3399.00.
+Warning: Teleporting vehicle 'dyn_3401'; waited too long (yield), lane='B0B1_0', time=3402.00.
+Warning: Vehicle 'dyn_3401' ends teleporting on edge 'B1B2', time=3402.00.
+Warning: Teleporting vehicle 'dyn_3442'; waited too long (yield), lane='B0B1_0', time=3403.00.
+Warning: Vehicle 'dyn_3442' ends teleporting on edge 'B1B2', time=3403.00.
+Warning: Teleporting vehicle 'dyn_3995'; waited too long (yield), lane='right1C1_0', time=3440.00.
+Warning: Vehicle 'dyn_3995' ends teleporting on edge 'C1B1', time=3442.00.
+Warning: Teleporting vehicle 'dyn_3607'; waited too long (jam), lane='bottom1B0_1', time=3479.00.
+Warning: Vehicle 'dyn_3607' ends teleporting on edge 'B0B1', time=3557.00.
+Warning: Vehicle 'dyn_3690' ends teleporting on edge 'B1A1', time=3580.00.
+Warning: Teleporting vehicle 'dyn_4310'; collision with vehicle 'dyn_4304', lane='B2B1_1', gap=-1.35, latGap=-0.20, time=3234.00, stage=move.
+Warning: Vehicle 'dyn_4310' ends teleporting on edge 'B1C1', time=3234.00.
+Warning: Vehicle 'dyn_3760' performs emergency braking on lane ':B1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=2559.00.
+Warning: Teleporting vehicle 'dyn_4357'; junction collision with vehicle 'dyn_4483', lane=':B2_15_0', gap=-2.36, latGap=-0.10, time=3405.00, stage=move.
+Warning: Vehicle 'dyn_4357' ends teleporting on edge 'B1C1', time=3405.00.
+Warning: Teleporting vehicle 'dyn_3754'; side collision with vehicle 'dyn_3736', lane='B2B1_0', gap=-0.96, latGap=-0.90, time=2552.00, stage=laneChange.
+Warning: Vehicle 'dyn_3754' ends teleporting on edge 'B1B0', time=2552.00.
+Warning: Teleporting vehicle 'dyn_4329'; waited too long (yield), lane='A2B2_0', time=3566.00.
+Warning: Vehicle 'dyn_4329' ends teleporting on edge 'B2B1', time=3566.00.
+Warning: Vehicle 'dyn_3954' performs emergency braking on lane ':A1_16_0' with decel=9.00, wished=4.50, severity=1.00, time=2661.00.
