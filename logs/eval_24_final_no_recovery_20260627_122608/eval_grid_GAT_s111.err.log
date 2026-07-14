@@ -1,0 +1,6 @@
+Warning: Teleporting vehicle 'dyn_1656'; side collision with vehicle 'dyn_1694', lane='B2B1_0', gap=-0.61, latGap=-0.45, time=1676.00, stage=laneChange.
+Warning: Vehicle 'dyn_1656' ends teleporting on edge 'B1B0', time=1676.00.
+Warning: Teleporting vehicle 'dyn_1749'; side collision with vehicle 'dyn_1754', lane='B2B1_0', gap=-1.89, latGap=-0.45, time=1755.00, stage=laneChange.
+Warning: Vehicle 'dyn_1749' ends teleporting on edge 'B1B0', time=1755.00.
+Warning: Teleporting vehicle 'dyn_1973'; side collision with vehicle 'dyn_2020', lane='C1B1_0', gap=-2.40, latGap=-0.60, time=1460.00, stage=laneChange.
+Warning: Vehicle 'dyn_1973' ends teleporting on edge 'B1A1', time=1460.00.

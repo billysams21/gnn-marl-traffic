@@ -1,0 +1,3 @@
+Warning: Vehicle '1561' performs emergency braking on lane ':B1_16_1' with decel=10.00, wished=5.00, severity=1.00, time=1608.00.
+Warning: Vehicle '2021' performs emergency braking on lane ':B1_1_1' with decel=10.00, wished=5.00, severity=1.00, time=2038.00.
+Warning: Vehicle '829' performs emergency braking on lane ':B2_1_1' with decel=10.00, wished=5.00, severity=1.00, time=848.00.

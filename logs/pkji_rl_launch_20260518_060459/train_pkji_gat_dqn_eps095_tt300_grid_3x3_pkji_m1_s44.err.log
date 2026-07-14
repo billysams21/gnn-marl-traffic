@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '2458'; waited too long (jam), lane=':C1_11_1', time=2845.00.
+Warning: Vehicle '2458' ends teleporting on edge 'C1C2', time=2845.00.
+Warning: Teleporting vehicle '2528'; waited too long (yield), lane=':C1_8_0', time=2847.00.
+Warning: Vehicle '2528' ends teleporting on edge 'C1C0', time=2847.00.

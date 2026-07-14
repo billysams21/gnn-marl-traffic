@@ -1,0 +1,35 @@
+============================================================
+Training gat_dqn on grid_3x3_pkji_m1
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml
+Episodes: 10
+Seed: 1101 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A1', 'B0', 'A0', 'A2', 'B1', 'B2', 'C0', 'C1', 'C2']
+Observation dim: 43
+Number of actions: 2
+Number of lanes per intersection: 8
+Adjacency matrix:
+[[1. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 1. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 1.]]
+Episode    1 | reward: -10.0994 | epsilon: 0.7840 | steps: 719 | avg_delay: 45.5658 | avg_queue: 1.1111 | throughput: 3448 | emergency_stops: 0 | loss_total: 0.0033 | loss_rl: 0.0026 | loss_pred: 0.0149
+Episode    2 | reward: -7.5398 | epsilon: 0.7683 | steps: 719 | avg_delay: 0.9579 | avg_queue: 0.2361 | throughput: 3505 | emergency_stops: 0 | loss_total: 0.0025 | loss_rl: 0.0020 | loss_pred: 0.0100
+Episode    3 | reward: -7.4409 | epsilon: 0.7530 | steps: 719 | avg_delay: 2.9184 | avg_queue: 0.2500 | throughput: 3502 | emergency_stops: 0 | loss_total: 0.0008 | loss_rl: 0.0003 | loss_pred: 0.0090
+Episode    4 | reward: -6.6454 | epsilon: 0.7379 | steps: 719 | avg_delay: 0.7677 | avg_queue: 0.1944 | throughput: 3501 | emergency_stops: 0 | loss_total: 0.0006 | loss_rl: 0.0002 | loss_pred: 0.0085
+Episode    5 | reward: -6.8503 | epsilon: 0.7231 | steps: 719 | avg_delay: 0.7802 | avg_queue: 0.1806 | throughput: 3509 | emergency_stops: 0 | loss_total: 0.0006 | loss_rl: 0.0002 | loss_pred: 0.0082 | eval_reward: -4.4979 | eval_reward_std: 0.0000 | eval_avg_delay: 0.0814 | eval_avg_queue: 0.0417 | eval_throughput: 3513.0000 | eval_emergency_stops: 0.0000
+Episode    6 | reward: -6.6218 | epsilon: 0.7087 | steps: 719 | avg_delay: 1.5165 | avg_queue: 0.2361 | throughput: 3509 | emergency_stops: 0 | loss_total: 0.0006 | loss_rl: 0.0002 | loss_pred: 0.0080
+Episode    7 | reward: -6.4005 | epsilon: 0.6945 | steps: 719 | avg_delay: 0.6429 | avg_queue: 0.1389 | throughput: 3502 | emergency_stops: 0 | loss_total: 0.0005 | loss_rl: 0.0001 | loss_pred: 0.0077
+Episode    8 | reward: -6.2507 | epsilon: 0.6806 | steps: 719 | avg_delay: 0.5109 | avg_queue: 0.1806 | throughput: 3507 | emergency_stops: 0 | loss_total: 0.0005 | loss_rl: 0.0001 | loss_pred: 0.0076
+Episode    9 | reward: -6.3960 | epsilon: 0.6670 | steps: 719 | avg_delay: 0.3100 | avg_queue: 0.1667 | throughput: 3500 | emergency_stops: 0 | loss_total: 0.0005 | loss_rl: 0.0001 | loss_pred: 0.0075
+Episode   10 | reward: -6.4002 | epsilon: 0.6537 | steps: 719 | avg_delay: 0.6264 | avg_queue: 0.1528 | throughput: 3509 | emergency_stops: 0 | loss_total: 0.0005 | loss_rl: 0.0001 | loss_pred: 0.0074 | eval_reward: -4.7881 | eval_reward_std: 0.0000 | eval_avg_delay: 1.3678 | eval_avg_queue: 0.2361 | eval_throughput: 3512.0000 | eval_emergency_stops: 0.0000
+
+Training complete! Best train reward: -6.25 | Best eval reward: -4.50
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_grid_3x3_pkji_m1_20260523_010522_pkji_stage1_fresh_smoke_gat_dqn_tt600_eps08_decay098_10ep_s1101

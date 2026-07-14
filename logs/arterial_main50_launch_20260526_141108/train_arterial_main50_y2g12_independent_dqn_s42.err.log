@@ -1,0 +1,10 @@
+Warning: Teleporting vehicle '5749'; side collision with vehicle '5753', lane='A2A1_1', gap=-0.53, latGap=-0.50, time=3590.00, stage=laneChange.
+Warning: Vehicle '5749' ends teleporting on edge 'A1W_A0', time=3590.00.
+Warning: Teleporting vehicle '5762'; side collision with vehicle '5759', lane='A2A1_1', gap=-2.30, latGap=-0.50, time=3593.00, stage=laneChange.
+Warning: Vehicle '5762' ends teleporting on edge 'A1W_A0', time=3593.00.
+Warning: Teleporting vehicle '5337'; side collision with vehicle '5380', lane='A2A1_1', gap=-0.27, latGap=-0.35, time=3348.00, stage=laneChange.
+Warning: Vehicle '5337' ends teleporting on edge 'A1W_A0', time=3348.00.
+Warning: Teleporting vehicle '4585'; junction collision with vehicle '4553', lane=':A1_14_0', gap=-0.54, latGap=-0.65, time=3542.00, stage=move.
+Warning: Vehicle '4585' ends teleporting on edge 'A1A2', time=3556.00.
+Warning: Teleporting vehicle '1448'; junction collision with vehicle '1572', lane=':A2_14_1', gap=-1.05, latGap=-0.60, time=1420.00, stage=move.
+Warning: Vehicle '1448' ends teleporting on edge 'A2A3', time=1420.00.

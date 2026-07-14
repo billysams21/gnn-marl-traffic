@@ -1,0 +1,30 @@
+============================================================
+Training gat_dqn on grid_3x3_pkji_m1
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3_pkji_m1.rou.xml
+Episodes: 5
+Seed: 42 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A1', 'B0', 'A0', 'A2', 'B1', 'B2', 'C0', 'C1', 'C2']
+Observation dim: 43
+Number of actions: 2
+Number of lanes per intersection: 8
+Adjacency matrix:
+[[1. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 1. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 1.]]
+Episode    1 | reward: -6790.5000 | epsilon: 0.9900 | steps: 719 | avg_delay: 2.8229 | avg_queue: 0.3333 | throughput: 3504 | emergency_stops: 0 | loss_total: 131.7680 | loss_rl: 131.7648 | loss_pred: 0.0107
+Episode    2 | reward: -7161.1111 | epsilon: 0.9801 | steps: 719 | avg_delay: 1.9293 | avg_queue: 0.3056 | throughput: 3501 | emergency_stops: 0 | loss_total: 75.2276 | loss_rl: 75.2248 | loss_pred: 0.0090
+Episode    3 | reward: -6591.3889 | epsilon: 0.9703 | steps: 719 | avg_delay: 5.7667 | avg_queue: 0.3056 | throughput: 3508 | emergency_stops: 0 | loss_total: 80.2399 | loss_rl: 80.2373 | loss_pred: 0.0089
+Episode    4 | reward: -6565.1111 | epsilon: 0.9606 | steps: 719 | avg_delay: 1.0722 | avg_queue: 0.1944 | throughput: 3502 | emergency_stops: 0 | loss_total: 78.1727 | loss_rl: 78.1701 | loss_pred: 0.0085
+Episode    5 | reward: -6460.4444 | epsilon: 0.9510 | steps: 719 | avg_delay: 2.0918 | avg_queue: 0.3472 | throughput: 3502 | emergency_stops: 0 | loss_total: 76.0569 | loss_rl: 76.0544 | loss_pred: 0.0084 | eval_reward: -2968.1667 | eval_reward_std: 0.0000 | eval_avg_delay: 1.3218 | eval_avg_queue: 0.2639 | eval_throughput: 3513.0000 | eval_emergency_stops: 0.0000
+
+Training complete! Best train reward: -6460.44 | Best eval reward: -2968.17
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_grid_3x3_pkji_m1_20260516_042713_pkji_m1_timing_probe_gat_dqn_cuda_y2_g12_eps099_s42

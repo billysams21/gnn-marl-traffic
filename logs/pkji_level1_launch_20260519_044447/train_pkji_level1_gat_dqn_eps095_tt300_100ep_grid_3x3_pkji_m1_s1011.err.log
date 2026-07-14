@@ -1,0 +1,15 @@
+Warning: Teleporting vehicle '1188'; waited too long (yield), lane=':B2_8_0', time=1539.00.
+Warning: Vehicle '1188' ends teleporting on edge 'B2B1', time=1539.00.
+Warning: Teleporting vehicle '1214'; waited too long (jam), lane=':B2_16_1', time=1581.00.
+Warning: Vehicle '1214' ends teleporting on edge 'B2C2', time=1581.00.
+Warning: Vehicle '454' performs emergency braking on lane ':B1_11_1' with decel=10.00, wished=5.00, severity=1.00, time=502.00.
+Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1029.00.
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1029.00.
+Warning: Teleporting vehicle '659'; waited too long (jam), lane=':B1_1_1', time=1043.00.
+Warning: Vehicle '659' ends teleporting on edge 'B1B0', time=1043.00.
+Warning: Teleporting vehicle '1359'; waited too long (jam), lane=':B0_16_1', time=1760.00.
+Warning: Vehicle '1359' ends teleporting on edge 'B0C0', time=1760.00.
+Warning: Teleporting vehicle '448'; waited too long (yield), lane=':B2_13_0', time=814.00.
+Warning: Vehicle '448' ends teleporting on edge 'B2A2', time=814.00.
+Warning: Teleporting vehicle '499'; waited too long (jam), lane=':B2_1_1', time=825.00.
+Warning: Vehicle '499' ends teleporting on edge 'B2B1', time=825.00.

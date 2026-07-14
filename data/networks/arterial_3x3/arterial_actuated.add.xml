@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<additional>
+    <inductionLoop id="e1_A1_A2A1_0" lane="A2A1_0" pos="-50.0" period="1" file="NUL" tl="A1" tlLinkIndex="4" />
+    <inductionLoop id="e1_A1_A2A1_1" lane="A2A1_1" pos="-50.0" period="1" file="NUL" tl="A1" tlLinkIndex="6" />
+    <inductionLoop id="e1_A1_W_A0A1_0" lane="W_A0A1_0" pos="-50.0" period="1" file="NUL" tl="A1" tlLinkIndex="13" />
+    <inductionLoop id="e1_A1_W_A0A1_1" lane="W_A0A1_1" pos="-50.0" period="1" file="NUL" tl="A1" tlLinkIndex="15" />
+    <inductionLoop id="e1_A2_A1A2_0" lane="A1A2_0" pos="-50.0" period="1" file="NUL" tl="A2" tlLinkIndex="13" />
+    <inductionLoop id="e1_A2_A1A2_1" lane="A1A2_1" pos="-50.0" period="1" file="NUL" tl="A2" tlLinkIndex="15" />
+    <inductionLoop id="e1_A2_A3A2_0" lane="A3A2_0" pos="-50.0" period="1" file="NUL" tl="A2" tlLinkIndex="4" />
+    <inductionLoop id="e1_A2_A3A2_1" lane="A3A2_1" pos="-50.0" period="1" file="NUL" tl="A2" tlLinkIndex="6" />
+    <inductionLoop id="e1_A3_A2A3_0" lane="A2A3_0" pos="-50.0" period="1" file="NUL" tl="A3" tlLinkIndex="13" />
+    <inductionLoop id="e1_A3_A2A3_1" lane="A2A3_1" pos="-50.0" period="1" file="NUL" tl="A3" tlLinkIndex="15" />
+    <inductionLoop id="e1_A3_E_A4A3_0" lane="E_A4A3_0" pos="-50.0" period="1" file="NUL" tl="A3" tlLinkIndex="4" />
+    <inductionLoop id="e1_A3_E_A4A3_1" lane="E_A4A3_1" pos="-50.0" period="1" file="NUL" tl="A3" tlLinkIndex="6" />
+</additional>

@@ -1,0 +1,90 @@
+{
+  "config": {
+    "env": {
+      "num_seconds": 3600,
+      "delta_time": 5,
+      "yellow_time": 2,
+      "min_green": 12,
+      "max_green": 40,
+      "time_to_teleport": 300,
+      "recovery_enabled": true,
+      "recovery_enter_delay": 30.0,
+      "recovery_enter_queue": 3.0,
+      "recovery_exit_delay": 10.0,
+      "recovery_exit_queue": 1.5,
+      "recovery_hold_seconds": 30,
+      "reward_alpha": 0.5,
+      "max_queue_per_lane": 30,
+      "max_waiting_time": 300.0,
+      "max_delta_queue": 10.0,
+      "max_delta_density": 0.5
+    },
+    "gat": {
+      "hidden_dim": 64,
+      "embed_dim": 64,
+      "num_heads": 4,
+      "dropout": 0.0
+    },
+    "q_network": {
+      "hidden_dims": [
+        128,
+        64
+      ]
+    },
+    "prediction": {
+      "lambda": 0.3,
+      "action_embed_dim": 8,
+      "mode": "full"
+    },
+    "rl": {
+      "lr": 0.0003,
+      "gamma": 0.95,
+      "epsilon_start": 1.0,
+      "epsilon_end": 0.05,
+      "epsilon_decay": 0.95,
+      "batch_size": 64,
+      "buffer_size": 50000,
+      "target_update_freq": 1000
+    },
+    "training": {
+      "num_episodes": 200,
+      "eval_interval": 10,
+      "eval_episodes": 1,
+      "eval_seed_offset": 10000,
+      "save_interval": 50,
+      "log_interval": 1,
+      "deterministic": true
+    }
+  },
+  "scenario": {
+    "net_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.net.xml",
+    "route_file": "data/networks/grid_3x3/grid_3x3_pkji_m1p5.rou.xml",
+    "description": "3x3 grid with PKJI calibrated fixed-time net and PKJI-aware synthetic demand m1.5"
+  },
+  "run": {
+    "agent_type": "gat_dqn",
+    "scenario_name": "grid_3x3_pkji_m1p5",
+    "seed": 44,
+    "device": "cuda",
+    "num_episodes_target": 50,
+    "use_gui": false,
+    "deterministic": true,
+    "resume_mode": false,
+    "resume_checkpoint": null,
+    "resume_log_dir": null,
+    "exp_suffix": "pkji_gat_dqn_eps095_tt300_50ep_grid_3x3_pkji_m1p5_s44",
+    "env_overrides": {
+      "yellow_time": 2,
+      "min_green": 12
+    },
+    "training_overrides": {
+      "eval_interval": 10,
+      "eval_episodes": 1
+    },
+    "rl_overrides": {
+      "epsilon_start": null,
+      "epsilon_end": null,
+      "epsilon_decay": 0.95
+    }
+  }
+}

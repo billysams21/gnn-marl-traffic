@@ -1,0 +1,47 @@
+Warning: Vehicle '3406' performs emergency braking on lane 'A1B1_1' with decel=9.00, wished=4.50, severity=1.00, time=3478.00.
+Warning: Vehicle '2764' performs emergency braking on lane ':A1_11_1' with decel=9.00, wished=4.50, severity=1.00, time=2854.00.
+Warning: Vehicle '1731' performs emergency braking on lane ':B1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=1818.00.
+Warning: Vehicle '518' performs emergency braking on lane 'B1A1_0' with decel=9.00, wished=4.50, severity=1.00, time=562.00.
+Warning: Vehicle '518' performs emergency stop at the end of lane 'B1A1_0' because of a red traffic light (decel=-9.63, offset=0.63), time=562.00.
+Warning: Vehicle '2543' performs emergency braking on lane ':B1_6_1' with decel=9.00, wished=4.50, severity=1.00, time=2578.00.
+Warning: Vehicle '168' performs emergency braking on lane 'B1C1_0' with decel=9.00, wished=4.50, severity=1.00, time=197.00.
+Warning: Vehicle '168' performs emergency stop at the end of lane 'B1C1_0' because of a red traffic light (decel=-10.19, offset=1.19), time=197.00.
+Warning: Vehicle '1627' performs emergency braking on lane 'B2B1_1' with decel=9.00, wished=4.50, severity=1.00, time=1643.00.
+Warning: Vehicle '518' performs emergency braking on lane 'B1A1_0' with decel=9.00, wished=4.50, severity=1.00, time=562.00.
+Warning: Vehicle '518' performs emergency stop at the end of lane 'B1A1_0' because of a red traffic light (decel=-11.38, offset=2.38), time=562.00.
+Warning: Vehicle '3002' performs emergency braking on lane 'B1B2_0' with decel=9.00, wished=4.50, severity=1.00, time=3037.00.
+Warning: Vehicle '3002' performs emergency stop at the end of lane 'B1B2_0' because of a red traffic light (decel=-9.14, offset=0.14), time=3037.00.
+Warning: Vehicle '512' performs emergency braking on lane 'A2A1_1' with decel=9.00, wished=4.50, severity=1.00, time=527.00.
+Warning: Vehicle '512' performs emergency stop at the end of lane 'A2A1_1' because of a red traffic light (decel=-11.57, offset=2.34), time=527.00.
+Warning: Vehicle '1251' performs emergency braking on lane 'B0B1_1' with decel=9.00, wished=4.50, severity=1.00, time=1294.00.
+Warning: Teleporting vehicle '3029'; collision with vehicle '2982', lane='B1A1_1', gap=-5.75, time=3063.00, stage=move.
+Warning: Vehicle '3029' ends teleporting on edge 'A1A0', time=3063.00.
+Warning: Vehicle '2194' performs emergency braking on lane 'C1B1_0' with decel=9.00, wished=4.50, severity=1.00, time=2297.00.
+Warning: Vehicle '2194' performs emergency stop at the end of lane 'C1B1_0' because of a red traffic light (decel=-10.23, offset=1.23), time=2297.00.
+Warning: Vehicle '1361' performs emergency braking on lane 'B1C1_1' with decel=9.00, wished=4.50, severity=1.00, time=1377.00.
+Warning: Vehicle '2764' performs emergency braking on lane ':B0_6_1' with decel=9.00, wished=4.50, severity=1.00, time=2803.00.
+Warning: Vehicle '2470' performs emergency braking on lane 'B2B1_1' with decel=9.00, wished=4.50, severity=1.00, time=2523.00.
+Warning: Vehicle '1464' performs emergency braking on lane ':B1_11_1' with decel=9.00, wished=4.50, severity=1.00, time=1511.00.
+Warning: Vehicle '1169' performs emergency braking on lane 'A1A2_0' with decel=9.00, wished=4.50, severity=1.00, time=1217.00.
+Warning: Vehicle '1169' performs emergency stop at the end of lane 'A1A2_0' because of a red traffic light (decel=-9.12, offset=0.12), time=1217.00.
+Warning: Vehicle '1822' performs emergency braking on lane 'B0B1_0' with decel=9.00, wished=4.50, severity=1.00, time=1837.00.
+Warning: Vehicle '1822' performs emergency stop at the end of lane 'B0B1_0' because of a red traffic light (decel=-10.60, offset=1.60), time=1837.00.
+Warning: Vehicle '1095' performs emergency braking on lane 'B0B1_1' with decel=9.00, wished=4.50, severity=1.00, time=1154.00.
+Warning: Vehicle '3337' performs emergency braking on lane ':B1_11_1' with decel=9.00, wished=4.50, severity=1.00, time=3388.00.
+Warning: Vehicle '486' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=518.00.
+Warning: Vehicle '1361' performs emergency braking on lane 'C1B1_0' with decel=9.00, wished=4.50, severity=1.00, time=1412.00.
+Warning: Vehicle '1361' performs emergency stop at the end of lane 'C1B1_0' because of a red traffic light (decel=-9.17, offset=0.17), time=1412.00.
+Warning: Vehicle '3363' performs emergency braking on lane ':C1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=3453.00.
+Warning: Vehicle '232' performs emergency braking on lane ':B1_6_1' with decel=9.00, wished=4.50, severity=1.00, time=249.00.
+Warning: Vehicle '471' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=518.00.
+Warning: Vehicle '168' performs emergency braking on lane 'B1C1_0' with decel=9.00, wished=4.50, severity=1.00, time=212.00.
+Warning: Vehicle '168' performs emergency stop at the end of lane 'B1C1_0' because of a red traffic light (decel=-10.15, offset=1.15), time=212.00.
+Warning: Vehicle '2913' performs emergency braking on lane 'B0B1_0' with decel=9.00, wished=4.50, severity=1.00, time=3007.00.
+Warning: Vehicle '2913' performs emergency stop at the end of lane 'B0B1_0' because of a red traffic light (decel=-9.89, offset=0.89), time=3007.00.
+Warning: Vehicle '486' performs emergency braking on lane ':B2_16_1' with decel=9.00, wished=4.50, severity=1.00, time=518.00.
+Warning: Vehicle '721' performs emergency braking on lane ':C1_1_1' with decel=9.00, wished=4.50, severity=1.00, time=753.00.
+Warning: Vehicle '168' performs emergency braking on lane 'B1C1_0' with decel=9.00, wished=4.50, severity=1.00, time=202.00.
+Warning: Vehicle '168' performs emergency stop at the end of lane 'B1C1_0' because of a red traffic light (decel=-10.49, offset=1.49), time=202.00.
+Warning: Vehicle '443' performs emergency braking on lane ':B0_1_1' with decel=9.00, wished=4.50, severity=1.00, time=504.00.
+Warning: Vehicle '518' performs emergency braking on lane 'B1A1_0' with decel=9.00, wished=4.50, severity=1.00, time=547.00.
+Warning: Vehicle '518' performs emergency stop at the end of lane 'B1A1_0' because of a red traffic light (decel=-11.13, offset=2.13), time=547.00.

@@ -1,0 +1,25 @@
+Warning: Teleporting vehicle '2999'; side collision with vehicle '3001', lane=':A3_5_0', gap=-0.71, latGap=-0.70, time=1812.00, stage=laneChange.
+Warning: Vehicle '2999' ends teleporting on edge 'A3A2', time=1812.00.
+Warning: Teleporting vehicle '4649'; waited too long (jam), lane=':A1_2_0', time=3179.00.
+Warning: Vehicle '4649' ends teleporting on edge 'A1A2', time=3179.00.
+Warning: Teleporting vehicle '950'; side collision with vehicle '951', lane='E_A4A3_0', gap=-2.54, latGap=-0.55, time=602.00, stage=laneChange.
+Warning: Vehicle '950' ends teleporting on edge 'A3A2', time=602.00.
+Warning: Teleporting vehicle '5349'; waited too long (yield), lane='C1A1_0', time=3571.00.
+Warning: Vehicle '5349' ends teleporting on edge 'A1B1', time=3571.00.
+Warning: Teleporting vehicle '5315'; waited too long (jam), lane=':A1_2_0', time=3573.00.
+Warning: Vehicle '5315' ends teleporting on edge 'A1A2', time=3573.00.
+Warning: Teleporting vehicle '5316'; waited too long (jam), lane=':A1_2_0', time=3574.00.
+Warning: Vehicle '5316' ends teleporting on edge 'A1A2', time=3574.00.
+Warning: Teleporting vehicle '5661'; side collision with vehicle '5632', lane=':A2_5_0', gap=-1.74, latGap=-0.35, time=3462.00, stage=laneChange.
+Warning: Vehicle '5661' ends teleporting on edge 'A2A1', time=3462.00.
+Warning: Teleporting vehicle '2597'; junction collision with vehicle '2560', lane=':A3_14_1', gap=-1.52, latGap=-0.20, time=2482.00, stage=move.
+Warning: Vehicle '2597' ends teleporting on edge 'A3E_A4', time=2482.00.
+Warning: Teleporting vehicle '3771'; waited too long (yield), lane='W_A0A1_1', time=3184.00.
+Warning: Vehicle '3771' ends teleporting on edge 'A1C1', time=3184.00.
+Warning: Teleporting vehicle '4568'; waited too long (jam), lane=':A1_5_0', time=3211.00.
+Warning: Vehicle '4568' ends teleporting on edge 'A1W_A0', time=3211.00.
+Warning: Teleporting vehicle '4573'; waited too long (jam), lane=':A1_5_0', time=3212.00.
+Warning: Vehicle '4573' ends teleporting on edge 'A1W_A0', time=3213.00.
+Warning: Vehicle '1550' performs emergency braking on lane ':A1_14_1' with decel=9.00, wished=4.50, severity=1.00, time=1185.00.
+Warning: Teleporting vehicle '4531'; side collision with vehicle '4580', lane=':A1_14_1', gap=-0.88, latGap=-0.20, time=3543.00, stage=laneChange.
+Warning: Vehicle '4531' ends teleporting on edge 'A1A2', time=3543.00.

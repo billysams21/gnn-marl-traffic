@@ -1,0 +1,3 @@
+Warning: Vehicle '1814' performs emergency braking on lane ':A1_11_1' with decel=10.00, wished=5.00, severity=1.00, time=1853.00.
+Error: tcpip::Socket::recvAndCheck @ recv: Socket reset by peer
+Quitting (on error).

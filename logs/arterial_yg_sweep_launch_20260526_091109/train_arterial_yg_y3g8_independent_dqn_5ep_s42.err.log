@@ -1,0 +1,6 @@
+Warning: Teleporting vehicle '2706'; waited too long (jam), lane=':A2_2_0', time=2026.00.
+Warning: Vehicle '2706' ends teleporting on edge 'A2A3', time=2026.00.
+Warning: Teleporting vehicle '3170'; side collision with vehicle '3235', lane=':A2_5_1', gap=-2.52, latGap=-0.20, time=2047.00, stage=laneChange.
+Warning: Vehicle '3170' ends teleporting on edge 'A2A1', time=2047.00.
+Warning: Teleporting vehicle '4783'; side collision with vehicle '4827', lane='A2A1_1', gap=-0.78, latGap=-0.80, time=2999.00, stage=laneChange.
+Warning: Vehicle '4783' ends teleporting on edge 'A1W_A0', time=2999.00.

@@ -1,0 +1,9 @@
+Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1042.00.
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1042.00.
+Warning: Teleporting vehicle '683'; waited too long (jam), lane=':B1_6_0', time=1062.00.
+Warning: Vehicle '683' ends teleporting on edge 'B1A1', time=1062.00.
+Warning: Teleporting vehicle '728'; waited too long (jam), lane=':B1_6_0', time=1063.00.
+Warning: Vehicle '728' ends teleporting on edge 'B1A1', time=1063.00.
+Warning: Teleporting vehicle '740'; waited too long (jam), lane=':B1_6_0', time=1068.00.
+Warning: Vehicle '740' ends teleporting on edge 'B1A1', time=1068.00.
+Warning: Vehicle '917' performs emergency braking on lane ':C1_16_1' with decel=9.00, wished=4.50, severity=1.00, time=1034.00.

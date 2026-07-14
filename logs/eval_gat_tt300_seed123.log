@@ -1,0 +1,43 @@
+﻿.\helm\Scripts\python.exe : Warning: Teleporting vehicle '705'; waited too long (yield), lane=':B1_13_0', time=1039.00.
+At line:2 char:42
++ ... rl-traffic; .\helm\Scripts\python.exe experiments\evaluate.py --model ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: Telepo..., time=1039.00.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Warning: Vehicle '705' ends teleporting on edge 'B1A1', time=1039.00.
+Warning: Teleporting vehicle '652'; waited too long (yield), lane=':B1_18_0', time=1055.00.
+Warning: Vehicle '652' ends teleporting on edge 'B1B2', time=1055.00.
+Warning: Teleporting vehicle '693'; waited too long (jam), lane='B2B1_0', time=1098.00.
+Warning: Vehicle '693' ends teleporting on edge 'B1B0', time=1098.00.
+Warning: Teleporting vehicle '728'; waited too long (jam), lane=':B1_6_0', time=1345.00.
+Warning: Vehicle '728' ends teleporting on edge 'B1A1', time=1345.00.
+Warning: Teleporting vehicle '742'; waited too long (yield), lane='B0B1_1', time=1348.00.
+Warning: Teleporting vehicle '743'; waited too long (yield), lane=':B1_3_0', time=1348.00.
+Warning: Vehicle '742' ends teleporting on edge 'B1B2', time=1348.00.
+Warning: Vehicle '743' ends teleporting on edge 'B1C1', time=1348.00.
+Warning: Teleporting vehicle '704'; waited too long (yield), lane=':B1_18_0', time=1362.00.
+Warning: Vehicle '704' ends teleporting on edge 'B1B2', time=1362.00.
+Warning: Teleporting vehicle '716'; waited too long (jam), lane='B0B1_1', time=1374.00.
+Warning: Vehicle '716' ends teleporting on edge 'B1B2', time=1374.00.
+Warning: Vehicle '709' performs emergency braking on lane ':B1_6_1' with decel=10.00, wished=5.00, severity=1.00, 
+time=783.00.
+Episode 1: reward=-2941.22, delay=1.66, queue=0.32, throughput=3511, emergency_stops=0
+Episode 2: reward=-2889.22, delay=0.25, queue=0.10, throughput=3509, emergency_stops=0
+Episode 3: reward=-12487.44, delay=74.86, queue=1.79, throughput=3415, emergency_stops=0
+Episode 4: reward=-2962.50, delay=1.96, queue=0.35, throughput=3508, emergency_stops=0
+Episode 5: reward=-3054.61, delay=0.73, queue=0.12, throughput=3510, emergency_stops=0
+Episode 6: reward=-2938.39, delay=1.16, queue=0.25, throughput=3513, emergency_stops=0
+Episode 7: reward=-2910.72, delay=1.07, queue=0.22, throughput=3508, emergency_stops=0
+Episode 8: reward=-128306.17, delay=1.56, queue=0.26, throughput=3510, emergency_stops=0
+Episode 9: reward=-2974.56, delay=1.47, queue=0.29, throughput=3513, emergency_stops=0
+Episode 10: reward=-2967.50, delay=1.65, queue=0.31, throughput=3508, emergency_stops=0
+
+==================================================
+Evaluation Results (10 episodes)
+==================================================
+Avg Reward:  -16443.23 ▒ 37395.82
+Avg Delay:   8.64 ▒ 22.08
+Avg Queue:   0.40 ▒ 0.47
+Throughput:  3500.50 ▒ 28.56
+Emergency:   0.00 ▒ 0.00

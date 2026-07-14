@@ -1,0 +1,8 @@
+Warning: Teleporting vehicle '3770'; side collision with vehicle '3758', lane='A3A2_0', gap=-1.29, latGap=-0.70, time=2304.00, stage=laneChange.
+Warning: Vehicle '3770' ends teleporting on edge 'A2A1', time=2304.00.
+Warning: Teleporting vehicle '2472'; junction collision with vehicle '2286', lane=':A2_14_1', gap=-0.01, latGap=-0.50, time=2316.00, stage=move.
+Warning: Vehicle '2472' ends teleporting on edge 'A2A3', time=2316.00.
+Warning: Teleporting vehicle '1656'; waited too long (yield), lane='A2A3_1', time=2275.00.
+Warning: Vehicle '1656' ends teleporting on edge 'A3C3', time=2275.00.
+Warning: Teleporting vehicle '5508'; side collision with vehicle '5513', lane='A2A1_0', gap=-0.06, latGap=-0.20, time=3427.00, stage=laneChange.
+Warning: Vehicle '5508' ends teleporting on edge 'A1W_A0', time=3427.00.

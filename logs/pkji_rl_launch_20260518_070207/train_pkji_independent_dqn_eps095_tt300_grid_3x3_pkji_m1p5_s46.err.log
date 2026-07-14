@@ -1,0 +1,3 @@
+Warning: Teleporting vehicle '917_x1'; waited too long (jam), lane=':A2_1_1', time=1266.00.
+Warning: Vehicle '917_x1' ends teleporting on edge 'A2A1', time=1266.00.
+Warning: Vehicle '1841_x1' performs emergency braking on lane ':A1_11_1' with decel=9.00, wished=4.50, severity=1.00, time=1928.00.

@@ -1,0 +1,75 @@
+============================================================
+Training gat_dqn on grid_3x3
+Net: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3.net.xml
+Route: D:\ITB\TA\gnn-marl-traffic\data/networks/grid_3x3/grid_3x3.rou.xml
+Episodes: 50
+Seed: 43 | Deterministic: True
+============================================================
+Number of agents (traffic lights): 9
+Traffic light IDs: ['A1', 'B0', 'A0', 'A2', 'B1', 'B2', 'C0', 'C1', 'C2']
+Observation dim: 43
+Number of actions: 2
+Number of lanes per intersection: 8
+Adjacency matrix:
+[[1. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 1. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 1.]]
+Episode    1 | reward: -7820.2222 | epsilon: 0.9900 | steps: 719 | avg_delay: 1.3438 | avg_queue: 0.2500 | throughput: 3504 | emergency_stops: 1 | loss_total: 218.2848 | loss_rl: 218.2815 | loss_pred: 0.0111
+Episode    2 | reward: -7090.0000 | epsilon: 0.9801 | steps: 719 | avg_delay: 0.9208 | avg_queue: 0.1806 | throughput: 3499 | emergency_stops: 0 | loss_total: 89.0692 | loss_rl: 89.0665 | loss_pred: 0.0091
+Episode    3 | reward: -6658.2222 | epsilon: 0.9703 | steps: 719 | avg_delay: 4.4239 | avg_queue: 0.3889 | throughput: 3508 | emergency_stops: 0 | loss_total: 83.2288 | loss_rl: 83.2261 | loss_pred: 0.0090
+Episode    4 | reward: -7199.1667 | epsilon: 0.9606 | steps: 719 | avg_delay: 2.2043 | avg_queue: 0.2361 | throughput: 3507 | emergency_stops: 1 | loss_total: 80.4621 | loss_rl: 80.4595 | loss_pred: 0.0086
+Episode    5 | reward: -6742.3333 | epsilon: 0.9510 | steps: 719 | avg_delay: 0.6344 | avg_queue: 0.1944 | throughput: 3507 | emergency_stops: 0 | loss_total: 79.9470 | loss_rl: 79.9445 | loss_pred: 0.0084
+Episode    6 | reward: -7014.6667 | epsilon: 0.9415 | steps: 719 | avg_delay: 1.0217 | avg_queue: 0.1667 | throughput: 3507 | emergency_stops: 0 | loss_total: 79.2318 | loss_rl: 79.2293 | loss_pred: 0.0083
+Episode    7 | reward: -6324.3333 | epsilon: 0.9321 | steps: 719 | avg_delay: 2.9565 | avg_queue: 0.3056 | throughput: 3508 | emergency_stops: 0 | loss_total: 78.2076 | loss_rl: 78.2051 | loss_pred: 0.0083
+Episode    8 | reward: -7304.2222 | epsilon: 0.9227 | steps: 719 | avg_delay: 1.0208 | avg_queue: 0.2500 | throughput: 3503 | emergency_stops: 0 | loss_total: 78.3910 | loss_rl: 78.3886 | loss_pred: 0.0082
+Episode    9 | reward: -6804.5000 | epsilon: 0.9135 | steps: 719 | avg_delay: 1.3444 | avg_queue: 0.2500 | throughput: 3510 | emergency_stops: 0 | loss_total: 80.6034 | loss_rl: 80.6010 | loss_pred: 0.0082
+Episode   10 | reward: -6540.7778 | epsilon: 0.9044 | steps: 719 | avg_delay: 1.5800 | avg_queue: 0.3194 | throughput: 3499 | emergency_stops: 0 | loss_total: 82.7185 | loss_rl: 82.7161 | loss_pred: 0.0082 | eval_reward: -3168.3333 | eval_reward_std: 0.0000 | eval_avg_delay: 1.2738 | eval_avg_queue: 0.2639 | eval_throughput: 3515.0000 | eval_emergency_stops: 0.0000
+Episode   11 | reward: -6743.1667 | epsilon: 0.8953 | steps: 719 | avg_delay: 0.5889 | avg_queue: 0.1667 | throughput: 3509 | emergency_stops: 0 | loss_total: 79.2806 | loss_rl: 79.2782 | loss_pred: 0.0081
+Episode   12 | reward: -6767.6667 | epsilon: 0.8864 | steps: 719 | avg_delay: 1.0333 | avg_queue: 0.1806 | throughput: 3510 | emergency_stops: 0 | loss_total: 81.5174 | loss_rl: 81.5150 | loss_pred: 0.0081
+Episode   13 | reward: -6268.3889 | epsilon: 0.8775 | steps: 719 | avg_delay: 1.9368 | avg_queue: 0.2361 | throughput: 3505 | emergency_stops: 0 | loss_total: 82.0727 | loss_rl: 82.0703 | loss_pred: 0.0080
+Episode   14 | reward: -6659.2222 | epsilon: 0.8687 | steps: 719 | avg_delay: 1.1789 | avg_queue: 0.2917 | throughput: 3505 | emergency_stops: 0 | loss_total: 82.5535 | loss_rl: 82.5511 | loss_pred: 0.0080
+Episode   15 | reward: -6227.2222 | epsilon: 0.8601 | steps: 719 | avg_delay: 1.6064 | avg_queue: 0.3194 | throughput: 3506 | emergency_stops: 0 | loss_total: 81.4288 | loss_rl: 81.4264 | loss_pred: 0.0080
+Episode   16 | reward: -5603.0556 | epsilon: 0.8515 | steps: 719 | avg_delay: 1.2333 | avg_queue: 0.2500 | throughput: 3507 | emergency_stops: 0 | loss_total: 81.4766 | loss_rl: 81.4742 | loss_pred: 0.0079
+Episode   17 | reward: -6049.5556 | epsilon: 0.8429 | steps: 719 | avg_delay: 1.2841 | avg_queue: 0.2361 | throughput: 3512 | emergency_stops: 0 | loss_total: 81.7399 | loss_rl: 81.7375 | loss_pred: 0.0079
+Episode   18 | reward: -6350.3889 | epsilon: 0.8345 | steps: 719 | avg_delay: 2.4362 | avg_queue: 0.4028 | throughput: 3506 | emergency_stops: 0 | loss_total: 81.7029 | loss_rl: 81.7006 | loss_pred: 0.0079
+Episode   19 | reward: -5567.5000 | epsilon: 0.8262 | steps: 719 | avg_delay: 3.0532 | avg_queue: 0.3889 | throughput: 3506 | emergency_stops: 0 | loss_total: 81.3348 | loss_rl: 81.3325 | loss_pred: 0.0078
+Episode   20 | reward: -5670.9444 | epsilon: 0.8179 | steps: 719 | avg_delay: 1.7742 | avg_queue: 0.3056 | throughput: 3507 | emergency_stops: 1 | loss_total: 82.2151 | loss_rl: 82.2128 | loss_pred: 0.0078 | eval_reward: -3302.7778 | eval_reward_std: 0.0000 | eval_avg_delay: 0.3294 | eval_avg_queue: 0.1389 | eval_throughput: 3514.0000 | eval_emergency_stops: 1.0000
+Episode   21 | reward: -5462.1111 | epsilon: 0.8097 | steps: 719 | avg_delay: 1.7527 | avg_queue: 0.3194 | throughput: 3506 | emergency_stops: 1 | loss_total: 81.7141 | loss_rl: 81.7118 | loss_pred: 0.0078
+Episode   22 | reward: -6286.2222 | epsilon: 0.8016 | steps: 719 | avg_delay: 1.6170 | avg_queue: 0.2083 | throughput: 3505 | emergency_stops: 0 | loss_total: 81.9719 | loss_rl: 81.9695 | loss_pred: 0.0078
+Episode   23 | reward: -5761.1667 | epsilon: 0.7936 | steps: 719 | avg_delay: 1.0217 | avg_queue: 0.1806 | throughput: 3508 | emergency_stops: 0 | loss_total: 82.8468 | loss_rl: 82.8445 | loss_pred: 0.0077
+Episode   24 | reward: -5456.6111 | epsilon: 0.7857 | steps: 719 | avg_delay: 0.5393 | avg_queue: 0.0972 | throughput: 3511 | emergency_stops: 0 | loss_total: 82.0780 | loss_rl: 82.0757 | loss_pred: 0.0077
+Episode   25 | reward: -5470.7778 | epsilon: 0.7778 | steps: 719 | avg_delay: 1.2045 | avg_queue: 0.2083 | throughput: 3511 | emergency_stops: 0 | loss_total: 82.2646 | loss_rl: 82.2623 | loss_pred: 0.0076
+Episode   26 | reward: -5568.6111 | epsilon: 0.7700 | steps: 719 | avg_delay: 2.4301 | avg_queue: 0.3889 | throughput: 3507 | emergency_stops: 0 | loss_total: 82.8785 | loss_rl: 82.8762 | loss_pred: 0.0076
+Episode   27 | reward: -5539.6667 | epsilon: 0.7623 | steps: 719 | avg_delay: 0.7753 | avg_queue: 0.1944 | throughput: 3511 | emergency_stops: 0 | loss_total: 82.8770 | loss_rl: 82.8748 | loss_pred: 0.0076
+Episode   28 | reward: -5350.8333 | epsilon: 0.7547 | steps: 719 | avg_delay: 1.7895 | avg_queue: 0.2917 | throughput: 3504 | emergency_stops: 0 | loss_total: 80.3470 | loss_rl: 80.3447 | loss_pred: 0.0075
+Episode   29 | reward: -5325.0000 | epsilon: 0.7472 | steps: 719 | avg_delay: 1.0000 | avg_queue: 0.1944 | throughput: 3506 | emergency_stops: 0 | loss_total: 80.6272 | loss_rl: 80.6249 | loss_pred: 0.0075
+Episode   30 | reward: -5393.5556 | epsilon: 0.7397 | steps: 719 | avg_delay: 0.1809 | avg_queue: 0.0694 | throughput: 3505 | emergency_stops: 0 | loss_total: 81.0572 | loss_rl: 81.0550 | loss_pred: 0.0075 | eval_reward: -3288.7222 | eval_reward_std: 0.0000 | eval_avg_delay: 1.1023 | eval_avg_queue: 0.1944 | eval_throughput: 3512.0000 | eval_emergency_stops: 0.0000
+Episode   31 | reward: -4974.2222 | epsilon: 0.7323 | steps: 719 | avg_delay: 1.0337 | avg_queue: 0.1667 | throughput: 3509 | emergency_stops: 0 | loss_total: 79.9939 | loss_rl: 79.9917 | loss_pred: 0.0075
+Episode   32 | reward: -5484.8333 | epsilon: 0.7250 | steps: 719 | avg_delay: 2.6889 | avg_queue: 0.3889 | throughput: 3510 | emergency_stops: 0 | loss_total: 84.1278 | loss_rl: 84.1256 | loss_pred: 0.0074
+Episode   33 | reward: -5289.0556 | epsilon: 0.7177 | steps: 719 | avg_delay: 0.6629 | avg_queue: 0.1389 | throughput: 3511 | emergency_stops: 0 | loss_total: 83.4989 | loss_rl: 83.4967 | loss_pred: 0.0074
+Episode   34 | reward: -5222.1667 | epsilon: 0.7106 | steps: 719 | avg_delay: 1.4737 | avg_queue: 0.2917 | throughput: 3504 | emergency_stops: 0 | loss_total: 81.8802 | loss_rl: 81.8780 | loss_pred: 0.0073
+Episode   35 | reward: -5008.5556 | epsilon: 0.7034 | steps: 719 | avg_delay: 1.6495 | avg_queue: 0.3333 | throughput: 3503 | emergency_stops: 0 | loss_total: 82.2821 | loss_rl: 82.2799 | loss_pred: 0.0073
+Episode   36 | reward: -5329.5000 | epsilon: 0.6964 | steps: 719 | avg_delay: 1.2688 | avg_queue: 0.2500 | throughput: 3507 | emergency_stops: 0 | loss_total: 81.8856 | loss_rl: 81.8834 | loss_pred: 0.0073
+Episode   37 | reward: -4880.8333 | epsilon: 0.6894 | steps: 719 | avg_delay: 1.3516 | avg_queue: 0.2361 | throughput: 3509 | emergency_stops: 0 | loss_total: 80.5194 | loss_rl: 80.5172 | loss_pred: 0.0073
+Episode   38 | reward: -5022.5000 | epsilon: 0.6826 | steps: 719 | avg_delay: 0.7647 | avg_queue: 0.2639 | throughput: 3498 | emergency_stops: 0 | loss_total: 80.3267 | loss_rl: 80.3245 | loss_pred: 0.0072
+Episode   39 | reward: -4978.6667 | epsilon: 0.6757 | steps: 719 | avg_delay: 0.2529 | avg_queue: 0.1250 | throughput: 3511 | emergency_stops: 0 | loss_total: 83.3545 | loss_rl: 83.3523 | loss_pred: 0.0072
+Episode   40 | reward: -5164.6667 | epsilon: 0.6690 | steps: 719 | avg_delay: 1.8021 | avg_queue: 0.2639 | throughput: 3504 | emergency_stops: 0 | loss_total: 82.1371 | loss_rl: 82.1349 | loss_pred: 0.0072 | eval_reward: -3298.5000 | eval_reward_std: 0.0000 | eval_avg_delay: 0.6067 | eval_avg_queue: 0.2083 | eval_throughput: 3511.0000 | eval_emergency_stops: 0.0000
+Episode   41 | reward: -5080.5000 | epsilon: 0.6623 | steps: 719 | avg_delay: 0.3596 | avg_queue: 0.1111 | throughput: 3510 | emergency_stops: 0 | loss_total: 81.2506 | loss_rl: 81.2484 | loss_pred: 0.0072
+Episode   42 | reward: -5052.1111 | epsilon: 0.6557 | steps: 719 | avg_delay: 1.2088 | avg_queue: 0.1944 | throughput: 3508 | emergency_stops: 0 | loss_total: 81.1849 | loss_rl: 81.1827 | loss_pred: 0.0072
+Episode   43 | reward: -5260.7222 | epsilon: 0.6491 | steps: 719 | avg_delay: 1.0652 | avg_queue: 0.2083 | throughput: 3507 | emergency_stops: 0 | loss_total: 83.7516 | loss_rl: 83.7495 | loss_pred: 0.0072
+Episode   44 | reward: -5050.5000 | epsilon: 0.6426 | steps: 719 | avg_delay: 1.4494 | avg_queue: 0.2639 | throughput: 3510 | emergency_stops: 0 | loss_total: 80.4991 | loss_rl: 80.4970 | loss_pred: 0.0072
+Episode   45 | reward: -5010.4444 | epsilon: 0.6362 | steps: 719 | avg_delay: 0.6300 | avg_queue: 0.1528 | throughput: 3500 | emergency_stops: 0 | loss_total: 81.6322 | loss_rl: 81.6301 | loss_pred: 0.0071
+Episode   46 | reward: -4448.9444 | epsilon: 0.6298 | steps: 719 | avg_delay: 1.4157 | avg_queue: 0.1944 | throughput: 3511 | emergency_stops: 0 | loss_total: 83.8782 | loss_rl: 83.8761 | loss_pred: 0.0071
+Episode   47 | reward: -5166.7778 | epsilon: 0.6235 | steps: 719 | avg_delay: 0.9072 | avg_queue: 0.2500 | throughput: 3502 | emergency_stops: 0 | loss_total: 81.0945 | loss_rl: 81.0924 | loss_pred: 0.0071
+Episode   48 | reward: -4815.1111 | epsilon: 0.6173 | steps: 719 | avg_delay: 0.7407 | avg_queue: 0.1389 | throughput: 3518 | emergency_stops: 0 | loss_total: 83.2708 | loss_rl: 83.2687 | loss_pred: 0.0071
+Episode   49 | reward: -4789.7778 | epsilon: 0.6111 | steps: 719 | avg_delay: 0.2308 | avg_queue: 0.0833 | throughput: 3508 | emergency_stops: 0 | loss_total: 84.9852 | loss_rl: 84.9831 | loss_pred: 0.0071
+Episode   50 | reward: -4617.8333 | epsilon: 0.6050 | steps: 719 | avg_delay: 0.9318 | avg_queue: 0.1806 | throughput: 3512 | emergency_stops: 0 | loss_total: 81.7404 | loss_rl: 81.7383 | loss_pred: 0.0071 | eval_reward: -3365.0000 | eval_reward_std: 0.0000 | eval_avg_delay: 0.1149 | eval_avg_queue: 0.0694 | eval_throughput: 3511.0000 | eval_emergency_stops: 0.0000
+
+Training complete! Best train reward: -4448.94 | Best eval reward: -3168.33
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\gat_dqn_grid_3x3_20260515_170748_quick50_gat_dqn_cuda_y2_g10_eps099_eval_s43

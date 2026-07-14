@@ -1,0 +1,6 @@
+Warning: Teleporting vehicle '889'; waited too long (jam), lane=':A1_11_0', time=888.00.
+Warning: Vehicle '889' ends teleporting on edge 'A1W_A0', time=888.00.
+Warning: Teleporting vehicle '1555'; junction collision with vehicle '1509', lane=':A2_5_1', gap=-3.13, latGap=-0.00, time=1538.00, stage=move.
+Warning: Vehicle '1555' ends teleporting on edge 'A2A1', time=1538.00.
+Warning: Teleporting vehicle '2999'; junction collision with vehicle '2983', lane=':A3_5_1', gap=-0.94, latGap=-0.45, time=2461.00, stage=move.
+Warning: Vehicle '2999' ends teleporting on edge 'A3A2', time=2461.00.

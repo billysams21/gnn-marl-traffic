@@ -1,0 +1,14 @@
+Episode 1: reward=-381.53, delay=10.01, queue=8.21, throughput=5181, emergency_stops=0
+Episode 2: reward=-387.91, delay=21.52, queue=9.76, throughput=5081, emergency_stops=0
+Episode 3: reward=-339.39, delay=12.59, queue=9.40, throughput=5163, emergency_stops=0
+Episode 4: reward=-408.55, delay=11.03, queue=9.05, throughput=5135, emergency_stops=0
+
+==================================================
+Fixed-Time Results (4 episodes)
+==================================================
+Avg Reward:  -379.35 ± 25.13
+Avg Delay:   13.79 ± 4.56
+Avg Queue:   9.11 ± 0.57
+Throughput:  5140.00 ± 37.80
+Emergency:   0.00 ± 0.00
+Logs saved to: D:\ITB\TA\gnn-marl-traffic\logs\fixed_time_arterial_peak_20260713_125022_delay_based_peak_s42_20260713_125019

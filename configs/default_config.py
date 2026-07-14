@@ -116,6 +116,20 @@ SCENARIOS = {
         "eff_vehicle_length": 3.55,
         "description": "Arterial+collector network (9 TL), PKJI-calibrated, 9000 veh Gaussian peak demand",
     },
+    "arterial_actuated_stable": {
+        "net_file": "data/networks/arterial_3x3/arterial_actuated.net.xml",
+        "route_file": "data/networks/arterial_3x3/arterial_stable.rou.xml",
+        "lateral_resolution": 0.7,
+        "eff_vehicle_length": 3.55,
+        "description": "Arterial+collector network (9 TL), SUMO actuated control, stable demand (baseline)",
+    },
+    "arterial_actuated_peak": {
+        "net_file": "data/networks/arterial_3x3/arterial_actuated.net.xml",
+        "route_file": "data/networks/arterial_3x3/arterial_peak.rou.xml",
+        "lateral_resolution": 0.7,
+        "eff_vehicle_length": 3.55,
+        "description": "Arterial+collector network (9 TL), SUMO actuated control, peak demand (baseline)",
+    },
     "arterial_unbalanced": {
         "net_file": "data/networks/arterial_3x3/arterial_fixed.net.xml",
         "route_file": "data/networks/arterial_3x3/arterial_unbalanced.rou.xml",

@@ -1,0 +1,3 @@
+Warning: Vehicle '1200' performs emergency braking on lane ':B1_1_1' with decel=9.00, wished=4.50, severity=1.00, time=1258.00.
+Warning: Vehicle '2162' performs emergency braking on lane ':B0_26_0' with decel=7.00, wished=4.00, severity=1.00, time=2187.00.
+Warning: Vehicle '1426' performs emergency braking on lane ':A1_6_1' with decel=10.00, wished=5.00, severity=1.00, time=1488.00.

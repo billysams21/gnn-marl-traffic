@@ -1,0 +1,95 @@
+Warning: Teleporting vehicle '2213'; side collision with vehicle '2239', lane='A3A2_0', gap=-2.54, latGap=-0.80, time=1415.00, stage=laneChange.
+Warning: Vehicle '2213' ends teleporting on edge 'A2A1', time=1415.00.
+Warning: Teleporting vehicle '1273'; waited too long (yield), lane='A2A3_1', time=2444.00.
+Warning: Vehicle '1273' ends teleporting on edge 'A3C3', time=2444.00.
+Warning: Teleporting vehicle '6191'; side collision with vehicle '6215', lane=':A2_5_0', gap=-2.90, latGap=-0.45, time=2798.00, stage=laneChange.
+Warning: Vehicle '6191' ends teleporting on edge 'A2A1', time=2798.00.
+Warning: Teleporting vehicle '1273'; waited too long (yield), lane='A2A3_1', time=2065.00.
+Warning: Vehicle '1273' ends teleporting on edge 'A3C3', time=2065.00.
+Warning: Teleporting vehicle '403'; waited too long (yield), lane='A2A3_1', time=1152.00.
+Warning: Vehicle '403' ends teleporting on edge 'A3C3', time=1152.00.
+Warning: Teleporting vehicle '5327'; side collision with vehicle '5340', lane='A3A2_1', gap=-2.46, latGap=-0.60, time=2493.00, stage=laneChange.
+Warning: Vehicle '5327' ends teleporting on edge 'A2A1', time=2493.00.
+Warning: Teleporting vehicle '6078'; waited too long (jam), lane=':A2_5_0', time=3137.00.
+Warning: Vehicle '6078' ends teleporting on edge 'A2A1', time=3137.00.
+Warning: Teleporting vehicle '6119'; waited too long (jam), lane=':A2_5_1', time=3140.00.
+Warning: Vehicle '6119' ends teleporting on edge 'A2A1', time=3140.00.
+Warning: Teleporting vehicle '6117'; waited too long (jam), lane=':A2_5_0', time=3141.00.
+Warning: Vehicle '6117' ends teleporting on edge 'A2A1', time=3141.00.
+Warning: Teleporting vehicle '6109'; waited too long (jam), lane=':A2_5_0', time=3142.00.
+Warning: Vehicle '6109' ends teleporting on edge 'A2A1', time=3142.00.
+Warning: Teleporting vehicle '8525'; waited too long (yield), lane='N2C2_0', time=3155.00.
+Warning: Vehicle '8525' ends teleporting on edge 'A2B2', time=3289.00.
+Warning: Teleporting vehicle '1259'; waited too long (yield), lane='W_A0A1_0', time=1582.00.
+Warning: Vehicle '1259' ends teleporting on edge 'A1A2', time=1582.00.
+Warning: Teleporting vehicle '816'; waited too long (yield), lane='W_A0A1_1', time=1628.00.
+Warning: Vehicle '816' ends teleporting on edge 'A1C1', time=1628.00.
+Warning: Teleporting vehicle '2597'; waited too long (yield), lane='W_A0A1_0', time=3138.00.
+Warning: Vehicle '2597' ends teleporting on edge 'A1A2', time=3138.00.
+Warning: Teleporting vehicle '456'; waited too long (yield), lane='A2A3_1', time=1202.00.
+Warning: Vehicle '456' ends teleporting on edge 'A3C3', time=1202.00.
+Warning: Teleporting vehicle '6917'; side collision with vehicle '7059', lane='A3A2_0', gap=-2.50, latGap=-0.15, time=3186.00, stage=laneChange.
+Warning: Vehicle '6917' ends teleporting on edge 'A2A1', time=3186.00.
+Warning: Teleporting vehicle '298'; waited too long (yield), lane='A2A3_1', time=1390.00.
+Warning: Vehicle '298' ends teleporting on edge 'A3C3', time=1390.00.
+Warning: Teleporting vehicle '4490'; side collision with vehicle '4476', lane='A3A2_1', gap=-2.04, latGap=-0.80, time=2102.00, stage=laneChange.
+Warning: Vehicle '4490' ends teleporting on edge 'A2A1', time=2102.00.
+Warning: Teleporting vehicle '3817'; side collision with vehicle '3842', lane=':A2_5_0', gap=-2.46, latGap=-0.35, time=1917.00, stage=laneChange.
+Warning: Vehicle '3817' ends teleporting on edge 'A2A1', time=1917.00.
+Warning: Teleporting vehicle '1397'; waited too long (yield), lane='A2A3_1', time=2263.00.
+Warning: Vehicle '1397' ends teleporting on edge 'A3C3', time=2263.00.
+Warning: Teleporting vehicle '2166'; collision with vehicle '2723', lane='W_A0A1_1', gap=-0.53, latGap=-0.00, time=2746.00, stage=move.
+Warning: Vehicle '2166' ends teleporting on edge 'A1C1', time=2746.00.
+Warning: Teleporting vehicle '1641'; waited too long (yield), lane='A1A2_1', time=2862.00.
+Warning: Vehicle '1641' ends teleporting on edge 'A2C2', time=2862.00.
+Warning: Teleporting vehicle '1782'; waited too long (yield), lane='A1A2_1', time=2905.00.
+Warning: Vehicle '1782' ends teleporting on edge 'A2C2', time=2905.00.
+Warning: Teleporting vehicle '5794'; waited too long (jam), lane=':A2_5_0', time=2908.00.
+Warning: Vehicle '5794' ends teleporting on edge 'A2A1', time=2908.00.
+Warning: Teleporting vehicle '5820'; waited too long (jam), lane=':A2_5_0', time=2917.00.
+Warning: Vehicle '5820' ends teleporting on edge 'A2A1', time=2917.00.
+Warning: Teleporting vehicle '5808'; waited too long (yield), lane='A3A2_0', time=2918.00.
+Warning: Vehicle '5808' ends teleporting on edge 'A2A1', time=2918.00.
+Warning: Teleporting vehicle '5805'; waited too long (jam), lane=':A2_5_1', time=2928.00.
+Warning: Vehicle '5805' ends teleporting on edge 'A2A1', time=2928.00.
+Warning: Teleporting vehicle '5781'; waited too long (jam), lane=':A2_5_1', time=2929.00.
+Warning: Vehicle '5781' ends teleporting on edge 'A2A1', time=2929.00.
+Warning: Teleporting vehicle '5921'; waited too long (jam), lane=':A2_1_0', time=2936.00.
+Warning: Teleporting vehicle '5775'; waited too long (jam), lane=':A2_2_0', time=2936.00.
+Warning: Vehicle '5775' ends teleporting on edge 'A2A3', time=2936.00.
+Warning: Vehicle '5921' ends teleporting on edge 'A2B2', time=2936.00.
+Warning: Teleporting vehicle '5791'; waited too long (jam), lane=':A2_2_0', time=2937.00.
+Warning: Vehicle '5791' ends teleporting on edge 'A2A3', time=2937.00.
+Warning: Teleporting vehicle '7728'; waited too long (yield), lane='N2C2_0', time=2976.00.
+Warning: Vehicle '7728' ends teleporting on edge 'A2A3', time=3110.00.
+Warning: Teleporting vehicle '4829'; junction collision with vehicle '4790', lane=':A1_2_0', gap=-1.68, latGap=-0.20, time=2130.00, stage=move.
+Warning: Vehicle '4829' ends teleporting on edge 'A1A2', time=2146.00.
+Warning: Teleporting vehicle '1328'; waited too long (yield), lane='A2A3_0', time=2342.00.
+Warning: Vehicle '1328' ends teleporting on edge 'A3E_A4', time=2342.00.
+Warning: Teleporting vehicle '1409'; waited too long (yield), lane='A2A3_1', time=2400.00.
+Warning: Vehicle '1409' ends teleporting on edge 'A3C3', time=2400.00.
+Warning: Teleporting vehicle '7224'; waited too long (yield), lane='N1C1_0', time=2678.00.
+Warning: Vehicle '7224' ends teleporting on edge 'C1A1', time=2809.00.
+Warning: Teleporting vehicle '6862'; side collision with vehicle '6838', lane='A3A2_1', gap=-1.18, latGap=-0.80, time=3080.00, stage=laneChange.
+Warning: Vehicle '6862' ends teleporting on edge 'A2A1', time=3080.00.
+Warning: Teleporting vehicle '1608'; side collision with vehicle '1646', lane='A3A2_0', gap=-2.58, latGap=-0.45, time=1220.00, stage=laneChange.
+Warning: Vehicle '1608' ends teleporting on edge 'A2A1', time=1220.00.
+Warning: Teleporting vehicle '4010'; side collision with vehicle '4002', lane='A2A1_1', gap=-2.39, latGap=-0.80, time=2059.00, stage=laneChange.
+Warning: Vehicle '4010' ends teleporting on edge 'A1W_A0', time=2059.00.
+Warning: Teleporting vehicle '1409'; waited too long (yield), lane='A2A3_1', time=2223.00.
+Warning: Vehicle '1409' ends teleporting on edge 'A3C3', time=2223.00.
+Warning: Teleporting vehicle '5403'; side collision with vehicle '5337', lane='A2A1_1', gap=-3.00, latGap=-0.20, time=2542.00, stage=laneChange.
+Warning: Vehicle '5337' ends teleporting on edge 'A1W_A0', time=2542.00.
+Warning: Vehicle '5403' ends teleporting on edge 'A1W_A0', time=2542.00.
+Warning: Teleporting vehicle '4138'; side collision with vehicle '4158', lane='A2A1_0', gap=-2.88, latGap=-0.15, time=2099.00, stage=laneChange.
+Warning: Vehicle '4138' ends teleporting on edge 'A1W_A0', time=2099.00.
+Warning: Teleporting vehicle '10373'; collision with vehicle '3752', lane='A1A2_1', gap=-3.05, latGap=-0.00, time=3478.00, stage=move.
+Warning: Vehicle '10373' ends teleporting on edge 'A2A3', time=3478.00.
+Warning: Teleporting vehicle '2826'; junction collision with vehicle '2823', lane=':A1_14_0', gap=-0.63, latGap=-0.10, time=2917.00, stage=move.
+Warning: Vehicle '2826' ends teleporting on edge 'A1A2', time=2918.00.
+Warning: Teleporting vehicle '4830'; waited too long (jam), lane=':A2_2_0', time=2640.00.
+Warning: Vehicle '4830' ends teleporting on edge 'A2A3', time=2640.00.
+Warning: Teleporting vehicle '4859'; waited too long (jam), lane=':A2_2_0', time=2663.00.
+Warning: Vehicle '4859' ends teleporting on edge 'A2A3', time=2663.00.
+Warning: Teleporting vehicle '6875'; waited too long (yield), lane='N2C2_0', time=2679.00.
+Warning: Vehicle '6875' ends teleporting on edge 'C2A2', time=2714.00.

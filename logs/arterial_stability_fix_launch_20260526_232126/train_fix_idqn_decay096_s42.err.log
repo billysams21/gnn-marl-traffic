@@ -1,0 +1,7 @@
+Warning: Teleporting vehicle '3298'; side collision with vehicle '3288', lane='A3A2_1', gap=-3.03, latGap=-0.80, time=2034.00, stage=laneChange.
+Warning: Vehicle '3298' ends teleporting on edge 'A2A1', time=2034.00.
+Warning: Teleporting vehicle '5667'; side collision with vehicle '5722', lane=':A1_5_1', gap=-2.49, latGap=-0.35, time=3584.00, stage=laneChange.
+Warning: Vehicle '5667' ends teleporting on edge 'A1W_A0', time=3584.00.
+Warning: Teleporting vehicle '4091'; side collision with vehicle '4047', lane='A2A1_0', gap=-3.00, latGap=-0.15, time=2570.00, stage=laneChange.
+Warning: Vehicle '4047' ends teleporting on edge 'A1W_A0', time=2570.00.
+Warning: Vehicle '4091' ends teleporting on edge 'A1W_A0', time=2570.00.

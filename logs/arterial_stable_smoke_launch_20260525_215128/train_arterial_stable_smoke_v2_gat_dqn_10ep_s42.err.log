@@ -1,0 +1,4 @@
+Warning: Teleporting vehicle '4835'; waited too long (jam), lane=':A1_2_0', time=3296.00.
+Warning: Vehicle '4835' ends teleporting on edge 'A1A2', time=3296.00.
+Error: tcpip::Socket::recvAndCheck @ recv: Socket reset by peer
+Quitting (on error).
