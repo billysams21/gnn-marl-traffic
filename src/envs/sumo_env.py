@@ -100,6 +100,7 @@ class SumoEnvironment:
         max_delta_density: float = 0.5,    # Max expected density change per step
         # Per-lane queue normalization (if eff_vehicle_length > 0, overrides max_queue_per_lane)
         eff_vehicle_length: float = 0.0,   # Weighted effective vehicle length (m); 0 = use max_queue_per_lane
+        tripinfo_output: Optional[str] = None,
     ):
         self.net_file = _normalize_path(net_file)
         if isinstance(route_file, list):
@@ -140,9 +141,11 @@ class SumoEnvironment:
         self.max_delta_queue = max_delta_queue
         self.max_delta_density = max_delta_density
         self.eff_vehicle_length = eff_vehicle_length
+        self.tripinfo_output = _normalize_path(tripinfo_output)
 
         # Per-lane max queue: built at reset() from lane lengths if eff_vehicle_length > 0
         self._lane_max_queue: Dict[str, float] = {}
+        self._episode_lane_peak_queue: Dict[str, float] = {}
 
         # Per-agent info
         self.controlled_lanes: Dict[str, List[str]] = {}
@@ -275,6 +278,11 @@ class SumoEnvironment:
             "--seed", str(self.seed),
             ]
         )
+        if self.tripinfo_output:
+            tripinfo_dir = os.path.dirname(self.tripinfo_output)
+            if tripinfo_dir:
+                os.makedirs(tripinfo_dir, exist_ok=True)
+            cmd.extend(["--tripinfo-output", self.tripinfo_output])
         
         if self.use_gui:
             # Quit on end allows SUMO to restart nicely
@@ -345,6 +353,7 @@ class SumoEnvironment:
 
         # Build per-lane max queue from physical lane length (if eff_vehicle_length enabled)
         self._lane_max_queue = {}
+        self._episode_lane_peak_queue = {}
         if self.eff_vehicle_length > 0.0:
             all_lanes = set()
             for lanes in self.controlled_lanes.values():
@@ -352,6 +361,11 @@ class SumoEnvironment:
             for lane_id in all_lanes:
                 lane_len = traci.lane.getLength(lane_id)
                 self._lane_max_queue[lane_id] = max(1.0, lane_len / self.eff_vehicle_length)
+
+        for lanes in self.controlled_lanes.values():
+            for lane_id in lanes:
+                self._episode_lane_peak_queue[lane_id] = 0.0
+        self._record_lane_queue_peaks()
 
         # Initialize previous state for delta computation
         obs = {}
@@ -366,6 +380,7 @@ class SumoEnvironment:
             self._step_count += 1
             self._advance_signal_timers()
             self._record_simulation_step_counters()
+            self._record_lane_queue_peaks()
 
         for ts_id in self.ts_ids:
             obs[ts_id] = self._get_observation(ts_id)
@@ -546,6 +561,7 @@ class SumoEnvironment:
             self._step_count += 1
             self._advance_signal_timers()
             self._record_simulation_step_counters()
+            self._record_lane_queue_peaks()
 
         # Collect observations and rewards
         obs = {}
@@ -994,7 +1010,45 @@ class SumoEnvironment:
         if hasattr(traci.simulation, "getEndingTeleportNumber"):
             self._episode_teleport_ended += traci.simulation.getEndingTeleportNumber()
 
-    def _get_metrics(self) -> Dict[str, float]:
+    def _record_lane_queue_peaks(self):
+        """Track the largest stopped-vehicle queue observed on every controlled lane."""
+        for lane_id in self._episode_lane_peak_queue:
+            queue = float(traci.lane.getLastStepHaltingNumber(lane_id))
+            self._episode_lane_peak_queue[lane_id] = max(
+                self._episode_lane_peak_queue[lane_id], queue
+            )
+
+    def _get_lane_peak_metrics(self) -> Dict[str, Union[float, str]]:
+        """Summarize per-lane queue peaks and normalize them by physical capacity."""
+        if not self._episode_lane_peak_queue:
+            return {
+                "mean_peak_queue_per_lane": 0.0,
+                "max_peak_queue": 0.0,
+                "max_peak_queue_occupancy_ratio": 0.0,
+                "critical_lane_id": "",
+            }
+
+        peak_queues = self._episode_lane_peak_queue
+        lane_capacities = {
+            lane_id: self._lane_max_queue.get(lane_id, float(self.max_queue_per_lane))
+            for lane_id in peak_queues
+        }
+        occupancy_ratios = {
+            lane_id: peak_queues[lane_id] / max(lane_capacities[lane_id], 1.0)
+            for lane_id in peak_queues
+        }
+        critical_lane_id = max(
+            occupancy_ratios,
+            key=lambda lane_id: (occupancy_ratios[lane_id], peak_queues[lane_id]),
+        )
+        return {
+            "mean_peak_queue_per_lane": float(np.mean(list(peak_queues.values()))),
+            "max_peak_queue": float(max(peak_queues.values())),
+            "max_peak_queue_occupancy_ratio": float(occupancy_ratios[critical_lane_id]),
+            "critical_lane_id": critical_lane_id,
+        }
+
+    def _get_metrics(self) -> Dict[str, Union[float, str]]:
         """Get global traffic metrics."""
         # Use bulk edge retrieval to avoid per-vehicle TraCI calls (massive speedup)
         # vehicles = traci.vehicle.getIDList()
@@ -1018,7 +1072,7 @@ class SumoEnvironment:
         )
         avg_queue = round(total_queue / max(len(all_lanes), 1), 4)
 
-        return {
+        metrics = {
             "avg_delay": avg_delay,
             "avg_queue": avg_queue,
             # Throughput is defined as cumulative completed/arrived vehicles per episode.
@@ -1035,6 +1089,8 @@ class SumoEnvironment:
             "episode_local_safety_steps": self._episode_local_safety_steps,
             "episode_local_safety_overrides": self._episode_local_safety_overrides,
         }
+        metrics.update(self._get_lane_peak_metrics())
+        return metrics
 
     def close(self):
         """Close the SUMO simulation."""

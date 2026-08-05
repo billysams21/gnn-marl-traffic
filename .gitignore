@@ -8,3 +8,4 @@
 /configs/__pycache__
 *.ps1
 *.pt
+/logs

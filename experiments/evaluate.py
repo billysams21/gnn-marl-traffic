@@ -7,8 +7,11 @@ import os
 import sys
 import argparse
 import copy
+import csv
 import json
 import numpy as np
+import xml.etree.ElementTree as ET
+from datetime import datetime
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
@@ -54,6 +57,45 @@ def _load_config_for_model(model_path: str) -> dict:
     return config
 
 
+def _count_scheduled_vehicles(route_file) -> int:
+    """Count explicitly scheduled vehicles and trips in route files used for evaluation."""
+    route_files = route_file if isinstance(route_file, list) else [route_file]
+    total = 0
+    for path in route_files:
+        if not path:
+            continue
+        root = ET.parse(path).getroot()
+        total += len(root.findall("vehicle")) + len(root.findall("trip"))
+        for flow in root.findall("flow"):
+            if "number" not in flow.attrib:
+                raise ValueError(
+                    "Completion rate requires explicit vehicle/trip demand or "
+                    f"a flow 'number' attribute: {path}"
+                )
+            total += int(float(flow.attrib["number"]))
+    return total
+
+
+def _tripinfo_metrics(tripinfo_path: str) -> tuple[float, float, int]:
+    """Return mean and median SUMO timeLoss for vehicles that arrived."""
+    root = ET.parse(tripinfo_path).getroot()
+    time_losses = np.array(
+        [float(trip.attrib["timeLoss"]) for trip in root.findall("tripinfo")],
+        dtype=float,
+    )
+    if not len(time_losses):
+        return float("nan"), float("nan"), 0
+    return float(np.mean(time_losses)), float(np.median(time_losses)), len(time_losses)
+
+
+def _format_median_iqr(values) -> str:
+    values = np.asarray(values, dtype=float)
+    return (
+        f"{np.median(values):.2f} "
+        f"[{np.percentile(values, 25):.2f}, {np.percentile(values, 75):.2f}]"
+    )
+
+
 def evaluate(
     model_path: str,
     scenario_name: str = "grid_2x2",
@@ -65,6 +107,7 @@ def evaluate(
     min_green: int = None,
     time_to_teleport: int = None,
     recovery_enabled: bool = None,
+    output_dir: str = None,
 ):
     config = _load_config_for_model(model_path)
     if yellow_time is not None:
@@ -90,6 +133,17 @@ def evaluate(
     set_global_seed(seed, deterministic=deterministic)
 
     net_file, route_file, sumocfg_file = _resolve_scenario_paths(scenario)
+    scheduled_vehicles = _count_scheduled_vehicles(route_file)
+    if scheduled_vehicles <= 0:
+        raise ValueError("Completion rate requires at least one scheduled vehicle.")
+
+    if output_dir is None:
+        output_dir = os.path.join(
+            os.path.dirname(os.path.abspath(model_path)),
+            "evaluations",
+            datetime.now().strftime("%Y%m%d_%H%M%S"),
+        )
+    os.makedirs(output_dir, exist_ok=True)
 
     env = SumoEnvironment(
         net_file=net_file,
@@ -136,24 +190,14 @@ def evaluate(
     agent.load(model_path)
 
     # Run evaluation episodes
-    all_rewards = []
-    all_delays = []
-    all_queues = []
-    all_throughputs = []
-    all_emergency_stops = []
-    all_teleport_started = []
-    all_teleport_ended = []
-    all_episode_mean_delays = []
-    all_episode_max_delays = []
-    all_episode_mean_queues = []
-    all_episode_max_queues = []
+    rows = []
 
     for ep in range(1, num_episodes + 1):
         env.seed = seed + ep
+        env.tripinfo_output = os.path.join(output_dir, f"tripinfo_episode_{ep:03d}.xml")
         obs = env.reset()
         obs_array = np.stack([obs[ts_id] for ts_id in env.ts_ids])
         ep_reward = 0.0
-        episode_step_metrics = []
 
         while True:
             actions_array = agent.select_actions(obs_array, evaluate=True)
@@ -161,7 +205,6 @@ def evaluate(
                 ts_id: int(actions_array[i]) for i, ts_id in enumerate(env.ts_ids)
             }
             next_obs, rewards, done, info = env.step(actions_dict)
-            episode_step_metrics.append(info["metrics"])
             next_obs_array = np.stack([next_obs[ts_id] for ts_id in env.ts_ids])
             rewards_array = np.array([rewards[ts_id] for ts_id in env.ts_ids])
 
@@ -171,36 +214,41 @@ def evaluate(
             if done:
                 break
 
-        all_rewards.append(ep_reward)
-        all_delays.append(info["metrics"]["avg_delay"])
-        all_queues.append(info["metrics"]["avg_queue"])
-        all_throughputs.append(info["metrics"]["throughput"])
-        all_emergency_stops.append(info["metrics"]["emergency_stops"])
-        all_teleport_started.append(info["metrics"]["teleport_started"])
-        all_teleport_ended.append(info["metrics"]["teleport_ended"])
-
-        delay_values = np.array([m["avg_delay"] for m in episode_step_metrics])
-        queue_values = np.array([m["avg_queue"] for m in episode_step_metrics])
-        mean_delay = float(np.mean(delay_values))
-        max_delay = float(np.max(delay_values))
-        mean_queue = float(np.mean(queue_values))
-        max_queue = float(np.max(queue_values))
-        all_episode_mean_delays.append(mean_delay)
-        all_episode_max_delays.append(max_delay)
-        all_episode_mean_queues.append(mean_queue)
-        all_episode_max_queues.append(max_queue)
+        mean_time_loss, median_time_loss, tripinfo_count = _tripinfo_metrics(
+            env.tripinfo_output
+        )
+        metrics = info["metrics"]
+        if tripinfo_count != metrics["throughput"]:
+            raise RuntimeError(
+                f"tripinfo count ({tripinfo_count}) does not match TraCI throughput "
+                f"({metrics['throughput']}) in episode {ep}."
+            )
+        row = {
+            "episode": ep,
+            "seed": env.seed,
+            "reward": ep_reward,
+            "mean_time_loss": mean_time_loss,
+            "median_time_loss": median_time_loss,
+            "completion_rate": 100.0 * tripinfo_count / scheduled_vehicles,
+            "throughput": tripinfo_count,
+            "scheduled_vehicles": scheduled_vehicles,
+            "mean_peak_queue_per_lane": metrics["mean_peak_queue_per_lane"],
+            "max_peak_queue": metrics["max_peak_queue"],
+            "max_peak_queue_occupancy_ratio": metrics["max_peak_queue_occupancy_ratio"],
+            "critical_lane_id": metrics["critical_lane_id"],
+            "emergency_stops": metrics["emergency_stops"],
+            "teleport_started": metrics["teleport_started"],
+            "teleport_ended": metrics["teleport_ended"],
+            "tripinfo_file": os.path.basename(env.tripinfo_output),
+        }
+        rows.append(row)
 
         print(
             f"Episode {ep}: reward={ep_reward:.2f}, "
-            f"delay={info['metrics']['avg_delay']:.2f}, "
-            f"queue={info['metrics']['avg_queue']:.2f}, "
-            f"mean_delay={mean_delay:.2f}, "
-            f"max_delay={max_delay:.2f}, "
-            f"mean_queue={mean_queue:.2f}, "
-            f"max_queue={max_queue:.2f}, "
-            f"throughput={info['metrics']['throughput']}, "
-            f"emergency_stops={info['metrics']['emergency_stops']}, "
-            f"teleport_started={info['metrics']['teleport_started']}"
+            f"median_time_loss={median_time_loss:.2f}, "
+            f"mean_peak_queue={metrics['mean_peak_queue_per_lane']:.2f}, "
+            f"completion_rate={row['completion_rate']:.2f}%, "
+            f"critical_lane={metrics['critical_lane_id']}"
         )
 
     env.close()
@@ -208,34 +256,18 @@ def evaluate(
     print(f"\n{'='*50}")
     print(f"Evaluation Results ({num_episodes} episodes)")
     print(f"{'='*50}")
-    print(f"Avg Reward:  {np.mean(all_rewards):.2f} ± {np.std(all_rewards):.2f}")
-    print(f"Avg Delay:   {np.mean(all_delays):.2f} ± {np.std(all_delays):.2f}")
-    print(f"Avg Queue:   {np.mean(all_queues):.2f} ± {np.std(all_queues):.2f}")
-    print(
-        "Mean Delay:  "
-        f"{np.mean(all_episode_mean_delays):.2f} ± {np.std(all_episode_mean_delays):.2f}"
-    )
-    print(
-        "Max Delay:   "
-        f"{np.mean(all_episode_max_delays):.2f} ± {np.std(all_episode_max_delays):.2f}"
-    )
-    print(
-        "Mean Queue:  "
-        f"{np.mean(all_episode_mean_queues):.2f} ± {np.std(all_episode_mean_queues):.2f}"
-    )
-    print(
-        "Max Queue:   "
-        f"{np.mean(all_episode_max_queues):.2f} ± {np.std(all_episode_max_queues):.2f}"
-    )
-    print(f"Throughput:  {np.mean(all_throughputs):.2f} ± {np.std(all_throughputs):.2f}")
-    print(
-        "Emergency:   "
-        f"{np.mean(all_emergency_stops):.2f} ± {np.std(all_emergency_stops):.2f}"
-    )
-    print(
-        "Teleport:    "
-        f"{np.mean(all_teleport_started):.2f} ± {np.std(all_teleport_started):.2f}"
-    )
+    for key, label in (
+        ("median_time_loss", "Median timeLoss (s/vehicle)"),
+        ("mean_peak_queue_per_lane", "Mean peak queue (vehicles/lane)"),
+        ("completion_rate", "Completion rate (%)"),
+    ):
+        print(f"{label}: {_format_median_iqr([row[key] for row in rows])}")
+    csv_path = os.path.join(output_dir, "metrics.csv")
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"Logs saved to: {output_dir}")
 
 
 if __name__ == "__main__":
@@ -250,6 +282,7 @@ if __name__ == "__main__":
     parser.add_argument("--min-green", type=int, default=None, help="Override env.min_green")
     parser.add_argument("--time-to-teleport", type=int, default=None, help="Override env.time_to_teleport")
     parser.add_argument("--no-recovery", action="store_true", help="Disable env.recovery_enabled for clean evaluation")
+    parser.add_argument("--output-dir", type=str, default=None)
 
     args = parser.parse_args()
     recovery_enabled = False if args.no_recovery else None
@@ -264,4 +297,5 @@ if __name__ == "__main__":
         args.min_green,
         args.time_to_teleport,
         recovery_enabled,
+        args.output_dir,
     )

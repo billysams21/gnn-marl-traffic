@@ -3,7 +3,7 @@ Generate SUMO route file for the arterial+collector network.
 
 Two scenarios:
   - stable:  6000 vehicles, uniform spawn over 3600s (Poisson-like flat demand)
-  - peak:   12000 vehicles, Gaussian spawn centered at 1800s (rush-hour wave)
+    - peak:    9000 vehicles, Gaussian spawn centered at 1800s (rush-hour wave)
 
 Vehicle types (no trucks, PKJI-compliant EMP):
   - passenger : 35%  EMP=1.0

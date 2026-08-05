@@ -11,6 +11,7 @@ import csv
 import json
 import os
 import sys
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
 import numpy as np
@@ -42,6 +43,45 @@ def _resolve_scenario_paths(scenario: dict):
     return net_file, route_file, sumocfg_file
 
 
+def _count_scheduled_vehicles(route_file) -> int:
+    """Count explicitly scheduled vehicles and trips in route files used for evaluation."""
+    route_files = route_file if isinstance(route_file, list) else [route_file]
+    total = 0
+    for path in route_files:
+        if not path:
+            continue
+        root = ET.parse(path).getroot()
+        total += len(root.findall("vehicle")) + len(root.findall("trip"))
+        for flow in root.findall("flow"):
+            if "number" not in flow.attrib:
+                raise ValueError(
+                    "Completion rate requires explicit vehicle/trip demand or "
+                    f"a flow 'number' attribute: {path}"
+                )
+            total += int(float(flow.attrib["number"]))
+    return total
+
+
+def _tripinfo_metrics(tripinfo_path: str) -> tuple[float, float, int]:
+    """Return mean and median SUMO timeLoss for vehicles that arrived."""
+    root = ET.parse(tripinfo_path).getroot()
+    time_losses = np.array(
+        [float(trip.attrib["timeLoss"]) for trip in root.findall("tripinfo")],
+        dtype=float,
+    )
+    if not len(time_losses):
+        return float("nan"), float("nan"), 0
+    return float(np.mean(time_losses)), float(np.median(time_losses)), len(time_losses)
+
+
+def _format_median_iqr(values) -> str:
+    values = np.asarray(values, dtype=float)
+    return (
+        f"{np.median(values):.2f} "
+        f"[{np.percentile(values, 25):.2f}, {np.percentile(values, 75):.2f}]"
+    )
+
+
 def evaluate_fixed_time(
     scenario_name: str,
     episodes: int,
@@ -52,6 +92,7 @@ def evaluate_fixed_time(
     sumocfg_file_override: str = "",
     yellow_time: int = None,
     min_green: int = None,
+    recovery_enabled: bool = False,
     exp_suffix: str = "",
 ):
     config = json.loads(json.dumps(DEFAULT_CONFIG))
@@ -59,6 +100,7 @@ def evaluate_fixed_time(
         config["env"]["yellow_time"] = yellow_time
     if min_green is not None:
         config["env"]["min_green"] = min_green
+    config["env"]["recovery_enabled"] = recovery_enabled
 
     deterministic = config["training"].get("deterministic", True)
     set_global_seed(seed, deterministic=deterministic)
@@ -73,6 +115,11 @@ def evaluate_fixed_time(
     if sumocfg_file_override:
         sumocfg_file = os.path.abspath(sumocfg_file_override)
         route_file = None
+    if route_file is None:
+        raise ValueError("Completion rate requires an explicit route file.")
+    scheduled_vehicles = _count_scheduled_vehicles(route_file)
+    if scheduled_vehicles <= 0:
+        raise ValueError("Completion rate requires at least one scheduled vehicle.")
 
     env = SumoEnvironment(
         net_file=net_file,
@@ -80,6 +127,8 @@ def evaluate_fixed_time(
         sumocfg_file=sumocfg_file,
         use_gui=use_gui,
         seed=seed,
+        lateral_resolution=scenario.get("lateral_resolution", 0.0),
+        eff_vehicle_length=scenario.get("eff_vehicle_length", 0.0),
         **config["env"],
     )
 
@@ -105,6 +154,7 @@ def evaluate_fixed_time(
             "env_overrides": {
                 "yellow_time": yellow_time,
                 "min_green": min_green,
+                "recovery_enabled": recovery_enabled,
             },
             "file_overrides": {
                 "net_file": net_file_override if net_file_override else None,
@@ -119,6 +169,7 @@ def evaluate_fixed_time(
     rows = []
     for ep in range(1, episodes + 1):
         env.seed = seed + ep
+        env.tripinfo_output = os.path.join(log_dir, f"tripinfo_episode_{ep:03d}.xml")
         obs = env.reset(preserve_default_program=True)
         episode_reward = 0.0
         steps = 0
@@ -132,21 +183,43 @@ def evaluate_fixed_time(
             if done:
                 break
 
+        mean_time_loss, median_time_loss, tripinfo_count = _tripinfo_metrics(
+            env.tripinfo_output
+        )
+        metrics = info["metrics"]
+        if tripinfo_count != metrics["throughput"]:
+            raise RuntimeError(
+                f"tripinfo count ({tripinfo_count}) does not match TraCI throughput "
+                f"({metrics['throughput']}) in episode {ep}."
+            )
+
         row = {
+            "seed": env.seed,
             "reward": episode_reward,
             "steps": steps,
-            "avg_delay": info["metrics"]["avg_delay"],
-            "avg_queue": info["metrics"]["avg_queue"],
-            "throughput": info["metrics"]["throughput"],
-            "emergency_stops": info["metrics"]["emergency_stops"],
+            "mean_time_loss": mean_time_loss,
+            "median_time_loss": median_time_loss,
+            "completion_rate": 100.0 * tripinfo_count / scheduled_vehicles,
+            "throughput": tripinfo_count,
+            "scheduled_vehicles": scheduled_vehicles,
+            "mean_peak_queue_per_lane": metrics["mean_peak_queue_per_lane"],
+            "max_peak_queue": metrics["max_peak_queue"],
+            "max_peak_queue_occupancy_ratio": metrics["max_peak_queue_occupancy_ratio"],
+            "critical_lane_id": metrics["critical_lane_id"],
+            "emergency_stops": metrics["emergency_stops"],
+            "teleport_started": metrics["teleport_started"],
+            "teleport_ended": metrics["teleport_ended"],
             "episode": ep,
             "timestamp": datetime.now().isoformat(),
+            "tripinfo_file": os.path.basename(env.tripinfo_output),
         }
         rows.append(row)
         print(
             f"Episode {ep}: reward={episode_reward:.2f}, "
-            f"delay={row['avg_delay']:.2f}, queue={row['avg_queue']:.2f}, "
-            f"throughput={row['throughput']}, emergency_stops={row['emergency_stops']}"
+            f"median_time_loss={median_time_loss:.2f}, "
+            f"mean_peak_queue={metrics['mean_peak_queue_per_lane']:.2f}, "
+            f"completion_rate={row['completion_rate']:.2f}%, "
+            f"critical_lane={metrics['critical_lane_id']}"
         )
 
     env.close()
@@ -160,11 +233,12 @@ def evaluate_fixed_time(
     print(f"\n{'=' * 50}")
     print(f"Fixed-Time Results ({episodes} episodes)")
     print(f"{'=' * 50}")
-    print(f"Avg Reward:  {np.mean([r['reward'] for r in rows]):.2f} ± {np.std([r['reward'] for r in rows]):.2f}")
-    print(f"Avg Delay:   {np.mean([r['avg_delay'] for r in rows]):.2f} ± {np.std([r['avg_delay'] for r in rows]):.2f}")
-    print(f"Avg Queue:   {np.mean([r['avg_queue'] for r in rows]):.2f} ± {np.std([r['avg_queue'] for r in rows]):.2f}")
-    print(f"Throughput:  {np.mean([r['throughput'] for r in rows]):.2f} ± {np.std([r['throughput'] for r in rows]):.2f}")
-    print(f"Emergency:   {np.mean([r['emergency_stops'] for r in rows]):.2f} ± {np.std([r['emergency_stops'] for r in rows]):.2f}")
+    for key, label in (
+        ("median_time_loss", "Median timeLoss (s/vehicle)"),
+        ("mean_peak_queue_per_lane", "Mean peak queue (vehicles/lane)"),
+        ("completion_rate", "Completion rate (%)"),
+    ):
+        print(f"{label}: {_format_median_iqr([row[key] for row in rows])}")
     print(f"Logs saved to: {log_dir}")
 
 
@@ -179,6 +253,7 @@ if __name__ == "__main__":
     parser.add_argument("--sumocfg-file", type=str, default="", help="Override scenario SUMO config")
     parser.add_argument("--yellow-time", type=int, default=None, help="Saved for config parity; SUMO default program controls timing")
     parser.add_argument("--min-green", type=int, default=None, help="Saved for config parity; SUMO default program controls timing")
+    parser.add_argument("--recovery", action="store_true", help="Enable recovery mode; disabled by default for clean evaluation")
     parser.add_argument("--exp-suffix", type=str, default="")
 
     args = parser.parse_args()
@@ -192,5 +267,6 @@ if __name__ == "__main__":
         sumocfg_file_override=args.sumocfg_file,
         yellow_time=args.yellow_time,
         min_green=args.min_green,
+        recovery_enabled=args.recovery,
         exp_suffix=args.exp_suffix,
     )
